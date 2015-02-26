@@ -1,0 +1,35 @@
+<template name="manageSchedule">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>Create New Schedule</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link" href="#">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="close-link" href="">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content" >
+            {{>Wizard steps=steps onFinished=onfinished}}
+        </div>
+    </div>
+
+</template>
+<template name="pickup">
+
+    {{>quickForm schema='Schema.Pickup' doc=this buttonContent=false id='puf' }}
+
+</template>
+
+<template name="dropOff">
+
+    {{>quickForm schema='Schema.DropOff' doc=this buttonContent=false id='dof' }}
+
+</template>
+<template name="memo">
+
+    {{>quickForm schema='Schema.Memo' doc=this buttonContent=false id='mf' }}
+
+</template>

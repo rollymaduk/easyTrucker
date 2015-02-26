@@ -7,3 +7,15 @@
 meteor-platform
 autopublish
 insecure
+aldeed:autoform
+iron:router
+aldeed:collection2
+coffeescript
+chrismbeckett:toastr
+nemo64:bootstrap
+less
+aldeed:simple-schema
+reactive-var
+yogiben:autoform-map
+francocatena:autoform-bs-datetimepicker
+tsega:bootstrap3-datetimepicker

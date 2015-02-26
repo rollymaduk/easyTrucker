@@ -1,0 +1,9 @@
+<template name="Wizard">
+    <div id="wizard" class="wizard-big">
+        {{#each this.steps}}
+            <h1>{{title}}</h1>
+                <section  data-content="content-{{id}}" ></section>
+
+        {{/each}}
+    </div>
+</template>
