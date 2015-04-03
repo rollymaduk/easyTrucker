@@ -1,0 +1,18 @@
+<template name="manageTruck">
+    <div class="col-lg-7">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Create A new Truck </h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    {{>quickForm collection="Trucks" type='insert'  template='bootstrap3_col_sm_6' buttonContent=false id='tf' doc=this }}
+                    <div class="col-sm-12">
+                        <button  class="btn btn-primary btn-sm pull-right"  onclick="$('#tf').submit();">save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

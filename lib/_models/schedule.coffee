@@ -12,71 +12,80 @@ Schema.Artifact=new SimpleSchema
     optional:true
 
 Schema.Pickup=new SimpleSchema
+  wayBill:
+    type:String
+    label:"Way Bill #"
+  sender:
+    type:String
+    label:"Pick up Customer"
   pickupDate:
     type:Date
+    autoform: {
+      afFieldInput: {
+        type: 'bootstrap-datetimepicker'
+      }
+    }
   pickupLocation:
-    type:String
-    autoform:
-      type:"map"
-      afFieldInput:
-        geolocation:true
-        autolocate:true
-        searchBox:true
-        height:'400px'
-
-
+    type:Schema.AddressSchema
 
 Schema.DropOff=new SimpleSchema
+  receiver:
+    type:String
   dropOffDate:
     type:Date
+    autoform: {
+      afFieldInput: {
+        type: 'bootstrap-datetimepicker'
+      }
+    }
   dropOffLocation:
-    type:String
+    type:Schema.AddressSchema
+
+Schema.AddressPropertySchema=new SimpleSchema
+  address:
+    type:Schema.AddressSchema
     autoform:
-      type:"map"
-      afFieldInput:
-        geolocation:true
-        autolocate:true
-        searchBox:true
-        height:'400px'
+      type:'googleplace'
 
 Schema.Memo=new SimpleSchema
-  Memo:
+  specs:
+    label:"Van Specifications"
+    type:Schema.TruckSpecs
+    optional:true
+  truckers:
+    type:[String]
+    defaultValue:[]
+    autoform:
+      type:"hidden"
+      label:false
+  memo:
     type:String
     optional:true
     autoform:
       afFieldInput:
-        rows:6
-
-
+        rows:8
 
 Schema.Artifacts=new SimpleSchema
   artifacts:
     type:[Schema.Artifact]
     optional:true
 
-
 Schema.Schedule=new SimpleSchema
   status:
     type:String
-    allowedValues:["request","declined","scheduled","completed",'inactive']
-    defaultValue:"request"
-    autoform:
-      type: "hidden"
-      label:false
-  owner:
-    type:String
-    defaultValue:'admin'
-    max:250
-  transport:
+    allowedValues:["new","declined","scheduled","done",'expired','inactive']
+    defaultValue:"new"
+  rate:
+    type:Number
+    defaultValue:0
+    optional:true
+  truck:
     type:String
     optional:true
-    autoform:
-      type: "hidden"
-      label:false
-  handler:
+  driver:
     type:String
     max:250
     optional:true
-    autoform:
-      type: "hidden"
-      label:false
+
+
+

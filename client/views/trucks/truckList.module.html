@@ -1,0 +1,28 @@
+<template name="truckList">
+    {{>pageHeader title='Trucks' btnTitle='create new truck' link='addTruck'}}
+    {{#each this}}
+        {{>truckItem}}
+    {{/each}}
+</template>
+<template name="truckItem">
+        <div class="col-lg-4">
+            <div class="contact-box">
+                <a href="profile.html">
+
+                        <h3><strong>{{truckSpecs.type}}-{{registration}}</strong></h3>
+                        <p>{{truckSpecs.weight}} tons</p>
+                        <address>
+
+                            chasis:{{chasis}}<br>
+                            color:{{color}}<br>
+                            make:{{make}}<br>
+                            load volume:{{volume}}<br>
+                            <span  class="icon"><i class="fa fa-truck"></i></span>
+                        </address>
+                    <div class="clearfix"></div>
+                </a>
+
+            </div>
+        </div>
+
+</template>

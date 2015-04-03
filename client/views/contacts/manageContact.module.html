@@ -1,0 +1,53 @@
+<template name="manageContact">
+    <div class="col-lg-7">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Create A new Contact </h5>
+
+            </div>
+            <div class="ibox-content">
+                {{#autoForm doc=this collection='Contacts' doc=contactDoc id='cf' type="insert"}}
+                    <div class="row">
+                    <div class="col-sm-6">
+                        <h5>Personal Details</h5>
+                            {{>afQuickField name="firstName" placeholder="schemaLabel" label=false}}
+                            {{>afQuickField name="lastName" placeholder="schemaLabel" label=false}}
+                            {{>afQuickField name="gender" placeholder="schemaLabel" label=false}}
+                            {{>afQuickField name="email" placeholder="schemaLabel" label=false}}
+                            {{>afQuickField name="phone" placeholder="schemaLabel" label=false}}
+                            <div class="form-group{{#if afFieldIsInvalid name='address'}} has-error{{/if}}">
+                                <div class="input-group">
+
+                                    <div class="input-group-btn"><button data-toggle="dropdown" id="locationmodal" class="btn btn-white dropdown-toggle">
+                                        <i class="fa fa-map-marker"></i> </button></div>
+                                    {{> afFieldInput name='address.fullAddress' placeholder="schemaLabel" }}
+                                </div>
+                                {{#if afFieldIsInvalid name='address.fullAddress'}}
+                                    <span class="help-block">{{afFieldMessage name='address.fullAddress'}}</span>
+                                {{/if}}
+                            </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <h5>Company Details</h5>
+                        {{>afQuickField name="company" placeholder="schemaLabel" label=false}}
+                        {{>afQuickField name="position" placeholder="schemaLabel" label=false}}
+
+                    </div>
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-sm pull-right m-t-n-xs" type="save">Save</button>
+                            </div>
+                        </div>
+                </div>
+
+                {{/autoForm}}
+            </div>
+        </div>
+    </div>
+
+
+
+
+</template>

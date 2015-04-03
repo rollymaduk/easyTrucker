@@ -12,14 +12,14 @@
             </div>
         </div>
         <div class="ibox-content" >
-            {{>Wizard steps=steps onFinished=onfinished}}
+            {{>Wizard steps=steps onCanceled=oncanceled onFinished=onfinished}}
         </div>
     </div>
 
 </template>
-<template name="pickup">
+    <template name="pickup">
 
-    {{>quickForm schema='Schema.Pickup' doc=this buttonContent=false id='puf' }}
+    {{>quickForm schema='Schema.Pickup'  doc=this buttonContent=false id='puf'}}
 
 </template>
 
@@ -29,7 +29,7 @@
 
 </template>
 <template name="memo">
-
-    {{>quickForm schema='Schema.Memo' doc=this buttonContent=false id='mf' }}
+    <h2>Extra Information</h2>
+    {{>quickForm schema='Schema.Memo' omitFields='price'  doc=this buttonContent=false id='mf' }}
 
 </template>

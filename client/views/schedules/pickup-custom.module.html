@@ -1,0 +1,43 @@
+<template name="pickupCustom">
+    <h2>Pickup Information</h2>
+    {{#autoForm schema='Schema.Pickup' doc=pickupDoc buttonContent=false id='puf' }}
+        {{pickupDoc.pickupLocation.address.fullAddress}}
+        <div class="form-group{{#if afFieldIsInvalid name='wayBill'}} has-error{{/if}}">
+            <div class="input-group">
+
+            <div class="input-group-addon"># </div>
+                {{> afFieldInput name='wayBill' placeholder="schemaLabel" }}
+            </div>
+            {{#if afFieldIsInvalid name='wayBill'}}
+                <span class="help-block">{{afFieldMessage name='wayBill'}}</span>
+            {{/if}}
+        </div>
+
+        <div class="form-group{{#if afFieldIsInvalid name='sender'}} has-error{{/if}}">
+            <div class="input-group">
+
+            <div class="input-group-btn"><button data-toggle="dropdown" id="usermodal" class="btn btn-white dropdown-toggle">
+                <i class="fa fa-user"></i> </button></div>
+                {{> afFieldInput name='sender' placeholder="schemaLabel" }}
+            </div>
+            {{#if afFieldIsInvalid name='sender'}}
+                <span class="help-block">{{afFieldMessage name='sender'}}</span>
+            {{/if}}
+        </div>
+
+        {{>afQuickField name="pickupDate" placeholder="schemaLabel" label=false}}
+
+        <div class="form-group{{#if afFieldIsInvalid name='pickupLocation'}} has-error{{/if}}">
+            <div class="input-group">
+
+            <div class="input-group-btn"><button data-toggle="dropdown" id="locationmodal" class="btn btn-white dropdown-toggle">
+                <i class="fa fa-map-marker"></i> </button></div>
+                {{> afFieldInput name='pickupLocation.fullAddress' placeholder="schemaLabel" }}
+            </div>
+            {{#if afFieldIsInvalid name='pickupLocation.fullAddress'}}
+                <span class="help-block">{{afFieldMessage name='pickupLocation.fullAddress'}}</span>
+            {{/if}}
+        </div>
+
+    {{/autoForm}}
+</template>

@@ -5,8 +5,6 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
-insecure
 aldeed:autoform
 iron:router
 aldeed:collection2
@@ -19,3 +17,11 @@ reactive-var
 yogiben:autoform-map
 francocatena:autoform-bs-datetimepicker
 tsega:bootstrap3-datetimepicker
+aldeed:template-extension
+peppelg:bootstrap-3-modal
+lukemadera:autoform-googleplace
+ogamedia:timer
+aldeed:delete-button
+codechimera:meteor-bootstrap-sweetalert
+rcy:nouislider
+meteorhacks:aggregate

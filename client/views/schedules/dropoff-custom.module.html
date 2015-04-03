@@ -1,0 +1,31 @@
+<template name="dropOffCustom">
+    {{#autoForm schema='Schema.DropOff' doc=dropOffDoc buttonContent=false id='dof' }}
+        <h2>Drop-off Information</h2>
+
+        <div class="form-group{{#if afFieldIsInvalid name='receiver'}} has-error{{/if}}">
+            <div class="input-group">
+
+                <div class="input-group-btn"><button data-toggle="dropdown" id="usermodal" class="btn btn-white dropdown-toggle">
+                    <i class="fa fa-user"></i> </button></div>
+                {{> afFieldInput name='receiver' placeholder="schemaLabel" }}
+            </div>
+            {{#if afFieldIsInvalid name='receiver'}}
+                <span class="help-block">{{afFieldMessage name='receiver'}}</span>
+            {{/if}}
+        </div>
+
+        {{>afQuickField name="dropOffDate" placeholder="schemaLabel" label=false}}
+
+        <div class="form-group{{#if afFieldIsInvalid name='dropOffLocation'}} has-error{{/if}}">
+            <div class="input-group">
+
+                <div class="input-group-btn"><button data-toggle="dropdown" id="locationmodal" class="btn btn-white dropdown-toggle">
+                    <i class="fa fa-map-marker"></i> </button></div>
+                {{> afFieldInput name='dropOffLocation.fullAddress' placeholder="schemaLabel" }}
+            </div>
+            {{#if afFieldIsInvalid name='dropOffLocation.fullAddress'}}
+                <span class="help-block">{{afFieldMessage name='dropOffLocation.fullAddress'}}</span>
+            {{/if}}
+        </div>
+    {{/autoForm}}
+</template>

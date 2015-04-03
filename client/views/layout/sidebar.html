@@ -22,15 +22,23 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> <span class="nav-label">My Dashboard</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-dashboard"></i> <span class="nav-label">My Dashboard</span><!--<span class="fa arrow"></span>--></a>
 
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-calendar-o"></i> <span class="nav-label">My Schedules</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="table_basic.html">list</a></li>
+                        <li><a href="{{pathFor 'home'}}">list</a></li>
                         <li><a href="table_data_tables.html">Calender</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a href="{{pathFor 'contactList'}}"><i class="fa fa-users"></i> <span class="nav-label">Contacts</span><!--<span class="fa arrow"></span>--></a>
+
+                </li>
+                <li>
+                <a href="{{pathFor 'truckList'}}"><i class="fa fa-truck"></i> <span class="nav-label">Trucks</span><!--<span class="fa arrow"></span>--></a>
+
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">Messages</span><span class="fa arrow"></span></a>

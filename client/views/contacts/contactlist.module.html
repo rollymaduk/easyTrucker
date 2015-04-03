@@ -1,0 +1,31 @@
+<template name="contactList">
+    {{>pageHeader title='contacts' btnTitle='create new contact' link='addContact'}}
+    {{#each this}}
+            {{>contactItem}}
+    {{/each}}
+</template>
+<template name="contactItem">
+    <div class="col-lg-4">
+        <div class="contact-box">
+            <a href="profile.html">
+                <div class="col-sm-4">
+                    <div class="text-center">
+                        <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a2.jpg">
+                        <div class="m-t-xs font-bold">{{position}}</div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <h3><strong>{{fullName}}</strong></h3>
+                   <p> {{email}}</p>
+                    <address>
+                        <strong>{{company}}</strong><br>
+                        <i class="fa fa-map-marker"></i> {{address.fullAddress}}
+                        <br>
+                        <abbr title="Phone">P:</abbr> {{phone}}
+                    </address>
+                </div>
+                <div class="clearfix"></div>
+            </a>
+        </div>
+    </div>
+</template>

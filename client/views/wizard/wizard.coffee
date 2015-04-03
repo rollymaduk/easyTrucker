@@ -3,7 +3,7 @@ Template.Wizard.created=->
   Template.Wizard.prepareSteps()
 
 Template.Wizard.resizeContent=(template,id)->
-  resizeHeight=template.$("form[id='#{id}']").height()+50
+  resizeHeight=template.$("form[id='#{id}']").height()+100
   console.log resizeHeight
   template.$(".wizard>div.content").height(resizeHeight)
 
@@ -42,7 +42,11 @@ Template.Wizard.rendered=->
       step=steps[currIndx]
       if that.data.onFinished
        that.data.onFinished.call(that,step.data,step)
+       null
 
+    onCanceled:(evt)->
+      if that.data.onCanceled
+        that.data.onCanceled.call(that)
 
     onStepChanged:(evt,currIndx,priorIndx)->
       step=steps[currIndx]
