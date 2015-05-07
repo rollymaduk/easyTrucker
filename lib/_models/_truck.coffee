@@ -69,16 +69,28 @@ Schema.Truck=new SimpleSchema
     autoform:
       label:false
       placeholder:"schemaLabel"
-  owner:
-    type:String
-    autoform:
-      label:false
-      placeholder:"schemaLabel"
   chasis:
     type:String
     optional:true
     autoform:
       label:false
       placeholder:"schemaLabel"
+  createdAt:
+    type:Date
+    autoform:
+      type:'hidden'
+    autoValue:()->
+      if @isInsert then new Date;
+      else if @isUpsert then $setOnInsert:new Date
+      else @unset()
+  owner:
+    type:String
+    autoform:
+      type:'hidden'
+    autoValue:()->
+      if @isInsert then Meteor.userId()
+      else if @isUpsert then $setOnInsert:Meteor.userId()
+      else @unset()
+
 
 

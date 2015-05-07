@@ -1,7 +1,8 @@
 Meteor.methods
   addUpdateSchedule:(schedule)->
-    result= Schedules.upsert(schedule._id,{$set:schedule})
-    return result
+    service= new TransactionService()
+    service.addUpdateSchedule(schedule)
+
   searchTrucks:(pipeline)->
     result=Trucks.aggregate(pipeline)
     return result

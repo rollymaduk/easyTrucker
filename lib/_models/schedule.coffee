@@ -73,12 +73,20 @@ Schema.Artifacts=new SimpleSchema
 Schema.Schedule=new SimpleSchema
   status:
     type:String
-    allowedValues:["new","declined","scheduled","done",'expired','inactive']
+    allowedValues:["new","bidded","declined","scheduled","done",'expired','inactive']
     defaultValue:"new"
-  rate:
-    type:Number
-    defaultValue:0
-    optional:true
+  createdAt:
+    type:Date
+    autoValue:()->
+      if @isInsert then new Date;
+      else if @isUpsert then $setOnInsert:new Date
+      else @unset()
+  owner:
+    type:String
+    autoValue:()->
+      if @isInsert then Meteor.userId()
+      else if @isUpsert then $setOnInsert:Meteor.userId()
+      else @unset()
   truck:
     type:String
     optional:true

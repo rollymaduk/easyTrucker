@@ -1,0 +1,203 @@
+<template name="scheduleDetail">
+    <div id="schedule-detail">
+        <div class="col-lg-9">
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="m-b-md">
+                                    <div class="row pull-right">
+                                        <div class="col-md-6">
+                                            <a href="#" class="btn btn-white btn-xs place-bid">
+                                            {{#unless bid}}
+                                                Place bid{{else}}Edit bid
+                                            {{/unless}}
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="#" class="btn btn-xs btn-danger close-bid">
+                                                close
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                <h2>Schedule Request-{{wayBill}}</h2>
+                            </div>
+                            <dl class="dl-horizontal">
+                                <dt>Status:</dt> <dd><span class="label {{formatStatus status}}">{{status}}</span></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <dl class="dl-horizontal">
+                                <dt>Pickup Date:</dt> <dd>{{tm_locale pickupDate}}</dd>
+                                <dt>Pickup Location:</dt> <dd>{{pickupLocation.fullAddress}}</dd>
+                                <dt>Pickup Client:</dt> <dd>{{sender}}</dd>
+
+                                <!--<dt>Client:</dt> <dd><a href="#" class="text-navy"> Zender Company</a> </dd>
+                                <dt>Version:</dt> <dd> 	v1.4.2 </dd>-->
+                            </dl>
+                        </div>
+                        <div class="col-lg-7" id="cluster_info">
+                            <dl class="dl-horizontal">
+                                <dt>DropOff Date:</dt> <dd>{{tm_locale dropOffDate}}</dd>
+                                <dt>DropOff Location:</dt> <dd>{{dropOffLocation.fullAddress}}</dd>
+                                <dt>DropOff Client:</dt> <dd>{{receiver}}</dd>
+
+                                <!--<dd class="project-people">
+                                    <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+                                    <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
+                                    <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
+                                    <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
+                                    <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
+                                </dd>-->
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-lg-12 ">
+
+                            <dl class="dl-horizontal">
+                                <dt >Bid</dt>
+
+                                    <dd >
+                                        {{#unless showManageBid}}
+                                          <a href="#" class="place-bid" style="color: inherit">
+                                            {{#unless bid}}
+                                                <p class="text-center gray-bg">
+                                                    <small class="no-bid-warning"><i class="fa fa-warning"></i> You currently have no bid on this request</small>
+                                                </p>
+                                            {{else}}
+                                                <div class="row ">
+                                                    <div class="col-md-3 ">
+                                                        <small>Qouted price</small>
+                                                        <h2 class="no-margins">
+                                                            ${{bid.rate}}
+                                                        </h2>
+
+                                                    </div>
+
+                                                    <div class="col-md-9">
+                                                        <div class="small">
+                                                            <div class="row">
+                                                                <div class="col-md-4 ">
+                                                                    Proposed Delivery
+                                                                </div>
+                                                                <div class="col-md-4 ">
+                                                                    5hrs <i class="fa fa-level-up"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h2 class="no-margins">
+                                                            {{tm_locale bid.proposedDelivery}}
+                                                        </h2>
+
+                                                    </div>
+                                                </div>
+                                            {{/unless}}
+                                          </a>
+                                        {{else}}
+                                            {{>placeBid bid=bid}}
+                                        {{/unless}}
+                                    </dd>
+
+                            </dl>
+
+                        </div>
+
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content">
+                                    <div class="row">
+
+                                            <div class="chat-form col-xs-12">
+
+                                                {{>quickForm type="update-pushArray" doc=bid  id="bidMsgForm" schema='Form.Message'  collection="Bids"
+                                                buttonContent='Send message' buttonClasses='btn btn-primary pull-right btn-xs' scope='messages'}}
+                                            </div>
+
+                                            <div class="chat-activity-list col-xs-12">
+                                            {{#each messages}}
+                                                {{>messageItem}}
+                                            {{/each}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="wrapper wrapper-content project-manager">
+                <h4>Schedule description</h4>
+                <!--<img src="img/zender_logo.png" class="img-responsive">-->
+                <p class="small">
+                    {{memo}}
+                </p>
+                <h5>Truck Specification</h5>
+                <ul class="list-unstyled project-files">
+                    <li>
+                        <a href="#" >Type: {{specs.type}} </a>
+                    </li>
+                    <li>
+                        <a href="#" >Doors: {{specs.doors}} </a>
+                    </li>
+                    <li>
+                       <a href="#" >Vol: ({{truckVolume}})</a>
+                    </li>
+                    <li>
+                      <a href="#" >Weight(tons): {{specs.weight}} </a>
+                    </li>
+
+                </ul>
+                <p class="small font-bold">
+                    <span><i class="fa fa-circle text-warning"></i> High priority</span>
+                </p>
+               <!-- <h5>Project tag</h5>
+                <ul class="tag-list" style="padding: 0">
+                    <li><a href=""><i class="fa fa-tag"></i> Zender</a></li>
+                    <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>
+                    <li><a href=""><i class="fa fa-tag"></i> Passages</a></li>
+                    <li><a href=""><i class="fa fa-tag"></i> Variations</a></li>
+                </ul>-->
+               <!-- <h5>Project files</h5>
+                <ul class="list-unstyled project-files">
+                    <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>
+                    <li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>
+                    <li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>
+                    <li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>
+                </ul>
+                <div class="text-center m-t-md">
+                    <a href="#" class="btn btn-xs btn-primary">Add files</a>
+                    <a href="#" class="btn btn-xs btn-primary">Report contact</a>
+
+                </div>-->
+            </div>
+        </div>
+    </div>
+</template>
+<template name="messageItem">
+    <div class="chat-element">
+        <a href="#" class="pull-left">
+            <img alt="image" class="img-circle" src="img/a2.jpg">
+        </a>
+        <div class="media-body ">
+            <small class="pull-right">1m ago</small>
+            <strong>Mike Smith</strong>
+            <p class="m-b-xs">
+                {{message}}
+            </p>
+            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+        </div>
+    </div>
+
+</template>

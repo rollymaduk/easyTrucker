@@ -1,0 +1,25 @@
+<template name="placeBid">
+    <div class="place-bid-form row">
+
+            {{#autoForm  class='form-inline'  schema='Schema.Bid' id='placeBidForm' doc=this.bid type='normal' }}
+                {{>afQuickField name='proposedDelivery'}}
+
+                <div class="form-group{{#if afFieldIsInvalid name='rate'}} has-error{{/if}}">
+                    <div class="input-group">
+
+                        <span class="input-group-addon">$ </span>
+                        {{> afFieldInput name='rate' placeholder="schemaLabel" }}
+                    </div>
+                        <span class="help-block">{{afFieldMessage name='rate'}}</span>
+                </div>
+                {{>afQuickField name='schedule'}}
+                {{>afQuickField name='owner'}}
+                {{>afQuickField name='messages' type="hidden" label=false}}
+                <button type="submit" class="btn btn-primary btn-xs">bid</button>
+                <a href="#"  class="btn btn-primary btn-xs cancel-bid">close</a>
+            {{/autoForm}}
+
+
+
+    </div>
+</template>

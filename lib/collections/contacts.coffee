@@ -2,7 +2,7 @@
    doc.fullName=()->
     "#{this.firstName} #{this.lastName}"
    doc
-Contacts.attachSchema Schema.Contact,true
+Contacts.attachSchema Schema.Contact
 Contacts.allow
   insert:(user,doc)->true
   update:(user,doc,fields,modifier)->true

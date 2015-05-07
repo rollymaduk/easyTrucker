@@ -1,5 +1,10 @@
 <template name="scheduleList">
-    {{>pageHeader title='contacts' btnTitle='create new schedule' link='newSchedule'}}
+    {{#unless canInsert}}
+        {{>pageHeader title='Schedules' }}
+        {{else}}
+        {{>pageHeader title='Schedules' btnTitle='create new schedule' link='newSchedule'}}
+    {{/unless}}
+
     {{#each this}}
         <div class="col-md-4">
 
@@ -11,9 +16,13 @@
 <template name="scheduleItem">
     <div class="ibox ">
         <div class="ibox-title">
+            <h5>{{wayBill}}-<span class="small">{{tm_now pickupDate}}</span></h5>
+            <span></span>
 
-            <span class="label {{formatStatus status}}">{{wayBill}}-({{tm_now pickupDate}})</span>
-            <div class="ibox-tools">
+
+            <div class="ibox-tools" >
+
+                <a href="{{pathFor 'viewSchedule'}}"  class="label {{formatStatus status}} manage-bid">{{status}}</a>
 
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-wrench"></i>
@@ -31,11 +40,13 @@
         </div>
 
         <div  class="ibox-content {{_id}}">
+            <a href="{{pathFor 'viewSchedule'}}" class="manage-bid" style="color: inherit">
             <h5><strong>Pickup from {{sender}}</strong></h5>
             <address>
                 <span class="fa fa-clock-o"></span>: {{tm_cal pickupDate}}<br>
                 <span class="fa fa-map-marker"></span>: {{pickupLocation.fullAddress}}<br>
             </address>
+            </a>
             <a href='#' id="toggleSchedule" class="btn btn-primary btn-xs"><i class="fa fa-arrow-down"></i> Dropoff for...</a>
             <!--<span class="icon">
              <i class="fa fa-arrow-circle-up "></i>
@@ -43,12 +54,13 @@
         </div>
 
         <div  style="display:none" class="ibox-content {{_id}}">
+            <a href="{{pathFor 'viewSchedule'}}" class="manage-bid" style="color: inherit">
             <h5><strong>Dropoff for {{receiver}}</strong></h5>
-
             <address>
                 <span class="fa fa-clock-o"></span>: {{tm_cal dropOffDate}}<br>
                 <span class="fa fa-map-marker"></span>: {{dropOffLocation.fullAddress}}<br>
             </address>
+            </a>
             <a href='#' id="toggleSchedule" class="btn btn-primary btn-xs"><i class="fa fa-arrow-up"></i> Pickup from...</a>
             <!--<span class="icon">
              <i class="fa fa-arrow-circle-down "></i>

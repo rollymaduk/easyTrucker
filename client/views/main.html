@@ -1,4 +1,4 @@
-<head>
+<!--<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
 </head>
 
 <body>
-</body>
+</body>-->
 <template name="main">
     <div id="wrapper">
         {{>sidebar}}
@@ -17,6 +17,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="wrapper wrapper-content animated fadeInUp">
+
+                        {{#unless hasProfile}}
+                            <div id="profile_warning" class="alert alert-danger">
+                              <i class="fa fa-info-circle"></i>  To enjoy the complete features of this app, please update your profile information
+                                <a class="alert-link" href="{{pathFor 'profile'}}">here</a>.
+                            </div>
+                        {{/unless}}
                         {{>yield}}
 
                     </div>

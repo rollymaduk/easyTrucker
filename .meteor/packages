@@ -25,3 +25,13 @@ aldeed:delete-button
 codechimera:meteor-bootstrap-sweetalert
 rcy:nouislider
 meteorhacks:aggregate
+accounts-ui
+accounts-password
+alanning:roles
+sanjo:jasmine@0.13.0-rc.4
+velocity:html-reporter
+yogiben:autoform-tags
+markdown
+chuangbo:marked
+cottz:publish-relations
+msavin:mongol

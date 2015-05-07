@@ -1,0 +1,70 @@
+<template name="bidList">
+    <div class="bidList">
+        {{#each this}}
+            {{>bidListItem}}
+        {{/each}}
+    </div>
+</template>
+<template name="bidListItem">
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>{{bidder}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                        {{#if isNew}}
+                            <span class="label  label-warning pull-right">NEW</span>
+                        {{/if}}
+                    </div>
+                    <div class="col-md-4">
+                        <a href="#" class="btn btn-white btn-xs">Accept bid</a>
+                    </div>
+                </div>
+            </div>
+            <a href="#" >
+                <div class="ibox-content ibox-heading">
+                    <h3>Latest Activity!</h3>
+                    <small><i class="fa fa-bell"></i> {{notification.message}} {{tm_now notification.createdAt}}</small>
+                </div>
+            </a>
+            <div class="ibox-content">
+                <!--<div class="team-members">
+                    <a href="#"><img alt="member" class="img-circle" src="img/a1.jpg"></a>
+                    <a href="#"><img alt="member" class="img-circle" src="img/a2.jpg"></a>
+                    <a href="#"><img alt="member" class="img-circle" src="img/a3.jpg"></a>
+                    <a href="#"><img alt="member" class="img-circle" src="img/a5.jpg"></a>
+                    <a href="#"><img alt="member" class="img-circle" src="img/a6.jpg"></a>
+                </div>-->
+
+               <!-- <h4>Latest Activity</h4>
+                <p>
+                    {{notification.message}}
+                </p>-->
+                <!-- <div>
+                     <span>Status of current project:</span>
+                     <div class="stat-percent">48%</div>
+                     <div class="progress progress-mini">
+                         <div style="width: 48%;" class="progress-bar"></div>
+                     </div>
+                 </div>-->
+                <div class="row  m-t-sm ">
+                    <div class="col-sm-3">
+                        <div class="font-bold">Rating</div>
+                        <!--include a rating widget here-->
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="font-bold">Price</div>
+                        ${{rate}}.00
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <div class="font-bold">Est Delivery Time</div>
+                        {{tm_locale proposedDelivery}}<i class="fa fa-level-up text-navy"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
