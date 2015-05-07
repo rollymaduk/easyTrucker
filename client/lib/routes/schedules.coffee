@@ -1,6 +1,6 @@
 Router.map ()->
   @route('scheduleList',
-    path:'app/user/schedules'
+    path:'app/schedules'
     data:->
       service=new QueryFilterService(null)
       query=service.scheduleListByRoles()
@@ -13,7 +13,7 @@ Router.map ()->
     template:"manageSchedule")
 
   @route('editSchedule',
-    path:'/schedules/edit/:_id',
+    path:'app/schedules/edit/:_id',
     data:->Schedules.findOne(@params._id),
     waitOn:->Meteor.subscribe('scheduleItem',@params._id)
     template:"manageSchedule")

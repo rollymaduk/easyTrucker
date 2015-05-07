@@ -1,5 +1,5 @@
 Router.configure {
-  layoutTemplate:'main'
+  layoutTemplate:'loadingLayout'
   waitOn:()->
     Meteor.subscribe('notifications',Meteor.userId()) if Meteor.userId()
   loadingTemplate:'loading'
@@ -13,6 +13,7 @@ Router.onBeforeAction(
       ###Router.go 'login'###
       null
     else
+      @layout 'main'
       @next()
       null
 ,{except: ['login','register','registrationSuccess','page']}
