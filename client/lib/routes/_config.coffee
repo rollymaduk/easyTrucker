@@ -1,8 +1,7 @@
 Router.configure {
-  layoutTemplate:'loadingLayout'
   waitOn:()->
     Meteor.subscribe('notifications',Meteor.userId()) if Meteor.userId()
-  loadingTemplate:'loading'
+
 }
 
 Router.onBeforeAction(

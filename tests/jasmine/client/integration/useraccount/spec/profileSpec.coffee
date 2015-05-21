@@ -23,10 +23,11 @@ describe 'Update',()->
       null
 
     it 'should update profile',(done)->
-      console.log Meteor.userId()
+      console.log profile
       Meteor.call 'updateUserProfile',Meteor.userId(),profile,(err,res)->
+        console.log err
         expect(res).toEqual(1)
-        expect(Meteor.user().profile.name).toEqual("Ronald")
+        expect(Meteor.user().profile).toEqual(profile)
         done()
         null
       null
@@ -58,7 +59,7 @@ describe 'Navigation',()->
 
 
 
-describe 'Navigation',()->
+xdescribe 'Navigation',()->
   describe 'to any page',()->
     describe 'user profile is empty',()->
       beforeEach (done)->

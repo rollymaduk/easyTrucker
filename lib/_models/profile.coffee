@@ -1,32 +1,30 @@
 Schema.ProfileFormContact=new SimpleSchema
+  companyName:
+    type:String
   emails:
     type:[String]
-    optional:true
     autoform:
       type:'tags'
   telephones:
     type:[String]
-    optional:true
     autoform:
       type:'tags'
-  addresses:
-    optional:true
-    type:[SimpleSchema.AddressSchema]
+  companyAddress:
+    type:String
+    autoform:
+      readonly:true
+
+
 
 Schema.ProfileFormDetail=new SimpleSchema
-  name:
+  firstname:
     type:String
-    optional:true
-  gender:
+  lastname:
     type:String
-    optional:true
-    allowedValues:['male','female','none']
-    autoform:
-      options:{male:'male',female:'female',none:'none'}
   bio:
     type:String
     optional:true
     autoform:
       rows:6
 
-Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormContact])
+Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormContact,Form.TruckAuthority])

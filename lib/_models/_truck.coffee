@@ -1,28 +1,14 @@
 Schema.TruckType=new SimpleSchema
   title:
     type:String
-Schema.Volume=new SimpleSchema
-  length:
-    type:Number
-    label:"Length(feet)"
-    optional:true
-    autoform:
-      label:false
-      placeholder:"schemaLabel"
-  width:
-    type:Number
-    label:"Width(feet)"
-    optional:true
-    autoform:
-      label:false
-      placeholder:"schemaLabel"
-  height:
-    type:Number
-    label:"Height(feet)"
-    optional:true
-    autoform:
-      label:false
-      placeholder:"schemaLabel"
+
+Schema.TruckInsurance=new SimpleSchema
+  policyNumber:
+    type:String
+  expirationDate:
+    type:Date
+  InsuranceCompany:
+    type:String
 
 Schema.TruckSpecs=new SimpleSchema
   type:
@@ -31,11 +17,22 @@ Schema.TruckSpecs=new SimpleSchema
     autoform:
       label:false
       placeholder:"schemaLabel"
+      options:{}
+  volumeType:
+    type:String
+    allowedValues:['boxed','liquid','nonboxed']
+    autoform:
+      type:'select-radio'
+      template:'buttonGroup'
+      options:{boxed:'boxed',liquid:'liquid',nonboxed:'non-boxed'}
   doors:
     type:String
+    optional:true
     allowedValues:['rollup','barndoors']
     autoform:
       options: {rollup:"roll-up",barndoors:"barn-doors"}
+      template:'buttonGroup'
+      type:'select-radio'
   weight:
     type:Number
     optional:true
@@ -44,13 +41,16 @@ Schema.TruckSpecs=new SimpleSchema
       label:false
       placeholder:"schemaLabel"
   volume:
-    type:Schema.Volume
+    type:Object
+    blackbox:true
     optional:true
 
 
 Schema.Truck=new SimpleSchema
   truckSpecs:
     type:Schema.TruckSpecs
+  Insurance:
+    type:Schema.TruckInsurance
   make:
     type:String
     optional:true

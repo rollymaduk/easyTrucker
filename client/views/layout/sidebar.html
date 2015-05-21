@@ -7,12 +7,12 @@
                             <img alt="image" class="img-circle" src="/img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{currentUser.profile.name}}</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{fullname}}</strong>
                              </span> <span class="text-muted text-xs block">{{role}}<b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{pathFor 'profile'}}">Profile</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="mailbox.html">Mailbox</a></li>
+                            <!--<li><a href="contacts.html">Contacts</a></li>-->
+                            <!--<li><a href="mailbox.html">Mailbox</a></li>-->
                             <li class="divider"></li>
                             <li><a href="login.html">Logout</a></li>
                         </ul>
@@ -26,28 +26,35 @@
 
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-calendar-o"></i> <span class="nav-label">My Schedules</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-calendar-o"></i> <span class="nav-label">My Loadboard</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="{{pathFor 'scheduleList'}}">list</a></li>
-                        <li><a href="table_data_tables.html">Calender</a></li>
+                        <li><a href="{{pathFor 'scheduleList'}}">All loads</a></li>
+                        <li><a href="{{pathFor 'scheduleList'}}">New loads</a></li>
+                        <li><a href="{{pathFor 'scheduleList'}}">Bidded loads</a></li>
+                        <li><a href="{{pathFor 'scheduleList'}}">Unfulfilled loads</a></li>
+                        <li><a href="{{pathFor 'scheduleList'}}">Fulfilled loads</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="{{pathFor 'contactList'}}"><i class="fa fa-users"></i> <span class="nav-label">Contacts</span><!--<span class="fa arrow"></span>--></a>
+                <!--<li>
+                    <a href="{{pathFor 'contactList'}}"><i class="fa fa-users"></i> <span class="nav-label">Contacts</span>&lt;!&ndash;<span class="fa arrow"></span>&ndash;&gt;</a>
 
-                </li>
+                </li>-->
                 <li>
-                <a href="{{pathFor 'truckList'}}"><i class="fa fa-truck"></i> <span class="nav-label">Trucks</span><!--<span class="fa arrow"></span>--></a>
-
+                <a href="#"><i class="fa fa-archive"></i> <span class="nav-label">My Assets</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li {{Rp_allow 'canViewTruck,canManageTruck'}}><a href="{{pathFor 'truckList'}}"><i class="fa fa-truck"></i>Trucks</a></li>
+                        <li><a href="{{pathFor 'scheduleList'}}"><i class="fa fa-users"></i>Users</a></li>
+                        <!--<li><a href="{{pathFor 'contactList'}}"><i class="fa fa-book"></i>Contacts</a></li>-->
+                    </ul>
                 </li>
-                <li>
+                <!--<li>
                     <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">Messages</span><span class="fa arrow"></span></a>
 
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
 
-                </li>
+                </li>-->
 
             </ul>
 

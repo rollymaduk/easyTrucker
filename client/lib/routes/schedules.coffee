@@ -1,6 +1,6 @@
 Router.map ()->
   @route('scheduleList',
-    path:'app/schedules'
+    path:'app/loads'
     data:->
       service=new QueryFilterService(null)
       query=service.scheduleListByRoles()
@@ -9,25 +9,39 @@ Router.map ()->
     waitOn:->Meteor.subscribe('scheduleList'))
 
   @route('newSchedule',
-    path:'/app/schedules/new'
+    path:'/app/loads/new'
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canCreateLoad','canManageLoad'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
     template:"manageSchedule")
 
   @route('editSchedule',
-    path:'app/schedules/edit/:_id',
+    path:'app/loads/edit/:_id',
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canEditLoad','canManageLoad'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
     data:->Schedules.findOne(@params._id),
     waitOn:->Meteor.subscribe('scheduleItem',@params._id)
     template:"manageSchedule")
 
   @route('viewSchedule',
-    path:'/app/schedules/view/:_id',
+    path:'/app/loads/view/:_id',
     onBeforeAction:()->
-      roles=Meteor?.user().roles
-      if roles and _.contains(_.values(roles)[0],'shipper')
-        @redirect 'bidList',{_id:@params._id} if not @params.acceptedBid
+      if RP_permissions.hasPermissions('canViewBidList') and not @params.acceptedBid
+        @render 'bidList'
         null
       else
         @next()
         null
+
     data:->Schedules.findOne(@params._id),
     waitOn:->Meteor.subscribe('scheduleItem',@params._id)
     template:"scheduleDetail")

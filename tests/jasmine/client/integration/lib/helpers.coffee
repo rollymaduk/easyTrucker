@@ -3,5 +3,7 @@
   {username:username,password:'enterme1234',email:"#{username}@gmail.com"}
 @mockAProfile=(name)->
   name=name or 'Robledo'
-  {name:name,telephones:['08032006618'],emails:["#{name}@gmail.com"]}
+  {firstname:name,lastname:'lastname',telephones:['08032006618']
+    ,emails:["#{name}@gmail.com"],companyName:'companyName',companyAddress:'companyAddress'
+    ,truckAuthorityType:'DOT',truckAuthorityNumber:'1234CO'}
 

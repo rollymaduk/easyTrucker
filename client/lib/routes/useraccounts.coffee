@@ -2,6 +2,9 @@ Router.map ()->
   @route('login',
     path:'/app/user/login'
     layoutTemplate:'user_account'
+    onAfterAction:()->
+      $('.middle-box').toggleClass('loginscreen',true)
+      $('.middle-box').toggleClass('registerscreen',false)
   )
 
   @route('manageProfile',
@@ -24,6 +27,9 @@ Router.map ()->
   @route('register',
     path:'/app/user/register'
     layoutTemplate:'user_account'
+    onAfterAction:()->
+      $('.middle-box').toggleClass('loginscreen',false)
+      $('.middle-box').toggleClass('registerscreen',true)
   )
 
   null

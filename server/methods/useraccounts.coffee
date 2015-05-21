@@ -3,5 +3,6 @@ Meteor.methods
     service= new UserAccountService()
     service.registerUser(user,role)
   updateUserProfile:(userId,profile)->
+    console.log profile
     service=new UserAccountService()
     service.updateProfile(userId,profile)

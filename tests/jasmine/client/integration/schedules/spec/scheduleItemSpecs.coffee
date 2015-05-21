@@ -25,7 +25,7 @@ describe 'scheduleItem',()->
     null
   null
 
-describe 'scheduleItem navigation',()->
+xdescribe 'scheduleItem navigation',()->
   describe 'for shipper to schedule detail page',()->
     beforeEach (done)->
       schedule={_id:'item-schedule',bid:{}}

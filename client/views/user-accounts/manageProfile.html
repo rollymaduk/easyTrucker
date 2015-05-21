@@ -9,20 +9,26 @@
 
                     {{#autoForm schema='Schema.Profile' id='profileForm'   type='normal'   buttonContent=false  doc=currentUser.profile }}
                         <div class="col-md-6">
-                            {{> afQuickField name='name'}}
+                            {{> afQuickField name='companyName'}}
                         </div>
                         <div class="col-md-6">
-                            {{> afQuickField name='gender'}}
+                            {{> afQuickField name='companyAddress'}}
                         </div>
+
+                        <div class="col-md-6">
+                            {{> afQuickField name='firstname'}}
+                        </div>
+                        <div class="col-md-6">
+                            {{> afQuickField name='lastname'}}
+                        </div>
+
                         <div class="col-md-6">
                             {{> afQuickField name='emails'}}
                         </div>
                         <div class="col-md-6">
                             {{> afQuickField name='telephones'}}
                         </div>
-                        <div class="col-md-6">
-                            {{> afQuickField name='addresses'}}
-                        </div>
+
                         <div class="col-md-6">
                             {{> afQuickField name='bio'}}
                         </div>

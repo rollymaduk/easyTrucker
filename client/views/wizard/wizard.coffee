@@ -74,9 +74,6 @@ Template.Wizard.initialize=(template)->
 
 
 
-
-
-
 Template.Wizard.displayContent=(step,template)->
   data="content-#{step.id}"
   parent=template.$("section[data-content='#{data}']")

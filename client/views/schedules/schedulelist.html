@@ -1,8 +1,8 @@
 <template name="scheduleList">
     {{#unless canInsert}}
-        {{>pageHeader title='Schedules' }}
+        {{>pageHeader title='Loads' }}
         {{else}}
-        {{>pageHeader title='Schedules' btnTitle='create new schedule' link='newSchedule'}}
+        {{>pageHeader title='Loads' btnTitle='create new Load' link='newSchedule'}}
     {{/unless}}
 
     {{#each this}}
