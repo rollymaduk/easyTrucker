@@ -1,0 +1,73 @@
+<template name="userList">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>All users assigned to this account</h5>
+            <div class="ibox-tools">
+                <a href="{{pathFor 'newUser'}}" class="btn btn-primary btn-xs">Create new user</a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <!--<div class="row m-b-sm m-t-sm">
+                <div class="col-md-1">
+                    <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Refresh</button>
+                </div>
+                <div class="col-md-11">
+                    <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                </div>
+            </div>-->
+
+            <div class="project-list">
+
+                <table class="table table-hover">
+                    <tbody>
+                        {{#each this}}
+                            {{>userItem}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>
+<template name="userItem">
+    <tr>
+        <td class="project-status">
+            <span class="label {{formatUserState isActive}}">
+                {{#if isActive}}Active{{else}} Disabled {{/if}}
+            </span>
+        </td>
+        <td class="project-title">
+            <a href="project_detail.html">{{fullname}}</a>
+            <br>
+            <small>{{getEmails}}</small>
+        </td>
+        <td class="project-completion">
+            <small>{{getRoles}}</small>
+            <!--<div class="progress progress-mini">
+                <div style="width: 48%;" class="progress-bar"></div>
+            </div>-->
+        </td>
+        <!--<td class="project-people">
+            <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+            <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
+            <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
+            <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
+            <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
+        </td>-->
+        <td class="project-actions">
+            <a href="#" class="btn btn-white btn-sm manageRoles"><i class="fa fa-user-secret"></i> Roles </a>
+            {{#if canToggleUser}}
+                {{#if isActive}}
+                    <a href="#" class="btn btn-white btn-sm toggleUserState"><i class="fa fa-user-times"></i>
+                    Disable
+                    </a>
+                {{else}}
+                <a href="#" class="btn btn-white btn-sm toggleUserState"><i class="fa fa-key"></i>
+                    Activate
+                </a>
+                {{/if}}
+            {{/if}}
+        </td>
+    </tr>
+</template>

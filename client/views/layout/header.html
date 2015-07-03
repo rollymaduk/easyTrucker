@@ -17,7 +17,7 @@
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope"></i>  <span class="label label-warning">0</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-messages">
+                    <!--<ul class="dropdown-menu dropdown-messages">
                         <li>
                             <div class="dropdown-messages-box">
                                 <a href="profile.html" class="pull-left">
@@ -64,7 +64,7 @@
                                 </a>
                             </div>
                         </li>
-                    </ul>
+                    </ul>-->
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -100,13 +100,11 @@
     <li>
         <a href="mailbox.html">
             <div>
-                <i class="fa fa-envelope fa-fw"></i> You have {{count}} new {{type}}(s)
+                <i class="fa fa-envelope fa-fw"></i>{{alertMsg this}}
                 <span class="pull-right text-muted small">{{tm_now elapsed}}</span>
             </div>
         </a>
     </li>
     <li class="divider"></li>
-
-
 
 </template>

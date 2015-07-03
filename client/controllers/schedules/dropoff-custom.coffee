@@ -5,6 +5,14 @@ Template.dropOff.created=->
 Template.dropOff.helpers
   dropOffDoc:->Session.get('dropOffObject')
 
+Template.dropOff.rendered=->
+  @autorun ->
+    if GoogleMaps.loaded()
+      $('input[data-schema-key="dropOffLocation.address"]').geocomplete
+        details:".geometry"
+        detailsAttribute:"data-geo"
+      null
+
 
 Template.dropOff.events
   'click #usermodal':(evt,temp)->

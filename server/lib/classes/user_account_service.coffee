@@ -1,10 +1,11 @@
 class @UserAccountService
-  registerUser:(user,role)->
+  registerUser:(user,role,groupName)->
     {username,password,email,profile}=user
     newUser={username:username,password:password,email:email,profile:profile}
     userId=Accounts.createUser(newUser)
     if userId
-      Roles.addUsersToRoles userId,[role,'admin'],username
+      groupName=groupName||username
+      Roles.addUsersToRoles userId,role,groupName
       Accounts.sendVerificationEmail(userId)
     userId
 

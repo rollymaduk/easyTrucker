@@ -1,0 +1,22 @@
+<template name="manageUser">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Create New User</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    {{#autoForm schema='Form.RegisterAccountDetail' type='normal'  doc=this  id='internalRegForm'}}
+                        {{>afQuickField name='accountType' options=userAccountTypes}}
+                        {{>afQuickField name='firstname'}}
+                        {{>afQuickField name='lastname'}}
+                        {{>afQuickField name='email'}}
+                        <div class="pull-right">
+                            <button  class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                    {{/autoForm}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

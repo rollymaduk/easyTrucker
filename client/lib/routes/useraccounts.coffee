@@ -7,6 +7,8 @@ Router.map ()->
       $('.middle-box').toggleClass('registerscreen',false)
   )
 
+
+
   @route('manageProfile',
     path:'/app/user/manageProfile'
     template:'manageProfile'
@@ -22,6 +24,20 @@ Router.map ()->
         @next()
        null
 
+  )
+
+  @route('userList',
+    path:'/app/user/userList'
+    waitOn:->
+      roles=Session.get('domainRoles')||null
+      Meteor.subscribe 'userList',roles
+    data:->Meteor.users.find()
+
+  )
+
+  @route('newUser',
+    path:'/app/user/new'
+    template:'manageUser'
   )
 
   @route('register',

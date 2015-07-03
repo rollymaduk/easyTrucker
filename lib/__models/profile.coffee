@@ -14,6 +14,20 @@ Schema.ProfileFormContact=new SimpleSchema
     autoform:
       readonly:true
 
+Schema.ProfileFormMetaData=new SimpleSchema
+  trucklatlngBounds:
+    type:Schema.LatLngBounds
+    optional:true
+    autoform:
+      type:'hidden'
+      label:false
+  isActive:
+    type:Boolean
+    defaultValue:true
+    optional:true
+    autoform:
+      type:'hidden'
+      label:false
 
 
 Schema.ProfileFormDetail=new SimpleSchema
@@ -27,4 +41,4 @@ Schema.ProfileFormDetail=new SimpleSchema
     autoform:
       rows:6
 
-Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormContact,Form.TruckAuthority])
+Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormContact,Schema.ProfileFormMetaData,Form.TruckAuthority])

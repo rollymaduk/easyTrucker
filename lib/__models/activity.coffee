@@ -1,25 +1,30 @@
-Form.Message=new SimpleSchema
+Schema.Activity=new SimpleSchema
+  isNew:
+    type:Boolean
+    defaultValue:true
+  parentId:
+    type:String
+    optional:true
+  objectId:
+    type:String
   message:
     type:String
-    autoform:
-      label:false
-      placeholder:"schemaLabel"
-      rows:3
+    max:250
+  tag:
+    type:String
   createdAt:
     type:Date
     autoValue:()->
       if @isInsert then new Date;
       else if @isUpsert then $setOnInsert:new Date
       else @unset()
-    autoform:
-      type:'hidden'
-      label:false
   owner:
     type:String
     autoValue:()->
       if @isInsert then Meteor.userId()
       else if @isUpsert then $setOnInsert:Meteor.userId()
       else @unset()
-    autoform:
-      type:'hidden'
-      label:false
+  audience:
+    type:[String]
+    minCount:1
+

@@ -1,18 +1,134 @@
 <template name="manageTruck">
-    <div class="col-lg-7">
+    <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Create A new Truck </h5>
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    {{>quickForm collection="Trucks" type='insert'  template='bootstrap3_col_sm_6' buttonContent=false id='tf' doc=this }}
+                    {{>Wizard steps=steps onCanceled=oncanceled onFinished=onfinished}}
+                    <!--{{>quickForm collection="Trucks" type='insert'   buttonContent=false id='tf' doc=this }}
                     <div class="col-sm-12">
                         <button  class="btn btn-primary btn-sm pull-right"  onclick="$('#tf').submit();">save</button>
-                    </div>
+                    </div>-->
                 </div>
 
             </div>
         </div>
     </div>
+</template>
+
+<template name="truckGeneral">
+    {{>quickForm schema='Schema.TruckGeneral' preserveForm=false doc=this buttonContent=false id='truckGeneralForm'}}
+</template>
+
+<template name="truckSpecs">
+    {{>quickForm schema='Schema.TruckSpecs' preserveForm=false doc=this buttonContent=false id='truckSpecsForm' }}
+</template>
+<template name="truckInsurance">
+    {{>quickForm schema='Schema.TruckInsurance' preserveForm=false  doc=this buttonContent=false id='truckInsuranceForm' }}
+</template>
+<template name="truckGeofence">
+    {{>quickForm schema='Schema.TruckGeofence' preserveForm=false  doc=this buttonContent=false id='truckGeofenceForm' }}
+</template>
+
+<template name="truckSpecsCustom">
+    {{#autoForm schema='Schema.TruckSpecs' preserveForm=false doc=this id='truckSpecsForm' }}
+        {{>afQuickField name='type'}}
+        {{>afQuickField name='volumeType'}}
+        <div class="{{hasDoors}}">
+           {{>afQuickField name='doors'}}
+        </div>
+        {{>afQuickField name='weight'}}
+        <div class="box-vol {{isBoxed}}" >
+            <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Volume
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-3">
+                            {{>afQuickField name='boxedVolume.length'}}
+                        </div> <div class="col-sm-3">
+                            {{>afQuickField name='boxedVolume.width'}}
+                        </div> <div class="col-sm-3">
+                            {{>afQuickField name='boxedVolume.height'}}
+                        </div>
+                        <div class="col-sm-3">
+                        {{>afQuickField name='boxedVolume.metric'}}
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class ="liquid-vol {{isLiquid}}">
+            <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Volume
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-6">
+                            {{>afQuickField name='liquidVolume.value'}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{>afQuickField name='liquidVolume.metric'}}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+<template name="truckGeofenceCustom">
+    {{#autoForm schema='Schema.TruckGeofence' doc=this id='truckGeofenceForm' }}
+        {{>afQuickField name='baseLocation.address'}}
+        <div class="hidden geometry">
+            <!--{{> afFieldInput placeholder='schemaLabel' name='baseLocation.geometry.formatted_address' value=""}}-->
+            {{> afQuickFields name="baseLocation.geometry"}}
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Pickup Settings
+                </h3>
+            </div>
+            <div class="panel-body">
+                {{>afQuickField name='pickupSettings.coverage'}}
+                <div class="{{isPickupDistance}}">
+                    <div class="col-sm-6">
+                        {{>afQuickField name='pickupSettings.coverageDistance.value'}}
+                    </div>
+
+                    <div class="col-sm-6">
+                        {{>afQuickField name='pickupSettings.coverageDistance.metric'}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Dropoff Settings
+                </h3>
+            </div>
+            <div class="panel-body">
+                {{>afQuickField name='dropoffSettings.coverage'}}
+                <div class="{{isDropoffDistance}}">
+                    <div class="col-sm-6">
+                        {{>afQuickField name='dropoffSettings.coverageDistance.value'}}
+                    </div>
+
+                    <div class="col-sm-6">
+                        {{>afQuickField name='dropoffSettings.coverageDistance.metric'}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    {{/autoForm}}
 </template>

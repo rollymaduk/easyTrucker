@@ -72,6 +72,10 @@ Template.Wizard.initialize=(template)->
     steps=if include then template.data.steps[..step.index] else template.data.steps[...step.index]
     getObjects(steps)
 
+  template.getStepData=(temp)->
+   res= _.findWhere(template.data.steps,{template:temp})
+   if res then res.data else null
+
 
 
 Template.Wizard.displayContent=(step,template)->

@@ -18,9 +18,7 @@ Form.RegisterInfoDetail=new SimpleSchema
 Form.RegisterAccountDetail=new SimpleSchema
   accountType:
     type:String
-    allowedValues:['shipper','trucker']
     autoform:
-      options:{shipper:'Shipper',trucker:'Trucker'}
       label:false
       placeholder:'schemaLabel'
   firstname:
@@ -39,6 +37,8 @@ Form.RegisterAccountDetail=new SimpleSchema
       label:false
       placeholder:'schemaLabel'
 
+
+
 Form.TruckAuthority=new SimpleSchema
   truckAuthState:
     type:String
@@ -51,19 +51,19 @@ Form.TruckAuthority=new SimpleSchema
     optional:true
     custom:()->
       if(Meteor.isClient)
-        condition=  _.isEmpty(@field('truckAuthState').value)
+        condition=  _.isEmpty(@field('truckAuthState').value) or @field('truckAuthState').value is 'NONE'
         if(condition and not @isSet and (not @operator or @value is null or _.isEmpty(@value)))
           "required"
         else true
-    allowedValues:['DOT','FF','MC','MX']
+    allowedValues:['DOT','FF','MC','MX','NONE']
     autoform:
-      options:{DOT:'DOT',FF:'FF',MC:'MC',MX:'MX'}
+      options:{DOT:'DOT',FF:'FF',MC:'MC',MX:'MX',NONE:'NONE'}
   truckAuthorityNumber:
     type:String
     optional:true
     custom:()->
       if(Meteor.isClient)
-        condition=  _.isEmpty(@field('truckAuthState').value)
+        condition=  _.isEmpty(@field('truckAuthState').value) or @field('truckAuthState').value is 'NONE'
         if(condition and not @isSet and (not @operator or @value is null or _.isEmpty(@value)))
           "required"
         else true

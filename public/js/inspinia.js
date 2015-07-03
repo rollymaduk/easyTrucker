@@ -1,6 +1,6 @@
 // Custom scripts
 $(document).ready(function () {
-
+    console.log('got called from document ready')
     // MetsiMenu
     $('#side-menu').metisMenu();
 

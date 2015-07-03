@@ -8,7 +8,7 @@ Router.map ()->
   )
 
   @route('viewBid',
-    path:'/app/schedules/bid/:_id',
+    path:'/app/loads/bid/:_id',
     data:->Schedules.findOne(@params.schedule),
     waitOn:->Meteor.subscribe('scheduleItem',@params.schedule,@params.owner)
     template:"scheduleDetail"

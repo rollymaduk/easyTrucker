@@ -1,0 +1,15 @@
+<template name="timeFrame">
+    <div class="row">
+        {{#panel title=this.title}}
+            <div class="col-md-4">
+                {{>afQuickField name=this.context class='date_context'}}
+            </div>
+            <div class="col-md-4">
+                {{>afQuickField name=this.dateField_1}}
+            </div>
+            <div class="col-md-4" {{isVisible}} >
+                {{>afQuickField name=this.dateField_2}}
+            </div>
+        {{/panel}}
+    </div>
+</template>

@@ -24,4 +24,17 @@ Router.map ()->
     template:"manageTruck"
   )
 
+  @route('editTruck',
+    path:'/app/truck/edit/:_id'
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canEditTruck','canManageTruck'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
+    data:->Trucks.findOne(@params._id),
+    waitOn:-> Meteor.subscribe('truckItem',@params._id)
+    template:"manageTruck"
+  )
   null

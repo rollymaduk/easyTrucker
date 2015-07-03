@@ -19,17 +19,48 @@
 </template>
     <template name="pickup">
 
-    {{>quickForm schema='Schema.Pickup'  doc=this buttonContent=false id='puf'}}
+    {{>quickForm schema='Schema.Pickup' preserveForm=false  doc=this buttonContent=false id='puf'}}
 
 </template>
 
 <template name="dropOff">
-
-    {{>quickForm schema='Schema.DropOff' doc=this buttonContent=false id='dof' }}
-
+ {{>quickForm schema='Schema.DropOff' preserveForm=false doc=this buttonContent=false id='dof' }}
 </template>
 <template name="memo">
     <h2>Extra Information</h2>
-    {{>quickForm schema='Schema.Memo' omitFields='price'  doc=this buttonContent=false id='mf' }}
+    {{>quickForm schema='Schema.Memo' preserveForm=false omitFields='price'  doc=this buttonContent=false id='mf' }}
 
+</template>
+
+<template name="memoCustom">
+    {{#autoForm schema='Schema.Memo' preserveForm=false doc=this id='mf' }}
+        {{>afQuickField name='shipmentTitle'}}
+        {{>afQuickField name='specs.type'}}
+        {{>afQuickField name='specs.volumeType'}}
+        <div class="{{hasDoors}}">
+            {{>afQuickField name='specs.doors'}}
+        </div>
+        {{>afQuickField name='specs.weight'}}
+        <div class="box-vol {{isBoxed}}" >
+            <div class="col-sm-3">
+                {{>afQuickField name='specs.boxedVolume.length'}}
+            </div> <div class="col-sm-3">
+            {{>afQuickField name='specs.boxedVolume.width'}}
+        </div> <div class="col-sm-3">
+            {{>afQuickField name='specs.boxedVolume.height'}}
+        </div>
+            <div class="col-sm-3">
+                {{>afQuickField name='specs.boxedVolume.metric'}}
+            </div>
+        </div>
+        <div class ="liquid-vol {{isLiquid}}">
+            <div class="col-sm-6">
+                {{>afQuickField name='specs.liquidVolume.value'}}
+            </div>
+            <div class="col-sm-6">
+                {{>afQuickField name='specs.liquidVolume.metric'}}
+            </div>
+        </div>
+        {{>afQuickField name='memo'}}
+    {{/autoForm}}
 </template>

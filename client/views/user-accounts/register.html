@@ -18,7 +18,12 @@
 </template>
 <template name="registerAccountDetail">
     <h2>User Detail</h2>
-    {{>quickForm schema='Form.RegisterAccountDetail'  doc=this buttonContent=false id='regAcctDetailForm'}}
+    {{#autoForm schema='Form.RegisterAccountDetail'  doc=this buttonContent=false id='regAcctDetailForm'}}
+        {{>afQuickField name='accountType' options=accountTypes}}
+        {{>afQuickField name='firstname'}}
+        {{>afQuickField name='lastname'}}
+        {{>afQuickField name='email'}}
+    {{/autoForm}}
 </template>
 <template name="registerInfoDetail">
     <h2>Company Detail</h2>

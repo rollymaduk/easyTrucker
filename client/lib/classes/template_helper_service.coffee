@@ -6,3 +6,5 @@ class @TemplateHelperService
       when  bid and isView then  'summary'
       else 'edit'
 
+
+

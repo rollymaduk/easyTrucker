@@ -1,16 +1,3 @@
-Template.scheduleItem.helpers
-  bidCount:()->
-    Bids.find({schedule:@_id}).count()
-
-  hasBid:()->
-    if(Meteor.userId())
-      Bids.find({schedule:@_id,owner:Meteor.userId()}).count()
-
-  canBid:()->
-    roles=Meteor?.user()?.roles
-    console.log roles
-    _.contains(_.values(roles)[0],'trucker') if roles
-
 Template.scheduleItem.events
   'click #toggleSchedule':(evt,temp)->
     id=".#{temp.data._id}"

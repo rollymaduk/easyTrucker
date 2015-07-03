@@ -7,20 +7,26 @@ Meteor.startup ->
       'canViewbidList',
       'canEditLoad',
       'canViewLoad',
-      'canViewDashboard'
+      'canViewDashboard',
+      'canManageUsers',
+      'canViewMatchedLoads'
     ]
   },{role:'trucker',perm:['canCreateTruck',
                           'canEditTruck',
                           'canViewTruck'
                           'canCreatebid',
                           'canEditbid',
+                          'canViewbidList',
                           'canViewbid'
                           'canViewLoad',
-                          'canViewDashboard']}]
+                          'canViewDashboard',
+                          'canManageUsers',
+                          'canViewBiddedLoads'
+
+  ]}]
 
   roles=_.map(PermissionsFixture,(item)->
     item.role
   )
   permissions=RP_permissions.getPermissionsForRoles(roles)
-  if(permissions.length<1)
-    RP_permissions.createPermissions item.role,item.perm for item in PermissionsFixture
+  RP_permissions.createPermissions item.role,_.difference(item.perm,permissions) for item in PermissionsFixture

@@ -1,6 +1,6 @@
 class @UserAccountService
-  registerNewUser:(user, role,callback)->
-    Meteor.call 'registerNewUser',user,role,(err,res)->
+  registerNewUser:(user, role,groupName,callback)->
+    Meteor.call 'registerNewUser',user,role,groupName,(err,res)->
       if callback then callback.call @,err,res
       null
     null

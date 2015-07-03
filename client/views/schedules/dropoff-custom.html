@@ -14,18 +14,21 @@
             {{/if}}
         </div>
 
-        {{>afQuickField name="dropOffDate" placeholder="schemaLabel" label=false}}
+        <!--{{>afQuickField name="dropOffDate" placeholder="schemaLabel" label=false}}-->
+        {{>timeFrame title="DropOff Date" context='dropOffDate.context' dateField_1='dropOffDate.dateField_1' dateField_2='dropOffDate.dateField_2'}}
 
         <div class="form-group{{#if afFieldIsInvalid name='dropOffLocation'}} has-error{{/if}}">
             <div class="input-group">
 
-                <div class="input-group-btn"><button data-toggle="dropdown" id="locationmodal" class="btn btn-white dropdown-toggle">
-                    <i class="fa fa-map-marker"></i> </button></div>
-                {{> afFieldInput name='dropOffLocation.fullAddress' placeholder="schemaLabel" }}
+                <div class="input-group-addon"><i class="fa fa-map-marker"></i></div>
+                {{> afFieldInput name='dropOffLocation.address' placeholder="schemaLabel" }}
             </div>
-            {{#if afFieldIsInvalid name='dropOffLocation.fullAddress'}}
-                <span class="help-block">{{afFieldMessage name='dropOffLocation.fullAddress'}}</span>
+            {{#if afFieldIsInvalid name='dropOffLocation.address'}}
+                <span class="help-block">{{afFieldMessage name='dropOffLocation.address'}}</span>
             {{/if}}
+        </div>
+        <div class="hidden geometry">
+            {{> afQuickFields name="dropOffLocation.geometry"}}
         </div>
     {{/autoForm}}
 </template>

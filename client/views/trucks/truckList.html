@@ -5,18 +5,103 @@
     {{/each}}
 </template>
 <template name="truckItem">
+    <div class="col-lg-4">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>{{type}}-{{registration}}</h5>
+                {{#if policyIsExpired}}
+                 <span class="label label-danger">policy expired!</span>
+                {{/if}}
+                <div class="ibox-tools" >
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a   href="{{pathFor 'editTruck'}}">
+                            <i class="fa fa-edit"></i> Edit Truck
+                        </a>
+                         <a   href="{{pathFor 'editTruck'}}">
+                            <i class="fa fa-user"></i> Assign Driver
+                        </a>
+                        </li>
+                    </ul>
+
+
+                    <a class="remove-schedule" href="#">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div  class="ibox-content {{_id}}">
+                <!--<a href="{{pathFor 'viewSchedule'}}" class="manage-bid" style="color: inherit">-->
+                    <!--<h5><strong>Pickup from {{sender}}</strong></h5>-->
+                    <address>
+                        <strong>Weight:</strong> {{weight}} tons<br>
+                        {{#if chasis}}
+                           <strong>Chasis:</strong> {{chasis}}<br>
+                        {{/if}}
+                        {{#if make}}
+                            <strong>Make:</strong> {{make}}<br>
+                        {{/if}}
+                        {{#if volume}}
+                           <strong>Load volume:</strong> {{volume}}<br>
+                        {{/if}}
+                        <span  class="icon"><i class="fa fa-truck"></i></span>
+                    </address>
+                <!--</a>-->
+                <a href='#' id="toggleSchedule" class="btn btn-primary btn-xs"><i class="fa fa-arrow-down"></i> more...</a>
+                <!--<span class="icon">
+                 <i class="fa fa-arrow-circle-up "></i>
+                </span>-->
+            </div>
+
+            <div  style="display:none" class="ibox-content {{_id}}">
+                <!--<a href="{{pathFor 'viewSchedule'}}" class="manage-bid" style="color: inherit">-->
+                    <!--<h5><strong>Dropoff for {{receiver}}</strong></h5>-->
+                    <address>
+                        <strong>Insurance:</strong> {{insurance}}<br>
+                        <strong>policy expiration:</strong> {{tm_cal expirationDate}}<br>
+                        <strong>Pick up:</strong> {{pickup}}<br>
+                        <strong>Drop off:</strong> {{dropoff}}<br>
+                    </address>
+               <!-- </a>-->
+                <a href='#' id="toggleSchedule" class="btn btn-primary btn-xs"><i class="fa fa-arrow-up"></i> less...</a>
+                <!--<span class="icon">
+                 <i class="fa fa-arrow-circle-down "></i>
+                </span>-->
+            </div>
+
+        </div>
+    </div>
+</template>
+<!--
+<template name="truckItem">
         <div class="col-lg-4">
+
             <div class="contact-box">
-                <a href="profile.html">
+                <a href="#">
+                        <div class="header">
+                            <div class="pull-right">
+                                <a href="#">
+                                    <span  class="fa fa-edit"></span>
+                                </a>
+                            </div>
+                            <h3><strong>{{truckSpecs.type}}-{{registration}}</strong></h3>
 
-                        <h3><strong>{{truckSpecs.type}}-{{registration}}</strong></h3>
-                        <p>{{truckSpecs.weight}} tons</p>
+                        </div>
+                        
+                        <p>{{weight}} tons</p>
                         <address>
-
+                            {{#if chasis}}
                             chasis:{{chasis}}<br>
-                            color:{{color}}<br>
+                            {{/if}}
+                            {{#if make}}
                             make:{{make}}<br>
+                            {{/if}}
+                            {{#if volume}}
                             load volume:{{volume}}<br>
+                            {{/if}}
                             <span  class="icon"><i class="fa fa-truck"></i></span>
                         </address>
                     <div class="clearfix"></div>
@@ -25,4 +110,4 @@
             </div>
         </div>
 
-</template>
+</template>-->

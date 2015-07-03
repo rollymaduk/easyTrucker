@@ -1,4 +1,4 @@
-###if Meteor.isServer
+if Meteor.isServer
   Router.map ()->
     @route('page',
       path:'/'
@@ -8,4 +8,4 @@
          @response.writeHead 200,'Content-Type':'text/html'
          @response.end html
     )
-  null###
+  null

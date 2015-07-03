@@ -31,27 +31,20 @@ Template.register.helpers
       service=new UserAccountService()
 
       {firstname,lastname,companyName,companyAddress,truckAuthorityType,truckAuthorityNumber}=data
+
       profile={firstname:firstname,lastname:lastname,companyAddress:companyAddress,
       truckAuthorityType:truckAuthorityType,truckAuthorityNumber:truckAuthorityNumber,companyName:companyName,
       emails:[data.email],telephones:[data.telephoneNumber]
       }
-      email=data.email.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
-      company=profile.companyName.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
-      part1=email.substr(0,3)
+      username=CommonHelpers.generateUsername(data.email,profile.companyName)
 
-      part2=email.substr(5,3) if email.length>5
+      password=CommonHelpers.generatePassword()
 
-      part3=company.substr(0,3)
-
-      username=part1.concat(part2,part3)
-
-      passwd='password'
-
-      user={username:username,email:data.email,password:passwd,profile:profile}
+      user={username:username,email:data.email,password:password,profile:profile}
 
       role=data.accountType
 
-      service.registerNewUser user,role,(err,res)->
+      service.registerNewUser user,role,null,(err,res)->
         if res
           Router.go 'registrationSuccess'
         else

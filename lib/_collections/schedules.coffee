@@ -1,7 +1,4 @@
-@Schedules=new Meteor.Collection 'schedules',transform:(doc)->
-  doc.truckVolume=()->
-    "W:#{this.specs.volume.width}ft x L:#{this.specs.volume.length}ft x H:#{this.specs.volume.height}ft"
-  doc
+@Schedules=new Meteor.Collection 'schedules'
 Schedules.attachSchema Schema.Schedule
 Schedules.attachSchema Schema.Pickup
 Schedules.attachSchema Schema.DropOff

@@ -1,7 +1,13 @@
 Template.pickup.created=->
   Session.set('pickupObject',@data)
 
-
+Template.pickup.rendered=->
+  @autorun ->
+    if GoogleMaps.loaded()
+      $('input[data-schema-key="pickupLocation.address"]').geocomplete
+        details:".geometry"
+        detailsAttribute:"data-geo"
+      null
 
 Template.pickup.helpers
   pickupDoc:->Session.get('pickupObject')

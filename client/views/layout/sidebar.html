@@ -14,7 +14,7 @@
                             <!--<li><a href="contacts.html">Contacts</a></li>-->
                             <!--<li><a href="mailbox.html">Mailbox</a></li>-->
                             <li class="divider"></li>
-                            <li><a href="login.html">Logout</a></li>
+                            <li class="logout"><a href="#">Logout</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
@@ -29,10 +29,19 @@
                     <a href="#"><i class="fa fa-calendar-o"></i> <span class="nav-label">My Loadboard</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{pathFor 'scheduleList'}}">All loads</a></li>
-                        <li><a href="{{pathFor 'scheduleList'}}">New loads</a></li>
-                        <li><a href="{{pathFor 'scheduleList'}}">Bidded loads</a></li>
-                        <li><a href="{{pathFor 'scheduleList'}}">Unfulfilled loads</a></li>
-                        <li><a href="{{pathFor 'scheduleList'}}">Fulfilled loads</a></li>
+                        {{#each links}}
+                            {{#if this.children}}
+                                <li  {{Rp_allow this.permissions}} ><a href="#"><span class="nav-label">{{this.title}}</span><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                {{#each this.children}}
+                                    <li  {{Rp_allow this.permissions}}><a href="{{pathFor 'filteredSchedules'}}">{{this.status}}</a></li>
+                                {{/each}}
+                                </ul>
+                                </li>
+                                {{else}}
+                                <li {{Rp_allow this.permissions}}><a href="{{pathFor 'filteredSchedules'}}">{{this.title}}</a></li>
+                            {{/if}}
+                        {{/each}}
                     </ul>
                 </li>
                 <!--<li>
@@ -40,10 +49,10 @@
 
                 </li>-->
                 <li>
-                <a href="#"><i class="fa fa-archive"></i> <span class="nav-label">My Assets</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-archive"></i> <span class="nav-label">My Assets</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li {{Rp_allow 'canViewTruck,canManageTruck'}}><a href="{{pathFor 'truckList'}}"><i class="fa fa-truck"></i>Trucks</a></li>
-                        <li><a href="{{pathFor 'scheduleList'}}"><i class="fa fa-users"></i>Users</a></li>
+                        <li {{Rp_allow 'canManageUsers'}}><a href="{{pathFor 'userList'}}"><i class="fa fa-users"></i>Users</a></li>
                         <!--<li><a href="{{pathFor 'contactList'}}"><i class="fa fa-book"></i>Contacts</a></li>-->
                     </ul>
                 </li>

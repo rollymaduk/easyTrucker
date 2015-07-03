@@ -1,6 +1,6 @@
 Router.map ()->
   @route('home',
-    path:'/'
+    path:'/app'
   )
 
   @route('registrationSuccess',
