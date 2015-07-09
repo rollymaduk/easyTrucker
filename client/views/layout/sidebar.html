@@ -2,9 +2,13 @@
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
-                <li class="nav-header">
+                {{#with currentUser}}
+                    <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="/img/profile_small.jpg" />
+
+                            <object class="img-circle" data="{{photo}}" >
+                                <img class="img-circle" src="{{photoPlaceHolder}}" alt="alternate text">
+                            </object>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{fullname}}</strong>
@@ -21,6 +25,7 @@
                         ET+
                     </div>
                 </li>
+                {{/with}}
                 <li>
                     <a href="#"><i class="fa fa-dashboard"></i> <span class="nav-label">My Dashboard</span><!--<span class="fa arrow"></span>--></a>
 

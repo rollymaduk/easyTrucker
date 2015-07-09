@@ -1,5 +1,5 @@
 if Meteor.isServer
-  Router.map ()->
+  ###Router.map ()->
     @route('page',
       path:'/'
       where:'server'
@@ -7,5 +7,5 @@ if Meteor.isServer
          html = SSR.render('layout')
          @response.writeHead 200,'Content-Type':'text/html'
          @response.end html
-    )
+    )###
   null

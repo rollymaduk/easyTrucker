@@ -15,7 +15,7 @@ class @QueryFilterService
         userId=Meteor.userId()
     unless not roles
       switch
-        when _.contains(roles,'trucker') then filter:{truckers:{$in:[userId]}},modifier:sort:{createdAt:-1}
+        when _.contains(roles,'trucker') then filter:{'truckers.owner':{$in:[userId]}},modifier:sort:{createdAt:-1}
         when _.contains(roles,'shipper') then filter:{owner:userId},modifier:sort:{createdAt:-1}
         else null
 

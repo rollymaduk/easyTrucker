@@ -15,12 +15,6 @@ Schema.ProfileFormContact=new SimpleSchema
       readonly:true
 
 Schema.ProfileFormMetaData=new SimpleSchema
-  trucklatlngBounds:
-    type:Schema.LatLngBounds
-    optional:true
-    autoform:
-      type:'hidden'
-      label:false
   isActive:
     type:Boolean
     defaultValue:true
@@ -41,4 +35,25 @@ Schema.ProfileFormDetail=new SimpleSchema
     autoform:
       rows:6
 
-Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormContact,Schema.ProfileFormMetaData,Form.TruckAuthority])
+Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormContact,Schema.ProfileFormMetaData,
+  truckAuthorityType:
+    type:String
+    optional:true
+    allowedValues:['DOT','FF','MC','MX','NONE']
+    defaultValue:'NONE'
+    autoform:
+      options:{DOT:'DOT',FF:'FF',MC:'MC',MX:'MX',NONE:'NONE'}
+  truckAuthorityNumber:
+    type:String
+    optional:true
+    autoform:
+      class:'ctrl-visible'
+    custom:()->
+      if(Meteor.isClient)
+        console.log @siblingField('truckAuthorityType')
+        condition= ! _.isEqual(@siblingField('truckAuthorityType').value,'NONE')
+        if(condition and not @isSet)
+          "required"
+        else true
+
+])

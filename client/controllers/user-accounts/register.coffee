@@ -1,24 +1,36 @@
-Template.register.created=()->
-  Session.set('truckAuthState','readonly')
+Template.truckAuthority.created=()->
+  @truckAuthNumVisibility=new ReactiveVar(true)
 
-toggleTruckAuthority=(type)->
+Template.register.created=->
+  Session.set('truckAuthFormState',null)
+
+toggleTruckAuthFormState=(type)->
   switch type
-    when 'shipper' then 'readonly'
-    else null
+    when 'shipper' then Session.set('truckAuthFormState','disabled')
+    else Session.set('truckAuthFormState',null)
 
+toggleTruckAuthNumVisibility=(type,rVar)->
+  switch type
+    when 'NONE' then rVar.set(true)
+    else rVar.set(false)
 
 Template.register.events
   'change [data-schema-key="accountType"]':(evt,temp)->
-    formtype=toggleTruckAuthority evt.target.value
-    Session.set('truckAuthState',formtype)
+    toggleTruckAuthFormState(evt.target.value)
+
+Template.truckAuthority.events
+  'change [data-schema-key="truckAuthorityType"]':(evt,temp)->
+    toggleTruckAuthNumVisibility(evt.target.value,temp.truckAuthNumVisibility)
 
 Template.truckAuthority.helpers
   formType:()->
-    Session.get('truckAuthState')
+    Session.get('truckAuthFormState')
 
 Template.truckAuthority.rendered=()->
-  @autorun((c)->
+  @autorun((c)=>
     $('input[data-schema-key="truckAuthState"]').val(Session.get('truckAuthState'))
+    $('.ctrl-visible').parent().toggleClass('hidden',@truckAuthNumVisibility.get())
+
   )
 
 
@@ -44,12 +56,13 @@ Template.register.helpers
 
       role=data.accountType
 
+      console.log user
+
       service.registerNewUser user,role,null,(err,res)->
         if res
           Router.go 'registrationSuccess'
         else
           swal 'Failure',err.message,'error'
-
 
 
   oncanceled:->

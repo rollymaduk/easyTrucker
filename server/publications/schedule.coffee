@@ -1,4 +1,4 @@
-Meteor.publish 'scheduleList',(qry,limit)->
+Meteor.publishRelations 'scheduleList',(qry,limit)->
   console.log qry
   limit=limit or 50
   service= new QueryFilterService(@)
@@ -11,7 +11,10 @@ Meteor.publish 'scheduleList',(qry,limit)->
     _.extend query.modifier,modifier if modifier
     query.modifier['limit']=limit
     console.log query
-    Schedules.find(query.filter,query.modifier)
+    @cursor Schedules.find(query.filter,query.modifier),(docId,doc)->
+      @cursor(Bids.find({schedule:docId,owner:userId},fields:{schedule:1,owner:1}))
+      null
+  @ready()
 
 
 Meteor.publishRelations 'scheduleItem',(scheduleId,userId)->
@@ -20,7 +23,10 @@ Meteor.publishRelations 'scheduleItem',(scheduleId,userId)->
     ###doc.bid=@changeParentDoc(Bids.find({schedule:docId,owner:userId}),(bidId,bid)->
       bidmete
     )###
-    @cursor(Bids.find({schedule:docId,owner:userId}))
+    @cursor(Bids.find({schedule:docId,owner:userId},fields:{schedule:1,owner:1}))
+
+    @cursor(Meteor.users.find({_id:$in:_.pluck(doc.messages,'owner')},{fields:profile:1}))
+
     null
   )
   @ready()

@@ -1,0 +1,6 @@
+<template name="dateFormatter">
+    {{this.date.context}} {{tm_cal this.date.dateField_1}}
+    {{#if this.date.dateField_2}}
+        and {{tm_cal this.date.dateField_2}}
+    {{/if}}
+</template>

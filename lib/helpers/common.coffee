@@ -50,6 +50,7 @@ CommonHelpers.buildFilterQry=(filters)->
   query
 
 CommonHelpers.getFiltersForSchedule=(key)->
-  if STATE_BIDDED then @buildFilterQry([{field:'status',value:key}])
-  else @buildFilterQry([{field:'totalBids',value:1,operator:'$gte'}])
+  switch
+    when !_.isEqual(key,STATE_BIDDED) then @buildFilterQry([{field:'status',value:key}])
+    else @buildFilterQry([{field:'totalBids',value:1,operator:'$gte'}])
 

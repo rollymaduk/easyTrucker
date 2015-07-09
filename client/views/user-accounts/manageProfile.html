@@ -28,7 +28,15 @@
                         <div class="col-md-6">
                             {{> afQuickField name='telephones'}}
                         </div>
+                        {{#if truckAuthorityType}}
+                        <div class="col-md-6">
+                            {{> afQuickField name='truckAuthorityType'}}
+                        </div>
 
+                        <div class="col-md-6">
+                            {{> afQuickField name='truckAuthorityNumber'}}
+                        </div>
+                        {{/if}}
                         <div class="col-md-6">
                             {{> afQuickField name='bio'}}
                         </div>

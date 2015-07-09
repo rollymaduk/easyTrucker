@@ -11,7 +11,7 @@ Router.map ()->
 
 
   @route('filteredSchedules',
-    path:'app/loads/:status'
+    path:'app/loads/filter/:status'
     template:'scheduleList'
     data:->
       service=new QueryFilterService(null)
@@ -33,7 +33,6 @@ Router.map ()->
     onBeforeAction:()->
       if RP_permissions.hasPermissions(['canCreateLoad','canManageLoad'])
         @next()
-        null
       else
         @render 'home'
         null

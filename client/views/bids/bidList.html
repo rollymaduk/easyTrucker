@@ -9,21 +9,16 @@
     <div class="col-lg-4">
         <div class="ibox">
             <div class="ibox-title">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>{{bidder.company}}</h5>
-                    </div>
-                    <div class="col-md-2">
-                        {{#if isNew}}
-                            <span class="label  label-warning pull-right">NEW</span>
-                        {{/if}}
-                    </div>
-                    <div class="col-md-4">
-                        <a href="#" class="btn btn-white btn-xs">Accept bid</a>
-                    </div>
+                <div class="ibox-tools">
+                    <a href="#" class="btn btn-primary btn-xs ">Accept bid</a>
                 </div>
+
+                <h2 class="no-margins pull-left">${{qoute}}</h2>
+                {{#if messages.length}}&nbsp;&nbsp;
+                <span>{{messages.length}}<i class="fa fa-comments"></i></span>
+                {{/if}}
             </div>
-            <a href="#" >
+            <a href="{{pathFor 'bidDetail'}}" >
                 <div class="ibox-content ibox-heading">
                     <h3>Latest Activity!</h3>
                     <small><i class="fa fa-bell"></i> {{notification.message}} {{tm_now notification.createdAt}}</small>
@@ -50,17 +45,18 @@
                      </div>
                  </div>-->
                 <div class="row  m-t-sm ">
-                    <div class="col-sm-3">
-                        <div class="font-bold">Rating</div>
+                    <div class="col-sm-6">
+                        <div class="font-bold">Bidder</div>
+                        {{>identity owner=bidder}}
                         <!--include a rating widget here-->
                     </div>
-                    <div class="col-sm-3">
+                    <!--<div class="col-sm-3">
                         <div class="font-bold">Price</div>
                         ${{rate}}.00
-                    </div>
+                    </div>-->
                     <div class="col-sm-6 text-right">
-                        <div class="font-bold">Est Delivery Time</div>
-                        {{tm_locale proposedDelivery}}<i class="fa fa-level-up text-navy"></i>
+                        <div class="font-bold">Authorization</div>
+                        {{>serviceCeritfication size=16 profile=bidder.profile}}
                     </div>
                 </div>
 

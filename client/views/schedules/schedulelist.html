@@ -21,7 +21,7 @@
                 {{bidCount}} bid(s)</a> </span>
 
 
-            <span class="small ">&nbsp;|&nbsp;<a href="#" ><i class="fa fa-envelope"></i> 15 new msg(s)</a> </span>
+            <span class="small ">&nbsp;|&nbsp;<a href="#" >{{messages.length}}<i class="fa fa-comments"></i> </a> </span>
 
             <div class="ibox-tools" >
                 <!--<a href="{{pathFor 'viewSchedule'}}"  class="label {{formatStatus status}} manage-bid">{{status}}</a>-->
@@ -54,10 +54,7 @@
                 <h5>{{shipmentTitle}}-<span class="small">({{wayBill}})</span></h5>
             <address>
                 <span class="fa fa-user"></span>: Pickup from {{sender}}<br/>
-                <span class="fa fa-clock-o"></span>:{{pickupDate.context}} {{tm_cal pickupDate.dateField_1}}
-                    {{#if pickupDate.dateField_2}}
-                            and {{tm_cal pickupDate.dateField_2}}
-                        {{/if}}
+                <span class="fa fa-clock-o"></span>:{{>dateFormatter date=pickupDate}}
                             <br>
                 <span class="fa fa-map-marker"></span>: {{pickupLocation.address}}<br>
             </address>
@@ -74,10 +71,7 @@
 
             <address>
                 <span class="fa fa-user"></span>: Dropoff for {{receiver}}<br/>
-                <span class="fa fa-clock-o"></span>: {{dropOffDate.context}} {{tm_cal dropOffDate.dateField_1}}
-                {{#if dropOffDate.dateField_2}}
-                    and {{tm_cal dropOffDate.dateField_2}}
-                {{/if}}<br>
+                <span class="fa fa-clock-o"></span>: {{>dateFormatter date=dropOffDate}}<br>
                 <span class="fa fa-map-marker"></span>: {{dropOffLocation.address}}<br>
             </address>
             </a>

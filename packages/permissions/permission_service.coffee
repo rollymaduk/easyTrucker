@@ -63,12 +63,14 @@ RP_permissions=new PermService()
 
 getPermissionVisibility=(perm,rVar,deny)->
   Tracker.autorun(()->
-    arr=perm.split(',') or []
-    switch
-      when not deny
-        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then null else  class: 'hidden'
-      else
-        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then class:hidden else null
+    res='hidden'
+    if perm
+      arr=perm.split(',') or []
+      switch
+        when not deny
+          res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then null else  class: 'hidden'
+        else
+          res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then class:hidden else null
     rVar.set(res)
   )
 
@@ -89,7 +91,7 @@ if Meteor.isClient
 
     Template.registerHelper('Rp_deny',(perm)->
       result=new ReactiveVar()
-      getPermissionVisibility(perm,result)
+      getPermissionVisibility(perm,result,true)
       result.get()
     )
 

@@ -14,7 +14,7 @@ Bids.after.insert (user,doc)->
   message=NotifyMessage.newBid
   tag=NotifyTag.newBid
   schedule=Schedules.findOne(doc.schedule)
-  schedule.totalBids+1
+  schedule.totalBids=schedule.totalBids+1
   Meteor.call "addUpdateSchedule",schedule,(err,res)->
     if res then service.createNotification(message,objectId,doc.schedule,[schedule.owner],tag)
     else console.log err

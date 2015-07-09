@@ -18,9 +18,8 @@ Template.scheduleDetail.events
     temp.showManageBid.set(false)
 
 Template.scheduleDetail.rendered=()->
-
   AutoForm.hooks
-    scheduleMsgForm:
+    scheduleCommentsForm:
       onSubmit:(ins,upd,curr)->
         Meteor.call 'addScheduleComment',@docId,ins,(err,res)=>
           console.log err or res

@@ -92,8 +92,8 @@ Schema.Schedule=new SimpleSchema
       omit:true
   totalBids:
     type:Number
-    autoValue:->
-      if not @isSet then 0
+    defaultValue:0
+    optional:true
     autoform:
       omit:true
   messages:

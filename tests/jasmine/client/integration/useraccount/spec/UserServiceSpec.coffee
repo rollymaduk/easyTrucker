@@ -1,11 +1,14 @@
 describe 'Registration',()->
   describe 'register a new user externally',()->
     userId=undefined
-    role='shippers'
-    username="temondrasat"
+    role='trucker'
+    username="temondrasatan"
+    service=new UserAccountService()
+    profile=mockAProfile(username)
     user=mockAUser(username)
+    _.extend(user,profile:profile)
     beforeAll (done)->
-      Meteor.call 'registerNewUser',user,role,(err,res)->
+      service.registerNewUser(user,role,null,(err,res)->
         throw new Meteor.Error err if err
         userId=res
         Meteor.loginWithPassword(user.username,user.password,(err)->
@@ -14,6 +17,7 @@ describe 'Registration',()->
           null
         )
         null
+      )
       null
 
     afterAll (done)->
@@ -33,18 +37,27 @@ describe 'Registration',()->
       expect(userId).toEqual(Meteor.userId())
       done()
       null
+    it 'should create profile truckAuthorityNumber ',(done)->
+      expect(profile.certNumber).toEqual(Meteor.user().profile.certNumber)
+      done()
+      null
 
+    it 'should create profile truckAuthorityType ',(done)->
+      expect(profile.certType).toEqual(Meteor.user().profile.certType)
+      console.log Meteor.user()
+      done()
+      null
 
     it 'should create and add user to a new role and group',(done)->
       userRoles=_.values(_.pick(Meteor.user().roles,username))
-      expect(userRoles[0]).toEqual(['shippers','admin'])
+      expect(userRoles[0]).toEqual(['trucker'])
       done()
       null
     null
   null
 null
 
-describe 'Navigation',()->
+xdescribe 'Navigation',()->
   describe 'after successful registration',()->
     beforeEach ()->
     it 'should go to the verify user page',()->

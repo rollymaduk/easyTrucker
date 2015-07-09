@@ -1,8 +1,10 @@
 class @UserAccountService
   registerUser:(user,role,groupName)->
-    {username,password,email,profile}=user
+    {profile,username,password,email}=user
     newUser={username:username,password:password,email:email,profile:profile}
+    console.log newUser
     userId=Accounts.createUser(newUser)
+
     if userId
       groupName=groupName||username
       Roles.addUsersToRoles userId,role,groupName

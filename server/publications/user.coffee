@@ -6,3 +6,12 @@ Meteor.publish('userList',(domainroles)->
   else
     @ready()
 )
+
+Meteor.publish('userInfo',(id)->
+  if @userId
+    check(id,String)
+    console.log id
+    Meteor.users.find(id,fields:profile:1)
+  else
+    @ready()
+)

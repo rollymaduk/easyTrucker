@@ -25,8 +25,6 @@ Template.memo.events
   'change select[data-schema-key="specs.volumeType"]':(evt,temp)->
     TruckHelpers.setVolumeVisibility evt.target.value,temp,'mf'
 
-Template.manageSchedule.created=->
-
 saveAndReturnToList=(data)->
   Meteor.call('addUpdateSchedule',data,(err,res)->
     unless err

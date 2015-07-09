@@ -1,0 +1,44 @@
+<template name="manageBid">
+    <div class="col-lg-9">
+        <div class="ibox">
+            <div class="ibox-content">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="m-b-md">
+                            <div class="pull-right">
+                                {{#unless _id}}
+                                    <a href="{{pathFor 'viewSchedule' _id=schedule}}" style="color: inherit" class=" close-bid">
+                                        <span class=" glyphicon gly glyphicon-remove"></span>
+                                    </a>
+                                    {{else}}
+                                    <a href="{{pathFor 'bidDetail'}}" style="color: inherit" class=" close-bid">
+                                        <span class=" glyphicon gly glyphicon-remove"></span>
+                                    </a>
+                                {{/unless}}
+                            </div>
+                            <h2>My Bid for <a href="{{pathFor "viewSchedule" _id=schedule}}">{{shipmentTitle}}</a></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                    {{#autoForm id="placeBidForm" doc=this schema="Schema.Bid"}}
+                        <fieldset>
+                        {{>afQuickField name="qoute"}}
+                        {{>timeFrame title="Pickup Date" context='proposedPickup.context' dateField_1='proposedPickup.dateField_1' dateField_2='proposedPickup.dateField_2'}}
+                        {{>timeFrame title="DropOff Date" context='proposedDelivery.context' dateField_1='proposedDelivery.dateField_1' dateField_2='proposedDelivery.dateField_2'}}
+                            {{>afQuickField name="schedule"}}
+                        </fieldset>
+                            <button type="submit" class="btn btn-primary btn-xs pull-right">Place bid</button>
+                    {{/autoForm}}
+                    </div>
+
+                    <!--{{>quickForm type='normal' schema="Schema.Bid" omitFields='messages' buttonClasses="btn btn-primary btn-xs pull-right"
+                    buttonContent="Place Bid"}}-->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

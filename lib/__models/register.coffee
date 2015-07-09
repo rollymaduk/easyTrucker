@@ -40,31 +40,23 @@ Form.RegisterAccountDetail=new SimpleSchema
 
 
 Form.TruckAuthority=new SimpleSchema
-  truckAuthState:
-    type:String
-    optional:true
-    autoform:
-      type:'hidden'
-      label:false
   truckAuthorityType:
     type:String
     optional:true
-    custom:()->
-      if(Meteor.isClient)
-        condition=  _.isEmpty(@field('truckAuthState').value) or @field('truckAuthState').value is 'NONE'
-        if(condition and not @isSet and (not @operator or @value is null or _.isEmpty(@value)))
-          "required"
-        else true
     allowedValues:['DOT','FF','MC','MX','NONE']
+    defaultValue:'NONE'
     autoform:
       options:{DOT:'DOT',FF:'FF',MC:'MC',MX:'MX',NONE:'NONE'}
   truckAuthorityNumber:
     type:String
     optional:true
+    autoform:
+      class:'ctrl-visible'
     custom:()->
       if(Meteor.isClient)
-        condition=  _.isEmpty(@field('truckAuthState').value) or @field('truckAuthState').value is 'NONE'
-        if(condition and not @isSet and (not @operator or @value is null or _.isEmpty(@value)))
+        console.log @siblingField('truckAuthorityType')
+        condition= ! _.isEqual(@siblingField('truckAuthorityType').value,'NONE')
+        if(condition and not @isSet)
           "required"
         else true
 

@@ -15,15 +15,14 @@ Router.map ()->
   )
 
   @route('profile',
-    path:'/app/user/profile'
+    path:'/app/user/profile/:_id'
     template:'profileDetail'
-    onBeforeAction:()->
-     unless not Meteor.user()
-       if _.isEmpty Meteor.user().profile then @render 'manageProfile'
-       else
-        @next()
-       null
-
+    waitOn:->Meteor.subscribe('userInfo',@params._id)
+    data:->
+      console.log @params._id
+      user=Meteor.users.findOne(@params._id)
+      console.log user
+      user
   )
 
   @route('userList',

@@ -1,12 +1,9 @@
 Schema.Bid=new SimpleSchema
-  rate:
-    label:'Rate Quote'
+  qoute:
+    label:'Quote'
     type:Number
     defaultValue:0
     optional:true
-    autoform:
-      label:false
-      placeholder:"schemaLabel"
   isNew:
     type:Boolean
     autoValue:()->
@@ -14,26 +11,22 @@ Schema.Bid=new SimpleSchema
       else if @isUpsert then $setOnInsert:on
       else on
     autoform:
-      label:false
-      type:'hidden'
+      omit:true
   messages:
     type:[Form.Message]
+    optional:true
     defaultValue:[]
+  proposedPickup:
+    type:Form.TimeFrame
   proposedDelivery:
-    label:"Delivery Estimate"
-    type:Date
-    autoform:
-      afFieldInput: {
-        type: 'bootstrap-datetimepicker'
-      }
-      label:false
-      placeholder:"schemaLabel"
+    type:Form.TimeFrame
   schedule:
     type:String
     optional:true
     autoform:
+      type:"hidden"
       label:false
-      type:'hidden'
+
   owner:
     type:String
     autoValue:()->
@@ -41,5 +34,4 @@ Schema.Bid=new SimpleSchema
       else if @isUpsert then $setOnInsert:Meteor.userId()
       else @unset()
     autoform:
-      label:false
-      type:'hidden'
+      omit:true
