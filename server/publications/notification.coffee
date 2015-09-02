@@ -1,3 +1,5 @@
-Meteor.publish('notifications',(user)->
-  Activities.find({audience:{$in:[user]},isNew:true})
+Meteor.publish('notifications',()->
+  if @userId
+   cursor= Notifications.find({audience:{$in:[@userId]},isNew:true})
+   Notifications.publishJoinedCursors(cursor)
 )

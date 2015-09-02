@@ -29,7 +29,7 @@ Template.Wizard.rendered=->
         when isValid
           if step.onSubmit then step.onSubmit.call that,step.data,step
         else
-         _.delay Template.Wizard.resizeContent,200,that,step.id
+         ###_.delay Template.Wizard.resizeContent,200,that,step.id###
       Blaze.remove Template.Wizard.myView if isValid
       isValid
 
@@ -82,7 +82,7 @@ Template.Wizard.displayContent=(step,template)->
   data="content-#{step.id}"
   parent=template.$("section[data-content='#{data}']")
   @myView=Blaze.renderWithData(step.template,step.data,parent[0])
-  @resizeContent(template,step.id)
+  ###@resizeContent(template,step.id)###
   console.log @myView
   null
 

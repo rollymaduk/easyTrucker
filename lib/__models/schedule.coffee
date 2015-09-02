@@ -1,17 +1,6 @@
-Schema.Artifact=new SimpleSchema
-  title:
-    type:String
-    optional:true
-  type:
-    type:String
-    defaultValue:'file'
-    allowedValues:['location','comment','file','photo','video','audio']
-  payload:
-    type:Object
-    blackbox:true
-    optional:true
-
 Schema.Pickup=new SimpleSchema
+  shipmentTitle:
+    type:String
   wayBill:
     type:String
     label:"Way Bill #"
@@ -53,8 +42,6 @@ Schema.DropOff=new SimpleSchema
       type:'googleplace'###
 
 Schema.Memo=new SimpleSchema
-  shipmentTitle:
-    type:String
   specs:
     label:"Van Specifications"
     type:Schema.TruckSpecs
@@ -65,26 +52,37 @@ Schema.Memo=new SimpleSchema
     autoform:
       omit:true
   'truckers.$.owner':
+    optional:true
     type:String
   'truckers.$.trucks':
+    optional:true
     type:[String]
   memo:
-    type:String
+    type:Object
     optional:true
+  'memo.notes':
+    type:String
     autoform:
       afFieldInput:
         rows:8
-
-Schema.Artifacts=new SimpleSchema
-  artifacts:
-    type:[Schema.Artifact]
+  'memo.files':
     optional:true
+    type:[String]
+    autoform:
+      template:'wizard_files'
+  "memo.files.$":
+    autoform:
+      afFieldInput:
+        type: 'fileUpload'
+        collection: 'eZFiles'
+        'remove-label':"change file"
+
 
 Schema.Schedule=new SimpleSchema
   status:
     type:String
-    allowedValues:[STATE_UNMATCHED,STATE_MATCHED,STATE_BOOKED,STATE_DISPATCH,STATE_CANCELLED,STATE_LATE,STATE_ISSUE,STATE_SUCCESS]
-    defaultValue:STATE_UNMATCHED
+    allowedValues:[STATE_NEW,STATE_BOOKED,STATE_DISPATCH,STATE_CANCELLED,STATE_LATE,STATE_ISSUE,STATE_SUCCESS,STATE_ASSIGNED]
+    defaultValue:STATE_NEW
   shipmentDistance:
     type:Number
     decimal:true
@@ -96,26 +94,34 @@ Schema.Schedule=new SimpleSchema
     optional:true
     autoform:
       omit:true
+  bidders:
+    type:[String]
+    optional:true
+    defaultValue:[]
   messages:
     type:[Form.Message]
     defaultValue:[]
     optional:true
-  createdAt:
-    type:Date
-    autoValue:()->
-      if @isInsert then new Date;
-      else if @isUpsert then $setOnInsert:new Date
-      else @unset()
   owner:
     type:String
     autoValue:()->
       if @isInsert then Meteor.userId()
       else if @isUpsert then $setOnInsert:Meteor.userId()
       else @unset()
-  truck:
+  winningBid:
+    type:Object
+    optional:true
+  'winningBid.bidder':
+    type:String
+  'winningBid.bid':
+    type:String
+  resource:
+    type:Object
+    optional:true
+  'resource.truck':
     type:String
     optional:true
-  driver:
+  'resource.driver':
     type:String
     max:250
     optional:true

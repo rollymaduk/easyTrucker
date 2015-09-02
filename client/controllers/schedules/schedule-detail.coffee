@@ -25,6 +25,7 @@ Template.scheduleDetail.rendered=()->
           console.log err or res
           @done()
         false
+    ,true
 
 
 AutoForm.debug()

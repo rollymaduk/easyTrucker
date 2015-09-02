@@ -7,19 +7,6 @@ Template.main.destroyed=->
 
 
 Template.main.created=->
-  @autorun ->
-    Session.set 'domainRoles',null
-    roles=Meteor?.user()?.roles
-    if roles
-     group=_.keys(roles)[0]
-     if _.contains(_.values(roles)[0],'trucker')
-      Session.set('domainRoles',{roles:['trucker','driver','accountant'],group:group})
-      Session.set('userType','trucker')
-     else if _.contains(_.values(roles)[0],'shipper')
-      Session.set('domainRoles',{roles:['shipper','clerk'],group:group})
-      Session.set('userType','shipper')
-
-
 
   swal.setDefaults
     allowEscapeKey:true
@@ -27,6 +14,8 @@ Template.main.created=->
 
 Template.main.rendered=->
   $.getScript('js/inspinia.js')
+  String.prototype.trimToLength = (m)->
+    if(@length > m) then $.trim(@).substring(0, m).split(" ").slice(0, -1).join(" ") + "..." else @;
 
 Template.main.helpers
   hasProfile:()->

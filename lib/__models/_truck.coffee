@@ -15,24 +15,30 @@ Schema.TruckSpecs=new SimpleSchema
   type:
     type:String
     optional:true
-    allowedValues:['flatbed',
-                   'reefer',
-                   'reftruck',
-                   'logcarrier',
-                   'insul-food-liquid-tanker',
-                   'non-insul-food-liquid-tanker',
-                   'insul-non-food-liquid-tanker',
-                   'non-insul-non-food-liquid-tanker',
-                   'auto-trans']
+    allowedValues:[
+      'Beavertail'
+      'Box van'
+      'Crew van'
+      'Curtainside'
+      'Dropside'
+      'Flatbed'
+      'Livestock'
+      'Log Carrier'
+      'Luton van'
+      'Microvan/Minibus'
+      'Pick up'
+      'Straight truck'
+      'Tanker-Insulated Food grade'
+      'Tanker-Non-insulated Food grade'
+      'Tanker-Insulated non-food grade'
+      'Tanker-Non-insulated non-Food grade'
+      'Temperature-controlled (Boxed)'
+      'Tipper'
+      'Tractor Trailer'
+      'Vehicle transporter'
+      ]
     autoform:
-      options:{
-        'flatbed':'Flatbed','reefer':'Reefer','reftruck':'Refrigirated Truck','logcarrier':'Log Carrier',
-        'insul-food-liquid-tanker':'Insulated Food grade Liquid Tanker',
-        'non-insul-food-liquid-tanker':'Non-insulated Food grade Liquid Tanker',
-        'insul-non-food-liquid-tanker':'Insulated non-Food grade Liquid Tanker',
-        'non-insul-non-food-liquid-tanker':'Non-insulated non-Food grade Liquid Tanker',
-        'auto-trans':'Auto-transporter'
-      }
+      options:"allowed"
   volumeType:
     label:'Load Type'
     type:String
@@ -44,8 +50,8 @@ Schema.TruckSpecs=new SimpleSchema
     optional:true
     allowedValues:['rollup','barndoors']
     autoValue:->
-      _voltype=@field('volumeType')
-      if(@isSet and not _.isEqual(_voltype.value,'boxed'))
+      _voltype=@siblingField('volumeType')
+      if(@isSet and !_.isEqual(_voltype.value,'boxed'))
         @unset()
         null
     autoform:
@@ -61,8 +67,9 @@ Schema.TruckSpecs=new SimpleSchema
     type:Object
     optional:true
     autoValue:->
-      _vol=@field('volumeType')
-      if(@isSet and not _.isEqual(_vol.value,'boxed'))
+      _vol=@siblingField('volumeType')
+      console.log _vol
+      if(@isSet and  !_.isEqual(_vol.value,'boxed'))
         @unset()
         null
   'boxedVolume.width':
@@ -83,8 +90,9 @@ Schema.TruckSpecs=new SimpleSchema
     type:Object
     optional:true
     autoValue:->
-     _voltype=@field('volumeType')
-     if(@isSet and not _.isEqual(_voltype.value,'liquid'))
+     _voltype=@siblingField('volumeType')
+
+     if(@isSet and  !_.isEqual(_voltype.value,'liquid'))
        @unset()
        null
   'liquidVolume.value':
@@ -182,15 +190,6 @@ Schema.TruckGeneral=new SimpleSchema
     defaultValue:false
     autoform:
       omit:true
-  createdAt:
-    type:Date
-    autoform:
-      label:false
-      type:'hidden'
-    autoValue:()->
-      if @isInsert then new Date;
-      else if @isUpsert then $setOnInsert:new Date
-      else @unset()
   owner:
     type:String
     autoform:

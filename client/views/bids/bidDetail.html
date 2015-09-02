@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
 
-                                    <h2>${{qoute}} for <a href="{{pathFor "viewSchedule" _id=this.schedule}}">{{shipmentTitle}}</a></h2>
+                                    <h2>${{qoute}} for <a href="{{pathFor "viewSchedule" _id=this.schedule}}">{{scheduleItem.shipmentTitle}}</a></h2>
                                 </div>
 
                                 <dl class="dl-horizontal">
@@ -52,7 +52,7 @@
 
                         <div class="row m-t-sm">
                             <div class="col-lg-12">
-                                {{>comments doc=this comments=this.comments formId='bidCommentsForm'}}
+                                {{>comments insertDoc=commentInsertDoc comments=messages }}
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,27 @@
 <template name="bidList">
+    {{#unless canInsert}}
+        {{>pageHeader title='Bids' }}
+    {{else}}
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Bids</h5>
+                <div class="ibox-tools">
+                    {{#unless hasBid}}
+                        <a href="{{pathFor 'newBid' _id=schedule }}" class="btn btn-primary btn-xs">create new Bid</a>
+                    {{else}}
+                        {{#with hasBid}}
+                        <a href="{{pathFor 'bidDetail'}}" class="btn btn-primary btn-xs">manage my Bid</a>
+                        {{/with}}
+                    {{/unless}}
+                    <a class="search-link">
+                        <i class="fa fa-search"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    {{/unless}}
+
     <div class="bidList">
         {{#each this}}
             {{>bidListItem}}
@@ -10,7 +33,8 @@
         <div class="ibox">
             <div class="ibox-title">
                 <div class="ibox-tools">
-                    <a href="#" class="btn btn-primary btn-xs ">Accept bid</a>
+
+                    <a {{Rp_allow 'canAcceptBid'}} href="#" class="accept-bid btn btn-primary btn-xs ">Accept bid</a>
                 </div>
 
                 <h2 class="no-margins pull-left">${{qoute}}</h2>
@@ -56,7 +80,7 @@
                     </div>-->
                     <div class="col-sm-6 text-right">
                         <div class="font-bold">Authorization</div>
-                        {{>serviceCeritfication size=16 profile=bidder.profile}}
+                        {{>serviceCeritfication size=16 profile=bidder}}
                     </div>
                 </div>
 

@@ -1,16 +1,17 @@
 Router.map ()->
   @route('bidList',
-    path:'/app/bids/:_id'
-    data:()->
-      Bids.find({schedule:@params._id})
+    path:'/app/bids/list/:_id'
+    data:()->Bids.find({schedule:@params._id})
     waitOn:()->
-      Meteor.subscribe('bidList',@params._id)
+      Meteor.subscribe('bids',{schedule:@params._id})
   )
 
   @route('bidDetail',
     path:'/app/bids/view/:_id'
-    data:->Bids.findOne(@params._id)
-    waitOn:->Meteor.subscribe('bidItem',@params._id)
+    data:->
+      Bids.findOne(@params._id)
+    waitOn:->
+      Meteor.subscribe('bidItem',@params._id)
     template:"bidDetail"
   )
 
@@ -24,12 +25,15 @@ Router.map ()->
         @render 'home'
         null
     data:->Bids.findOne(@params._id),
-    waitOn:->Meteor.subscribe('bidItem',@params._id)
+    waitOn:->Meteor.subscribe('bids',@params._id)
     template:"manageBid")
 
   @route('newBid',
-    path:'/app/bids/:shipmentTitle/new/:_id'
-    data:->{schedule:@params._id,shipmentTitle:@params.shipmentTitle}
+    path:'/app/bids/new/:_id'
+    data:->
+      schedule=Schedules.findOne(@params._id)
+      if schedule
+        {scheduleItem:schedule,schedule:schedule._id,proposedPickup:schedule.pickupDate,proposedDelivery:schedule.dropOffDate}
     onBeforeAction:()->
       if RP_permissions.hasPermissions(['canCreatebid','canManagebid'])
         @next()
@@ -37,6 +41,7 @@ Router.map ()->
       else
         @render 'home'
         null
+    waitOn:->Meteor.subscribe('scheduleItem',@params._id)
     template:"manageBid")
 
   null

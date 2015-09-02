@@ -6,14 +6,10 @@
             Comments/Questions
         </div>
 
-
         <div class="ibox-content">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="chat-message-form">
-                        {{>quickForm id=this.formId type='normal' doc=this.doc buttonClasses="pull-right btn-primary btn btn-xs"
-                        buttonContent="Post Comment"  schema='Form.Message'}}
-                    </div>
+                        {{>commentControl formId='newCommentForm' doc=this.insertDoc }}
                 </div>
             </div>
             <br>
@@ -29,19 +25,13 @@
                     </div>
                 </div>
             {{/if}}
-
-
-
         </div>
-
     </div>
 </template>
 
 <template name="messageItem">
     <div class="chat-message left">
-        <object class="message-avatar" data="{{owner.photo}}" >
-            <img class="message-avatar" src="{{photoPlaceHolder}}" alt="alternate text">
-        </object>
+        {{>imageControl collection='eZImages' class='message-avatar' photo=owner.profile.photo}}
         <!--<img  src="{{photo}}" alt="">-->
         <div class="message">
                 {{>identity owner=owner}}
@@ -55,10 +45,13 @@
 
 <template name="identity">
     {{#with owner}}
-    {{#unless company}}
-        <a class="message-author" href="#">{{fullname}} </a>
-    {{else}}
-        <a class="message-author" href="{{pathFor 'profile'}}">{{company}} </a>
-    {{/unless}}
+        <a class="message-author" href="{{pathFor 'profile'}}">{{identity this}} </a>
     {{/with}}
+</template>
+
+<template name="commentControl">
+    <div class="chat-message-form">
+        {{>quickForm id=this.formId type='normal' doc=this.doc buttonClasses="pull-right btn-primary btn btn-xs"
+        buttonContent="Post Comment"  schema='Schema.Message'}}
+    </div>
 </template>

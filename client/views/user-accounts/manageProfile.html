@@ -7,7 +7,7 @@
             <div class="ibox-content">
                 <div class="row">
 
-                    {{#autoForm schema='Schema.Profile' id='profileForm'   type='normal'   buttonContent=false  doc=currentUser.profile }}
+                    {{#autoForm schema='Schema.Profile' id='profileForm'   type='normal'   buttonContent=false  doc=this.profile }}
                         <div class="col-md-6">
                             {{> afQuickField name='companyName'}}
                         </div>
@@ -28,17 +28,14 @@
                         <div class="col-md-6">
                             {{> afQuickField name='telephones'}}
                         </div>
-                        {{#if truckAuthorityType}}
-                        <div class="col-md-6">
-                            {{> afQuickField name='truckAuthorityType'}}
-                        </div>
-
-                        <div class="col-md-6">
-                            {{> afQuickField name='truckAuthorityNumber'}}
-                        </div>
+                        {{#if this.profile.truckAuthorityType}}
+                            {{>truckAuthorityControl col_class="col-md-6"}}
                         {{/if}}
                         <div class="col-md-6">
                             {{> afQuickField name='bio'}}
+                        </div>
+                        <div class="col-md-6">
+                            {{> afQuickField name='photo'}}
                         </div>
                         <div class="col-md-12 ">
                             <button type="save" class="pull-right btn btn-primary ">Update</button>

@@ -1,4 +1,3 @@
-
 Meteor.users.attachSchema Schema.User
 Meteor.users.allow
   insert:(user,doc)->true

@@ -1,0 +1,15 @@
+<template name="schedule_actions">
+    {{#unless item.canAssignResource}}
+
+            {{#if item.hasBid}}
+                <a href="{{pathFor 'bidDetail' _id=item.bid._id }}" class="{{btnClasses}}" {{visibleWhen item.status 'new'}} {{Rp_allow 'canEditbid,canCreatebid,canManagebid'}}>Manage bid</a>
+            {{else}}
+                <a href="{{pathFor 'newBid' _id=item._id }}" class="{{btnClasses}}" {{visibleWhen item.status 'new'}} {{Rp_allow 'canEditbid,canCreatebid,canManagebid'}}>Place a bid</a>
+            {{/if}}
+
+    {{else}}
+       <a {{Rp_allow 'canAssignTruck'}} {{visibleWhen item.status 'accepted'}} href="{{pathFor 'filteredTruckList' trucks=item.matchedTrucks  hash='assignMode'}}" class="assign-truck {{btnClasses}}">Assign Driver/Truck</a>
+    {{/unless}}
+        <a href="{{pathFor 'manageDispatch' _id=item._id shipmentTitle=item.shipmentTitle}}" {{Rp_allow 'canDispatchLoad'}} {{visibleWhen item.status 'booked'}} class="assign-truck {{btnClasses}}">Dispatch load</a>
+        <a href="#" {{Rp_allow 'canCloseRequest'}} class="{{btnClasses}}" {{visibleWhen item.status 'dispatched'}}>Deliver Load</a>
+</template>

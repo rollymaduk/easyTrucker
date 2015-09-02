@@ -3,6 +3,7 @@
     "#{this.firstName} #{this.lastName}"
    doc
 Contacts.attachSchema Schema.Contact
+Contacts.attachBehaviour('timestampable');
 Contacts.allow
   insert:(user,doc)->true
   update:(user,doc,fields,modifier)->true

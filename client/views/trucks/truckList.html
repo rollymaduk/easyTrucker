@@ -8,9 +8,24 @@
     <div class="col-lg-4">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>{{type}}-{{registration}}</h5>
+                <h5>{{title}}</h5>
                 {{#if policyIsExpired}}
-                 <span class="label label-danger">policy expired!</span>
+                 <span class="label label-danger">expired!</span>
+                {{/if}}
+                {{#if isAssignMode}}
+                    {{#unless isOccupied}}
+                        <span class="label label-primary">available</span>
+                    {{else}}
+                        <span class="label label-danger">unavailable</span>
+                    {{/unless}}
+
+                 {{else}}
+                    {{#if matches.length}}
+                        <a href="{{pathFor 'filteredSchedules' status=matches hash='_id' }}"
+                           style="text-decoration:none;color:inherit;font:inherit;">
+                        <span class="label label-success">{{matches.length}} matches</span>
+                        </a>
+                    {{/if}}
                 {{/if}}
                 <div class="ibox-tools" >
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -20,9 +35,24 @@
                         <li><a   href="{{pathFor 'editTruck'}}">
                             <i class="fa fa-edit"></i> Edit Truck
                         </a>
-                         <a   href="{{pathFor 'editTruck'}}">
-                            <i class="fa fa-user"></i> Assign Driver
-                        </a>
+                            <a   href="#" class="duplicate-truck">
+                                <i class="fa fa-user "></i> Duplicate Truck
+                            </a>
+
+                            <a href="{{pathFor 'viewTruckSchedule'}}" class="view-schedule">
+                            <i class="fa fa-calendar"></i> View Schedule
+                            </a>
+                            {{#if isAssignMode}}
+                             <a   href="#" class="assign-driver">
+                                <i class="fa fa-user"></i> Assign Driver
+                            </a>
+                            {{else}}
+                            {{#if matches.length}}
+                                <a href="{{pathFor 'filteredSchedules' status=matches hash='_id' }}" class="view-matches">
+                                    <i class="fa fa-binoculars"></i> View Matches
+                                </a>
+                            {{/if}}
+                        {{/if}}
                         </li>
                     </ul>
 

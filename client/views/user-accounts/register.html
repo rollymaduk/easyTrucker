@@ -31,5 +31,8 @@
 </template>
 <template name="truckAuthority">
     <h2>Truck Authority</h2>
-    {{>quickForm schema='Form.TruckAuthority' type=formType doc=this.data buttonContent=false id='regTruckAuthorityForm'}}
+    {{#autoForm schema='Form.TruckAuthority' type=formType doc=this.data id='regTruckAuthorityForm'}}
+        {{>truckAuthorityControl }}
+    {{/autoForm}}
+    <!--{{>quickForm schema='Form.TruckAuthority' type=formType doc=this.data buttonContent=false id='regTruckAuthorityForm'}}-->
 </template>

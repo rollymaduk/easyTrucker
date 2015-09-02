@@ -1,0 +1,13 @@
+<template name="imageControl">
+    {{#if photo}}
+        {{#with FS.GetFile collection photo }}
+            {{#if this.isImage }}
+                <img class="{{../class}}" height="{{../height}}" width="{{../width}}" src="{{this.url }}" alt="profile image">
+            {{else}}
+                <img class="{{../class}}" height="{{../height}}" width="{{../width}}" src="{{photoPlaceHolder}}" alt="alternate text">
+            {{/if}}
+        {{/with}}
+    {{else}}
+        <img class="{{class}}" height="{{height}}" width="{{width}}" src="{{photoPlaceHolder}}" alt="alternate text">
+    {{/if}}
+</template>

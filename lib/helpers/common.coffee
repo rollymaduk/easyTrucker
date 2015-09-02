@@ -2,7 +2,9 @@
 CommonHelpers.getRoles=()->
   roles=Meteor?.user()?.roles
   if roles
-    _.values(roles)[0]
+    res=_.values(roles)[0]
+    console.log res
+    res
   else []
 
 CommonHelpers.generateUsername=(useremail,companyName)->
@@ -20,19 +22,27 @@ CommonHelpers.generatePassword=()->
   'password'
 
 CommonHelpers.getAllRoles=(type)->
+  console.log type
   switch type
     when 'shipper' then {clerk:'Clerk',shipper:'Administrator'}
     when 'trucker' then {driver:'Driver',accountant:'Accountant',trucker:'Administrator'}
     else null
+
+CommonHelpers.getNotificationAudience=(users,exlude)->
+  users=if _.isArray(users) then users else []
+  _.without(users,exlude)
 
 
 CommonHelpers.buildFilterQry=(filters)->
   query=filter:{}
   groups={}
   _.each(filters,(doc)->
-    if doc.value and doc.field
+    if  doc.field
       myOp={}
-      if doc.operator then myOp[doc.operator]=doc.value else myOp=doc.value
+      if doc.operator
+        myOp[doc.operator]=doc.value
+      else
+        myOp=doc.value
       myFilter={}
       myFilter[doc.field]=myOp
       if doc.group and doc.condition
@@ -51,6 +61,24 @@ CommonHelpers.buildFilterQry=(filters)->
 
 CommonHelpers.getFiltersForSchedule=(key)->
   switch
-    when !_.isEqual(key,STATE_BIDDED) then @buildFilterQry([{field:'status',value:key}])
-    else @buildFilterQry([{field:'totalBids',value:1,operator:'$gte'}])
+    when _.isEqual(key,STATE_BIDDED) then @buildFilterQry([{field:'bidders',value:Meteor.userId()}
+    ,{field:'status',value:STATE_NEW}])
+    when _.isEqual(key,STATE_UNMATCHED) then @buildFilterQry([{field:'truckers',value:0,operator:'$size'}
+    ,{field:'status',value:STATE_NEW}])
+    when _.isEqual(key,STATE_MATCHED)
+      if Meteor.user().isTrucker()
+        @buildFilterQry([{field:'truckers.owner',value:[Meteor.userId()],operator:'$in'},{field:'status',value:STATE_NEW}])
+      else
+        @buildFilterQry([{field:'truckers.owner',value:true,operator:'$exists'},{field:'status',value:STATE_NEW}])
+    when _.isEqual(key,STATE_BOOKED)
+      if Meteor.user().isTrucker()
+        @buildFilterQry([{field:'shipper',value:Meteor.userId()},{field:'status',value:STATE_BOOKED}])
+      else
+        @buildFilterQry([{field:'status',value:key}])
+    else
+      @buildFilterQry([{field:'status',value:key}])
+
+CommonHelpers.getFiltersForTrucks=(key)->
+  @buildFilterQry([{field:'_id',value:key?.split(",") or [],operator:'$in'}])
+
 

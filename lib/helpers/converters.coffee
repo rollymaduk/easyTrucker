@@ -50,4 +50,4 @@ Converters.convertSizeFromFeet=(value,metric)->
   else 0
 
 Converters.metersToRadians=(val)->
-  if val then val/6371000 else null
+  if val then val/6371000 else 0

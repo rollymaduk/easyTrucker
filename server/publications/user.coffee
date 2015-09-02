@@ -1,4 +1,5 @@
 Meteor.publish('userList',(domainroles)->
+  ###todo fix security hole here remove domainroles parameter###
   roles=domainroles?.roles
   group=domainroles?.group
   if roles and group
@@ -7,11 +8,12 @@ Meteor.publish('userList',(domainroles)->
     @ready()
 )
 
-Meteor.publish('userInfo',(id)->
+Meteor.publishRelations('userInfo',(id,withImage)->
   if @userId
+    withImage=withImage or false
     check(id,String)
-    console.log id
-    Meteor.users.find(id,fields:profile:1)
-  else
-    @ready()
+    @cursor  Meteor.users.find(id,fields:profile:1),(docId,doc)->
+      @cursor eZImages.find({_id:doc.profile.photo}) if withImage
+      null
+  @ready()
 )

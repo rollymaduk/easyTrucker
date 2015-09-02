@@ -12,10 +12,10 @@ Schema.Bid=new SimpleSchema
       else on
     autoform:
       omit:true
-  messages:
+  ###messages:
     type:[Form.Message]
     optional:true
-    defaultValue:[]
+    defaultValue:[]###
   proposedPickup:
     type:Form.TimeFrame
   proposedDelivery:

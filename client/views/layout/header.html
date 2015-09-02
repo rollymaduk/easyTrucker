@@ -15,8 +15,15 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">0</span>
+                        <i class="fa fa-envelope"></i>  <span class="label label-warning">{{messages.length}}</span>
                     </a>
+                    <ul class="dropdown-menu dropdown-messages">
+
+                        {{#each messages}}
+                            {{>messageNotifyItem}}
+                        {{/each}}
+
+                    </ul>
                     <!--<ul class="dropdown-menu dropdown-messages">
                         <li>
                             <div class="dropdown-messages-box">
@@ -68,13 +75,14 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">{{alertCount}}</span>
+                        <i class="fa fa-bell"></i>  <span class="label label-primary">{{alerts.length}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
                         {{#each alerts}}
                             {{>alertItem}}
                         {{/each}}
                         <li>
+
                             <div class="text-center link-block">
                                 <a href="#">
                                     <strong>See All Alerts</strong>
@@ -98,12 +106,49 @@
 </template>
 <template name="alertItem">
     <li>
-        <a href="mailbox.html">
-            <div>
-                <i class="fa fa-envelope fa-fw"></i>{{alertMsg this}}
-                <span class="pull-right text-muted small">{{tm_now elapsed}}</span>
-            </div>
-        </a>
+        {{#if isBidAlert}}
+            <a href="{{pathFor 'bidDetail' _id=notification.documentId }}">
+                <div>
+                    <i class="fa fa-bell"></i> {{notification.description}}
+                    <span class="pull-right text-muted small">{{tm_cal createdAt}}</span>
+                </div>
+            </a>
+            {{else}}
+            <a href="{{pathFor 'viewSchedule' _id=notification.documentId }}">
+                <div>
+                    <i class="fa fa-bell"></i> {{notification.description}}
+                    <span class="pull-right text-muted small">{{tm_cal createdAt}}</span>
+                </div>
+            </a>
+        {{/if}}
+
+    </li>
+    <li class="divider"></li>
+
+</template>
+
+<template name="messageNotifyItem">
+    <li>
+        <div class="dropdown-messages-box">
+                <div>
+                    <span class="fa fa-envelope" ></span>
+                    <small class="pull-right">{{tm_now notification.createdAt}}</small>
+                    {{#unless isBidAlert}}
+                        <a href="{{pathFor 'viewSchedule' _id=notification.documentId }}" class="text-muted">
+                            {{summarizeText notification.message 50}}
+                        </a>
+                    {{else}}
+                        <a href="{{pathFor 'bidDetail' _id=notification.documentId }}" class="text-muted">
+                            {{summarizeText notification.message 50}}
+                        </a>
+                    {{/unless}}
+                    <br>
+                    <span class="text-muted small pull-right">@{{identity owner}}</span>
+                    <span class="text-muted small">{{tm_cal notification.createdAt}}</span>
+
+                </div>
+
+        </div>
     </li>
     <li class="divider"></li>
 

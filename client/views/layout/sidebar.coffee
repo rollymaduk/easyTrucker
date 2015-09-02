@@ -10,7 +10,8 @@ Template.sidebar.helpers
       {title:"Bidded Loads",status:STATE_BIDDED,permissions:'canViewBiddedLoads'},
       {title:"UnMatched Loads",status:STATE_UNMATCHED,permissions:'canViewUnmatchedLoads'},
       {title:"Unfulfilled Loads",children:[
-        {status:STATE_BOOKED},
+        {status:STATE_BOOKED,permissions:'canViewAcceptedLoads'},
+        {status:STATE_ASSIGNED},
         {status:STATE_DISPATCH},
         {status:STATE_CANCELLED},
         {status:STATE_LATE},

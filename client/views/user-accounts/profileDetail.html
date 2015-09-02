@@ -1,16 +1,20 @@
 <template name="profileDetail">
-    {{#with this.profile}}
+
     <div class="col-md-4">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Profile Detail</h5>
                 <div class="ibox-tools">
-                    <a href="{{pathFor 'manageProfile'}}" class="btn btn-primary btn-xs "><i class="fa fa-pencil"></i> Edit profile</a>
+                    {{#if canEditProfile this._id}}
+                    <a href="{{pathFor 'manageProfile' }}" class="btn btn-primary btn-xs "><i class="fa fa-pencil"></i> Edit profile</a>
+                    {{/if}}
                 </div>
             </div>
+            {{#with this.profile}}
             <div>
                 <div class="ibox-content no-padding border-left-right">
-                    <img alt="image" class="img-responsive" src="/img/profile_big.jpg">
+                    {{>imageControl class='img-responsive' collection='eZFiles' photo=photo }}
+                    <!--image implementation here!-->
                 </div>
                 <div class="ibox-content profile-content">
                     <h4><strong>{{name}}</strong></h4>
@@ -36,6 +40,10 @@
                         {{/each}}
                     </p>
                     {{/if}}
+                    <strong>Certification:</strong>
+                    <p>
+                        {{>serviceCeritfication size=54 profile=this}}
+                    </p>
                     <h5>
                         About me
                     </h5>
@@ -68,7 +76,8 @@
                     </div>-->
                 </div>
             </div>
+            {{/with}}
         </div>
     </div>
-    {{/with}}
+
 </template>

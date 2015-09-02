@@ -1,7 +1,9 @@
 <template name="pickupCustom">
+
     <h2>Pickup Information</h2>
     {{#autoForm schema='Schema.Pickup' doc=pickupDoc buttonContent=false id='puf' }}
-        {{pickupDoc.pickupLocation.address.fullAddress}}
+
+        {{>afQuickField name='shipmentTitle'}}
         <div class="form-group{{#if afFieldIsInvalid name='wayBill'}} has-error{{/if}}">
             <div class="input-group">
 
@@ -41,4 +43,5 @@
             {{> afQuickFields name="pickupLocation.geometry"}}
         </div>
     {{/autoForm}}
+
 </template>

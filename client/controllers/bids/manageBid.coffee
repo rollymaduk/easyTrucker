@@ -1,3 +1,5 @@
+Template.manageBid.created=->
+  console.log @data
 Template.manageBid.rendered=->
   that=@
   AutoForm.hooks

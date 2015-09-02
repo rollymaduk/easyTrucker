@@ -20,7 +20,7 @@ TruckHelpers.setVolumeVisibility=(caseItem,temp,id)->
         temp.isBoxed.set('hidden')
         temp.isLiquid.set('hidden')
         temp.hasDoors.set('hidden')
-    _.delay @resizeWidget,200,100,temp,id
+    ###_.delay @resizeWidget,200,100,temp,id###
   else console.log 'Client only!'
 
 TruckHelpers.setCoverageVisibility=(caseItem,element,temp)->
@@ -29,7 +29,7 @@ TruckHelpers.setCoverageVisibility=(caseItem,element,temp)->
       when 'distance' then element.set(null)
       else
         element.set('hidden')
-    _.delay @resizeWidget,200,100,temp,'truckGeofenceForm'
+    ###_.delay @resizeWidget,200,100,temp,'truckGeofenceForm'###
   else console.log 'Client only!'
 
 TruckHelpers.getTruckSpecsQuery=(specsObj,prefix,reverse)->
@@ -56,7 +56,7 @@ TruckHelpers.getTruckSpecsQuery=(specsObj,prefix,reverse)->
 TruckHelpers.buildTruckMatchQuery=(specsObj,prefix,reverse,coordinates,radius,distance)->
   truck_qry=@getTruckSpecsQuery(specsObj,prefix,reverse)
 
-  _.extend(truck_qry,{status:$in:[STATE_UNMATCHED,STATE_MATCHED]})
+  _.extend(truck_qry,{status:STATE_NEW})
 
   if distance
     _.extend(truck_qry,'shipmentDistance':$lte:distance)

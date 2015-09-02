@@ -4,19 +4,22 @@
         {{else}}
         {{>pageHeader title='Loads' btnTitle='create new Load' link='newSchedule'}}
     {{/unless}}
-
+    {{#if this.length}}
     {{#each this}}
         <div class="col-md-4">
 
             {{>scheduleItem}}
         </div>
     {{/each}}
+    {{else}}
+    <h2>No items found!</h2>
+    {{/if}}
 
 </template>
 <template name="scheduleItem">
     <div class="ibox ">
         <div class="ibox-title">
-            <span class="label {{formatStatus status}}">{{status}}</span>
+            <span class="label {{formatStatus state}}">{{state}}</span>
             <span class="small" {{Rp_allow 'canViewbidList'}}>&nbsp;|&nbsp;<a href="{{pathFor 'bidList'}}">
                 {{bidCount}} bid(s)</a> </span>
 
@@ -29,18 +32,15 @@
                     <i class="fa fa-wrench"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="{{pathFor 'viewSchedule'}}">View</a></li>
-                    <li {{Rp_allow 'canEditLoad,canManageLoad'}}><a href="{{pathFor 'editSchedule'}}">Edit Load</a>
-                    </li>
-                    <li {{Rp_allow 'canEditbid,canManagebid'}}><a href="{{pathFor 'viewSchedule' hash='placeBid'}}">
-                        {{#if hasBid}}
-                            Manage bid
-                            {{else}}
-                            Place a bid
-                        {{/if}}</a>
-                    </li>
+                    <li>
+                    <a href="{{pathFor 'viewSchedule'}}">View</a>
 
-                    <li><a href="#">Close Load</a>
+                    <a href="{{pathFor 'editSchedule'}}" {{Rp_allow "canEditLoad,canManageLoad"  }}>Edit Load</a>
+
+
+                    <a href="#" class="duplicate-load" {{Rp_allow 'canEditLoad,canManageLoad'}}>Duplicate Load</a>
+
+                    {{>schedule_actions item=this}}
                     </li>
                 </ul>
                 <a class="remove-schedule" href="">

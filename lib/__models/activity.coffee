@@ -2,29 +2,23 @@ Schema.Activity=new SimpleSchema
   isNew:
     type:Boolean
     defaultValue:true
-  parentId:
+    autoform:
+      type:'hidden'
+      label:false
+  description:
     type:String
-    optional:true
-  objectId:
+  documentId:
     type:String
-  message:
+    autoform:
+      type:'hidden'
+      label:false
+  collectionName:
     type:String
-    max:250
-  tag:
-    type:String
-  createdAt:
-    type:Date
-    autoValue:()->
-      if @isInsert then new Date;
-      else if @isUpsert then $setOnInsert:new Date
-      else @unset()
-  owner:
-    type:String
-    autoValue:()->
-      if @isInsert then Meteor.userId()
-      else if @isUpsert then $setOnInsert:Meteor.userId()
-      else @unset()
+    autoform:
+      type:'hidden'
+      label:false
   audience:
     type:[String]
-    minCount:1
+    defaultValue:[]
+
 

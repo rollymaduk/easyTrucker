@@ -1,0 +1,56 @@
+<template name="agile_board">
+    {{#unless canInsert}}
+        {{>pageHeader title='Loads' }}
+    {{else}}
+        {{>pageHeader title='Loads' btnTitle='create new Load' link='newSchedule'}}
+    {{/unless}}
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h3>New Jobs</h3>
+                {{>jobListItem items=newJobs}}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h3>In Progress</h3>
+                {{>jobListItem items=inProgressJobs}}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h3>Completed</h3>
+                {{>jobListItem items=completeJobs}}
+            </div>
+        </div>
+
+    </div>
+
+</template>
+
+<template name="jobListItem">
+    <ul class="sortable-list connectList agile-list ui-sortable">
+        {{#each items}}
+            {{>jobItem}}
+        {{/each}}
+    </ul>
+</template>
+<template name="jobItem">
+    <li class="{{formatElement state}} work-item">
+        {{shipmentTitle}}
+        <div class="agile-detail">
+            {{>schedule_actions item=this btnClasses="pull-right btn btn-xs btn-white"}}
+            <i class="fa fa-clock-o"></i>
+            {{#if updatedAt}}
+                {{tm_cal updatedAt}}
+            {{else}}
+                {{tm_cal createdAt}}
+            {{/if}}
+        </div>
+        <span class="label {{formatStatus state}}">{{state}}</span>
+    </li>
+</template>

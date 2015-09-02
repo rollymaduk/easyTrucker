@@ -37,42 +37,10 @@ Template.manageSchedule.helpers
     (e)->
       data=@getAllData()
       data._id=scheduleId
-      data.pickupLocation.geometry.loc=
-        GeoDataHelper.createPointGeoJSON(data.pickupLocation.geometry.lng,data.pickupLocation.geometry.lat)
 
-      data.dropOffLocation.geometry.loc=
-        GeoDataHelper.createPointGeoJSON(data.dropOffLocation.geometry.lng,data.dropOffLocation.geometry.lat)
-      ###find trucks and companies to append to###
-      ###volume dimension###
-      distFromPickup=GeoJSON.pointDistance(data.pickupLocation.geometry.loc,data.dropOffLocation.geometry.loc)
+      Meteor.call 'addUpdateSchedule',data,(err,res)->
+        unless err then Router.go 'scheduleList' else console.log err
 
-      data.shipmentDistance=distFromPickup
-
-      Meteor.call 'searchTrucks',{$group:_id:null,dist:$max:'$dropOffSettings.coverageDistance.value'},(err,res)->
-        if res
-          matchObj=TruckHelpers.getTruckSpecsQuery(data.specs)
-
-          _.extend(matchObj,{$or:[{'baseLocation.geometry.loc':{$geoWithin:$centerSphere:[data.pickupLocation.geometry.loc.coordinates
-            ,Converters.metersToRadians(res[0].dist)]}},{'pickupSettings.coverage':$in:['international','usa']}]}
-          ,{$or:['dropoffSettings.coverage':$in:['international','usa'],{'dropoffSettings.coverageDistance.value':$gte:distFromPickup}]})
-          ###geoSpatQry=$geoNear:{near:data.pickupLocation.geometry.loc
-            ,distanceField:'dist.calculated',maxDistance:5000,query:matchObj,spherical:true,includeLocs:'distance.location'}###
-          console.log matchObj;
-
-          pipeline=[$match:matchObj,{$group:_id:'$owner',trucks:$push:'$_id'}]
-
-          console.log pipeline
-
-          Meteor.call 'searchTrucks',pipeline,(err,res)->
-            unless err
-              console.log res
-              if res
-                data.truckers=({owner:item._id,trucks:item.trucks} for item in res)
-                data.status=STATE_MATCHED
-              else
-                data.status=STATE_UNMATCHED
-              Meteor.call 'addUpdateSchedule',data, (err,res)->
-                Router.go 'scheduleList' if res
 
   oncanceled:->
     (e)->Router.go 'scheduleList'
@@ -96,6 +64,7 @@ Template.manageSchedule.helpers
         template:Template.memo
         data:@||{}
       }
+
     ]
 
 AutoForm.hooks

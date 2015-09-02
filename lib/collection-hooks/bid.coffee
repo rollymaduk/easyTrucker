@@ -1,20 +1,18 @@
-service=new NotificationService()
+
+collectionName=COLLECTION_BID
+
 
 Bids.after.update (user,doc,fieldnames,modifier,options)->
-  if (not _.isEqual(@previous.proposedDelivery,doc.proposedDelivery) or not _.isEqual(@previous.rate,doc.rate))
-    objectId=doc._id
-    message=NotifyMessage.updateBid(doc.rate,doc.proposedDelivery)
-    tag=NotifyTag.updateBid
-    schedule=Schedules.findOne(doc.schedule)
-    service.createNotification(message,objectId,doc.schedule,[schedule.owner],tag)
+  ###todo: add activity for bid updates###
 
 
 Bids.after.insert (user,doc)->
-  objectId=@_id
-  message=NotifyMessage.newBid
-  tag=NotifyTag.newBid
   schedule=Schedules.findOne(doc.schedule)
-  schedule.totalBids=schedule.totalBids+1
-  Meteor.call "addUpdateSchedule",schedule,(err,res)->
-    if res then service.createNotification(message,objectId,doc.schedule,[schedule.owner],tag)
-    else console.log err
+  modifier= $inc:{totalBids:1},$addToSet:bidders:doc.owner
+  qry=_id:doc.schedule
+  Meteor.call "updateSchedule",qry,modifier,(err,res)->
+    if res
+      message="NEW[BID]: #{schedule.wayBill}-#{Meteor.user().company()}"
+      activity={description:message,documentId:doc._id,collectionName:collectionName,audience:[schedule.owner]}
+      Meteor.call 'createActivity',activity
+

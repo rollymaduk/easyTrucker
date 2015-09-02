@@ -1,0 +1,18 @@
+<template name="chooseDriverModal">
+    {{#modal title="Schedule"}}
+    {{#autoForm id='chooseDriverForm' schema='Form.Driver'}}
+        {{> afQuickField  name='driver' type="selectize" selectize=driverSelectize }}
+    {{/autoForm}}
+        {{>modalfooter}}
+    {{/modal}}
+</template>
+<template name="chooseDriverItem">
+    <div class="chat-user">
+        <object class="chat-avatar" data="{{this.photo}}" >
+            <img class="chat-avatar" src="{{photoPlaceHolder}}" alt="alternate text">
+        </object>
+        <div class="chat-user-name">
+            <a href="#">{{this.firstname}} {{this.lastname}}</a>
+        </div>
+    </div>
+</template>

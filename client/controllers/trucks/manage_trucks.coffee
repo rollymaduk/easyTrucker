@@ -58,31 +58,11 @@ Template.manageTruck.helpers
     (e)->
       data=@getAllData()
       data._id=truckId
-      data.baseLocation.geometry.loc=
-        GeoDataHelper.createPointGeoJSON(data.baseLocation.geometry.lng,data.baseLocation.geometry.lat)
 
-      truckSpecs= _.defaults({},@getStepData(Template.truckSpecs))
-      Schema.TruckSpecs.clean(truckSpecs)
-      radius=data.pickupSettings?.coverageDistance?.value
-      distance=data.dropoffSettings?.coverageDistance?.value
+      Meteor.call 'addUpdateTruck',data,(err,res)->
+        unless err then Router.go('truckList') else console.log err
 
-      truck_qry=TruckHelpers.buildTruckMatchQuery(truckSpecs,'specs.'
-      ,true,data.baseLocation.geometry.loc.coordinates,radius,distance)
 
-      pipeline=[$match:truck_qry,{$project:_id:1}]
-
-      Meteor.call 'addTruck',data,(err,res)->
-        if res
-          truck=data._id or res
-          Meteor.call 'searchSchedules',pipeline,(err,res)->
-            if res
-              schedules=if(res.length) then _.pluck(res,'_id')else []
-              Meteor.call 'updateScheduleTrucker',schedules,Meteor.userId(),truck,(err,res)->
-                if err then console.log err
-              Router.go 'truckList'
-            else console.log err
-        null
-      null
   oncanceled:->
     (e)->Router.go('truckList')
 

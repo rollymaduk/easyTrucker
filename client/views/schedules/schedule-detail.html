@@ -8,12 +8,15 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="m-b-md">
-                                    <div class="row pull-right">
+                                    <div class="row pull-right" style="margin-right:1%">
                                        <!-- {{#unless showManageBid}}-->
 
                                            &nbsp;&nbsp;
                                       <!--  {{/unless}}-->
-
+                                           <a href="{{pathFor 'editSchedule'}}" style="color: inherit" class=" edit-request">
+                                               <span class=" glyphicon gly glyphicon-pencil"></span>
+                                           </a>
+                                           &nbsp;&nbsp;
                                             <a href="{{pathFor 'scheduleList'}}" style="color: inherit" class=" close-bid">
                                                 <span class=" glyphicon gly glyphicon-remove"></span>
                                             </a>
@@ -23,21 +26,21 @@
                                 <h2>{{shipmentTitle}}<span class="small">-{{wayBill}}</span></h2>
                             </div>
                             <dl class="dl-horizontal">
-                                <dt>Status:</dt> <dd><span class="label {{formatStatus status}}">{{status}}</span></dd>
+                                <dt>Status:</dt> <dd><span class="label {{formatStatus state}}">{{state}}</span></dd>
                             </dl>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-5">
                             <dl class="dl-horizontal">
-                                <dt>Pickup Date:</dt> <dd>{{tm_locale pickupDate}}</dd>
+                                <dt>Pickup Date:</dt> <dd>{{>dateFormatter date=pickupDate}}</dd>
                                 <dt>Pickup Location:</dt> <dd>{{pickupLocation.address}}</dd>
                                 <dt>Pickup Client:</dt> <dd>{{sender}}</dd>
                             </dl>
                         </div>
                         <div class="col-lg-7" id="cluster_info">
                             <dl class="dl-horizontal">
-                                <dt>DropOff Date:</dt> <dd>{{tm_locale dropOffDate}}</dd>
+                                <dt>DropOff Date:</dt> <dd>{{>dateFormatter date=dropOffDate}}</dd>
                                 <dt>DropOff Location:</dt> <dd>{{dropOffLocation.address}}</dd>
                                 <dt>DropOff Client:</dt> <dd>{{receiver}}</dd>
                             </dl>
@@ -91,7 +94,7 @@
                     </div>
                     <div class="row m-t-sm">
                         <div class="col-lg-12">
-                            {{>comments doc=this comments=this.comments formId='scheduleCommentsForm'}}
+                            {{>comments insertDoc=commentInsertDoc comments=comments }}
                         </div>
                     </div>
                 </div>

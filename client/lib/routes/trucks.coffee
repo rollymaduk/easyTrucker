@@ -8,9 +8,31 @@ Router.map ()->
       else
         @render 'home'
         null
+    data:->
+      Trucks.find()
+    waitOn:->
+      Meteor.subscribe('trucks')
+  )
 
-    data:->Trucks.find()
-    waitOn:->Meteor.subscribe('truckList',50))
+  @route('filteredTruckList',
+    path:'/app/filteredTrucks/:trucks'
+    template:'truckList'
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewTruck','canManageTruck'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
+    onStop:->
+      if Session.get('acceptedRequestItem') then Session.set('acceptedRequestItem',undefined)
+    data:->
+      Trucks.find()
+    waitOn:->
+      qry=CommonHelpers.getFiltersForTrucks(@params.trucks)
+      console.log qry
+      Meteor.subscribe('trucks',qry)
+  )
 
   @route('addTruck',
     path:'/app/truck/new'
@@ -37,4 +59,7 @@ Router.map ()->
     waitOn:-> Meteor.subscribe('truckItem',@params._id)
     template:"manageTruck"
   )
+
+
+
   null
