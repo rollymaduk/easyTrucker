@@ -2,6 +2,8 @@ Router.configure {
   layoutTemplate:'main'
   waitOn:()->
     Meteor.subscribe('notifications') if Meteor.userId()
+    photo=Meteor?.user()?.profile?.photo
+    Meteor.subscribe('eZImages',{_id:photo}) if photo
 }
 
 Router.onBeforeAction(

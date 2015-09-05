@@ -17,6 +17,12 @@ Template.bidListItem.events
               Router.go 'filteredSchedules',{status:STATE_BOOKED}
         else false
 
+Template.bidListItem.helpers
+  activity:->
+    Activities.findOne({documentId:@_id},{sort:{createdAt:-1}})
+
+  message:->
+    Messages.findOne({documentId:@_id},{sort:{createdAt:-1}})
 
 Template.bidList.helpers
   canInsert:()->

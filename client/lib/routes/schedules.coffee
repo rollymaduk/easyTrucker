@@ -83,13 +83,13 @@ Router.map ()->
         null
     data:->Schedules.findOne(@params._id),
     waitOn:->
-      Meteor.subscribe('scheduleItem',@params._id)
+      Meteor.subscribe('scheduleDetailItem',@params._id)
     template:"manageSchedule")
 
   @route('viewSchedule',
     path:'/app/loads/view/:_id',
     data:->Schedules.findOne(@params._id),
-    waitOn:->Meteor.subscribe('scheduleItem',@params._id)
+    waitOn:->Meteor.subscribe('scheduleDetailItem',@params._id)
     template:"scheduleDetail")
 
 

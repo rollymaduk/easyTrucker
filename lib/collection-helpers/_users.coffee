@@ -1,4 +1,5 @@
 Meteor.users.helpers
+
   isTrucker:->
     _.contains(_.values(@roles)[0],'trucker')
   role:->

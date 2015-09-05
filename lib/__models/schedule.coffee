@@ -35,6 +35,8 @@ Schema.DropOff=new SimpleSchema
     autoform:
      omit:true
 
+@dropSchemaContext=Schema.DropOff.namedContext('dof')
+
 ###Schema.AddressPropertySchema=new SimpleSchema
   address:
     type:Schema.AddressSchema
@@ -57,6 +59,9 @@ Schema.Memo=new SimpleSchema
   'truckers.$.trucks':
     optional:true
     type:[String]
+  maximumBidPrice:
+    type:Number
+    optional:true
   memo:
     type:Object
     optional:true
@@ -78,53 +83,56 @@ Schema.Memo=new SimpleSchema
         'remove-label':"change file"
 
 
-Schema.Schedule=new SimpleSchema
-  status:
-    type:String
-    allowedValues:[STATE_NEW,STATE_BOOKED,STATE_DISPATCH,STATE_CANCELLED,STATE_LATE,STATE_ISSUE,STATE_SUCCESS,STATE_ASSIGNED]
-    defaultValue:STATE_NEW
-  shipmentDistance:
-    type:Number
-    decimal:true
-    autoform:
-      omit:true
-  totalBids:
-    type:Number
-    defaultValue:0
-    optional:true
-    autoform:
-      omit:true
-  bidders:
-    type:[String]
-    optional:true
-    defaultValue:[]
-  messages:
-    type:[Form.Message]
-    defaultValue:[]
-    optional:true
-  owner:
-    type:String
-    autoValue:()->
-      if @isInsert then Meteor.userId()
-      else if @isUpsert then $setOnInsert:Meteor.userId()
-      else @unset()
-  winningBid:
-    type:Object
-    optional:true
-  'winningBid.bidder':
-    type:String
-  'winningBid.bid':
-    type:String
-  resource:
-    type:Object
-    optional:true
-  'resource.truck':
-    type:String
-    optional:true
-  'resource.driver':
-    type:String
-    max:250
-    optional:true
+Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
+  {
+    status:
+      type: String
+      allowedValues: [STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
+                      STATE_ASSIGNED]
+      defaultValue: STATE_NEW
+    shipmentDistance:
+      type: Number
+      decimal: true
+      autoform:
+        omit: true
+    totalBids:
+      type: Number
+      defaultValue: 0
+      optional: true
+      autoform:
+        omit: true
+    bidders:
+      type: [String]
+      optional: true
+      defaultValue: []
+    messages:
+      type: [Form.Message]
+      defaultValue: []
+      optional: true
+    owner:
+      type: String
+      autoValue: ()->
+        if @isInsert then Meteor.userId()
+        else if @isUpsert then $setOnInsert: Meteor.userId()
+        else @unset()
+    winningBid:
+      type: Object
+      optional: true
+    'winningBid.bidder':
+      type: String
+    'winningBid.bid':
+      type: String
+    resource:
+      type: Object
+      optional: true
+    'resource.truck':
+      type: String
+      optional: true
+    'resource.driver':
+      type: String
+      max: 250
+      optional: true
+  }])
 
 
 

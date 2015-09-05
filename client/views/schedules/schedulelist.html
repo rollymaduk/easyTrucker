@@ -19,8 +19,9 @@
 <template name="scheduleItem">
     <div class="ibox ">
         <div class="ibox-title">
-            <span class="label {{formatStatus state}}">{{state}}</span>
-            <span class="small" {{Rp_allow 'canViewbidList'}}>&nbsp;|&nbsp;<a href="{{pathFor 'bidList'}}">
+            <span class="label {{formatStatus state}}">{{state}}</span>&nbsp;
+
+            <span class="small" {{Rp_allow 'canViewbidList'}} {{visibleWhen status 'new'}} >&nbsp;|&nbsp;<a href="{{pathFor 'bidList'}}">
                 {{bidCount}} bid(s)</a> </span>
 
 

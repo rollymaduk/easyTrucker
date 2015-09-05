@@ -7,10 +7,16 @@ class @TransactionService
     result
 
   addUpdateBids:(bid)->
-    unless bid._id
-      result= Bids.insert(bid)
-    else
-      result=Bids.update(bid._id,$set:bid)
-    result
+    schedule=Schedules.findOne(bid.schedule)
+    isValid=true
+    if schedule.maximumBidPrice
+      isValid=schedule.maximumBidPrice>=bid.qoute
+    if isValid
+      unless bid._id
+        result= Bids.insert(bid)
+      else
+        result=Bids.update(bid._id,$set:bid)
+      result
+    else throw new Meteor.Error('Invalid Qoute!','Qouted price must be less or equal to max bid price')
 
 

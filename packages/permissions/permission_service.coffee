@@ -4,6 +4,7 @@ class PermService
 
   subscribeHandle=null
   isActive=new ReactiveVar(false)
+  _internalPerm=new ReactiveVar([])
   subscribe_to_perm=(roles,callback)->
     isActive.set(true)
     if subscribeHandle
@@ -24,6 +25,7 @@ class PermService
     if(Meteor.isClient)
       subscribe_to_perm(roles,()=>
         @currentPermissions=R_polly_permissions.find(filter).map (doc)->doc.permission
+        _internalPerm.set(@currentPermissions)
         callback.call @,@currentPermissions if callback
       )
       null
@@ -31,11 +33,12 @@ class PermService
       R_polly_permissions.find(filter).map (doc)->doc.permission
 
   hasPermissions:(perm)->
-    perm=unless _.isArray(perm) then [perm] else perm
-    if(Meteor.isClient)
-      _.intersection(@currentPermissions,perm).length>0
-    else
-      R_polly_permissions.find({permissions:$in:perm}).count()>0
+    if Meteor.userId()
+      perm=unless _.isArray(perm) then [perm] else perm
+      if(Meteor.isClient)
+        _.intersection(_internalPerm.get(),perm).length>0
+      else
+        R_polly_permissions.find({permissions:$in:perm}).count()>0
 
 
   createPermissions:(permObj...)->

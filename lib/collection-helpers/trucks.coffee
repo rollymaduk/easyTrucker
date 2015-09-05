@@ -69,13 +69,4 @@ Trucks.helpers
     metric=@dropoffSettings?.coverageDistance?.metric
     getCoverageDescription(@dropoffSettings.coverage,distance,metric,"pickup location")
   volume:()->
-    if @boxedVolume
-      width=Converters.convertSizeFromFeet(@boxedVolume.width,@boxedVolume.metric)
-      length=Converters.convertSizeFromFeet(@boxedVolume.length,@boxedVolume.metric)
-      height=Converters.convertSizeFromFeet(@boxedVolume.height,@boxedVolume.metric)
-
-      "W:#{width}#{@boxedVolume.metric} x L:#{length}#{@boxedVolume.metric} x H:#{height}#{@boxedVolume.metric}"
-    else if @liquidVolume
-      value=Converters.convertVolumeFromLitre(@liquidVolume.value,@liquidVolume.metric)
-      "#{value}#{@liquidVolume.metric}"
-    else 'nil'
+    CommonHelpers.getTruckVolume(@)

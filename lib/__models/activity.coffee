@@ -5,6 +5,8 @@ Schema.Activity=new SimpleSchema
     autoform:
       type:'hidden'
       label:false
+  title:
+    type:String
   description:
     type:String
   documentId:

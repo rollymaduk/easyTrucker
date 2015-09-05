@@ -1,14 +1,22 @@
-Meteor.publish 'bids',(qry)->
+Meteor.publishRelations 'bids',(qry)->
   isSchedule=isSchedule or false
   if(@userId)
-    cursor=Bids.find(qry)
-    Bids.publishJoinedCursors(cursor)
+    @cursor Bids.find(qry),(docId,doc)->
+      @cursor Activities.find({documentId:docId},{limit:1,sort:{createdAt:-1}}) if docId
+      @cursor Messages.find({documentId:docId},{limit:1,sort:{createdAt:-1}}) if docId
+      @cursor Meteor.users.find(doc.owner,{fields:profile:1}) if doc.owner
+      null
+    @ready()
 
-Meteor .publishRelations 'bidItem',(qry)->
+
+    ### Bids.publishJoinedCursors(cursor)###
+
+Meteor.publishRelations 'bidItem',(qry)->
   @cursor Bids.find(qry),(docId,doc)->
-    @cursor Schedules.find(doc.schedule)
-    @cursor Messages.find({documentId:docId})
-    @cursor Activities.find(documentId:docId)
+    @cursor Schedules.find(doc.schedule,{fields:{status:1,shipmentTitle:1,owner:1,pickupDate:1,dropOffDate:1,maximumBidPrice:1}}) if doc.schedule
+    @cursor Messages.find({documentId:docId}) if docId
+    @cursor Activities.find(documentId:docId) if docId
+    @cursor Meteor.users.find(doc.owner,{fields:profile:1}) if doc.owner
     null
   @ready()
 ###

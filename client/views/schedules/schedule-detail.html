@@ -4,97 +4,202 @@
         <div class="col-lg-9">
             <div class="ibox">
                 <div class="ibox-content">
-
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="m-b-md">
-                                    <div class="row pull-right" style="margin-right:1%">
-                                       <!-- {{#unless showManageBid}}-->
+                                <div class="row pull-right" style="margin-right:1%">
+                                <!-- {{#unless showManageBid}}-->
 
-                                           &nbsp;&nbsp;
-                                      <!--  {{/unless}}-->
-                                           <a href="{{pathFor 'editSchedule'}}" style="color: inherit" class=" edit-request">
-                                               <span class=" glyphicon gly glyphicon-pencil"></span>
-                                           </a>
-                                           &nbsp;&nbsp;
-                                            <a href="{{pathFor 'scheduleList'}}" style="color: inherit" class=" close-bid">
-                                                <span class=" glyphicon gly glyphicon-remove"></span>
-                                            </a>
+                                    &nbsp;&nbsp;
+                                        <!--  {{/unless}}-->
+                                    <a href="{{pathFor 'editSchedule'}}" style="color: inherit" class=" edit-request">
+                                        <span class=" glyphicon gly glyphicon-pencil"></span>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="{{pathFor 'scheduleList'}}" style="color: inherit" class=" close-bid">
+                                        <span class=" glyphicon gly glyphicon-remove"></span>
+                                    </a>
+
+                                </div>
+
+                               <div><h2> {{shipmentTitle}}<span class="small">-{{wayBill}}</span></h2>
+                                   <span class="label {{formatStatus state}}">{{state}} </span> &nbsp;&nbsp;
+                                   <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Pickup/Delivery</a>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <dl class="dl-horizontal">
+                                                <dt>Pickup Date:</dt> <dd>{{>dateFormatter date=pickupDate}}</dd>
+                                                <dt>Pickup Location:</dt> <dd>{{pickupLocation.address}}</dd>
+                                                <dt>Pickup Client:</dt> <dd>{{sender}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-lg-7" id="cluster_info">
+                                            <dl class="dl-horizontal">
+                                                <dt>DropOff Date:</dt> <dd>{{>dateFormatter date=dropOffDate}}</dd>
+                                                <dt>DropOff Location:</dt> <dd>{{dropOffLocation.address}}</dd>
+                                                <dt>DropOff Client:</dt> <dd>{{receiver}}</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="row " >
+                                        <div class="col-lg-12 ">
+
+                                            <dl class="dl-horizontal" >
+                                                <dt >Bids</dt>
+
+                                                <dd >
+
+                                                    {{#unless totalBids}}
+                                                        <p class="text-center gray-bg">
+                                                            {{#unless canManageBid}}
+                                                                <small class="no-bid-warning"><i class="fa fa-warning"></i> There are currently no bids on this load</small>
+                                                            {{else}}
+                                                                <a href="{{pathFor 'newBid'}}">
+                                                                    <small class="no-bid-warning"><i class="fa fa-warning"></i> There are currently no bids on this , click here to add your bid!</small>
+                                                                </a>
+                                                            {{/unless}}
+                                                        </p>
+                                                    {{else}}
+                                                        <a href="{{pathFor 'bidList'}}" >
+                                                            {{totalBids}} Bid(s)
+                                                        </a>
+
+                                                    {{/unless}}
+                                                </dd>
+
+                                            </dl>
+
+                                        </div>
 
                                     </div>
-
-                                <h2>{{shipmentTitle}}<span class="small">-{{wayBill}}</span></h2>
+                                </div>
                             </div>
-                            <dl class="dl-horizontal">
-                                <dt>Status:</dt> <dd><span class="label {{formatStatus state}}">{{state}}</span></dd>
-                            </dl>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Vehicle Specs</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <dl class="dl-horizontal">
+                                                <dt>Truck type:</dt> <dd>{{specs.type}}</dd>
+                                                <dt>Truck doors:</dt> <dd>{{specs.doors}}</dd>
+                                                <dt>Truck weight</dt> <dd>{{specs.weight}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-lg-7" id="cluster_info">
+                                            <dl class="dl-horizontal">
+                                                <dt>Truck volume Type:</dt> <dd>{{specs.volumeType}}</dd>
+                                                <dt>Truck volume:</dt> <dd>{{truckSpecsVolume}}</dd>
+                                                <!--<dt>DropOff Client:</dt> <dd>{{receiver}}</dd>-->
+                                            </dl>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Memo</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                {{#if memo.notes}}
+                                    <div class="row">
+                                    <div class="col-lg-12 ">
+
+                                            <dl class="dl-horizontal" >
+                                                <dt>Notes: </dt>
+                                                <dd>
+                                                    <small class="no-bid-warning"> {{memo.notes}}</small>
+                                                </dd>
+                                                </dl>
+                                      </div>
+                                    </div>
+                                {{/if}}
+                                {{#if files.length}}
+                                    <div class="row">
+                                        <div class="col-lg-12 ">
+
+                                                <dl class="dl-horizontal" >
+                                                    <dt >files: </dt>
+                                                    <dd >
+                                                        <ul class="tag-list" style="padding: 0">
+                                                            {{#each files}}
+                                                                <li><a href="{{this.url}}"><i class="fa fa-file"></i> {{this.name}}</a></li>
+                                                            {{/each}}
+                                                        </ul>
+                                                    </dd>
+                                                </dl>
+
+                                        </div>
+
+                                    </div>
+                                {{/if}}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <dl class="dl-horizontal">
-                                <dt>Pickup Date:</dt> <dd>{{>dateFormatter date=pickupDate}}</dd>
-                                <dt>Pickup Location:</dt> <dd>{{pickupLocation.address}}</dd>
-                                <dt>Pickup Client:</dt> <dd>{{sender}}</dd>
-                            </dl>
-                        </div>
-                        <div class="col-lg-7" id="cluster_info">
-                            <dl class="dl-horizontal">
-                                <dt>DropOff Date:</dt> <dd>{{>dateFormatter date=dropOffDate}}</dd>
-                                <dt>DropOff Location:</dt> <dd>{{dropOffLocation.address}}</dd>
-                                <dt>DropOff Client:</dt> <dd>{{receiver}}</dd>
-                            </dl>
-                        </div>
-                    </div>
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-3" aria-expanded="true"> <i class="fa fa-envelope"></i></a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false"><i class="fa fa-magic"></i></a></li>
 
-                    <div class="row " >
-                        <div class="col-lg-12 ">
+                        </ul>
+                        <div class="tab-content">
 
-                            <dl class="dl-horizontal" >
-                                <dt >Bids</dt>
+                            <div id="tab-3" class="tab-pane active">
+                                <div class="panel-body">
+                                    <div class="row m-t-sm">
+                                        <div class="col-lg-12">
+                                            {{>comments insertDoc=commentInsertDoc comments=comments }}
+                                        </div>
+                                    </div>
 
-                                    <dd >
-
-                                            {{#unless totalBids}}
-                                                <p class="text-center gray-bg">
-                                                    {{#unless canManageBid}}
-                                                    <small class="no-bid-warning"><i class="fa fa-warning"></i> There are currently no bids on this load</small>
-                                                    {{else}}
-                                                <a href="{{pathFor 'newBid'}}">
-                                                <small class="no-bid-warning"><i class="fa fa-warning"></i> There are currently no bids on this , click here to add your bid!</small>
-                                                </a>
-                                                {{/unless}}
-                                                </p>
-                                            {{else}}
-                                            <a href="{{pathFor 'bidList'}}" >
-                                                {{totalBids}} Bid(s)
-                                            </a>
-                                                &nbsp;
-                                                 <span  {{Rp_allow 'canEditbid,canManagebid'}}>
-                                                     {{#unless bid}}
-                                                         <a href="{{pathFor 'newBid'}}" class="btn btn-primary btn-xs place-bid">
-                                                             Place a bid
-                                                         </a>
-                                                     {{else}}
-                                                         {{#with bid}}
-                                                             <a href="{{pathFor 'bidDetail'}}" class="btn btn-primary btn-xs place-bid">
-                                                                 View my bid
-                                                             </a>
-                                                         {{/with}}
-                                                     {{/unless}}
-
-                                                 </span>
-                                            {{/unless}}
-                                    </dd>
-
-                            </dl>
-
-                        </div>
-
-                    </div>
-                    <div class="row m-t-sm">
-                        <div class="col-lg-12">
-                            {{>comments insertDoc=commentInsertDoc comments=comments }}
+                                </div>
+                            </div>
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body inspinia-timeline">
+                                    {{#if activities.length}}
+                                        {{#each activities}}
+                                            <div class="timeline-item">
+                                        <div class="row">
+                                            <div class="col-xs-3 date">
+                                                <i class="fa fa-briefcase"></i>
+                                                {{tm_cal createdAt}}
+                                                <br>
+                                                <small class="text-navy">{{tm_now createdAt}}</small>
+                                            </div>
+                                            <div class="col-xs-7 content no-top-border">
+                                                <p class="m-b-xs"><strong>{{title}}</strong></p>
+                                                <p>{{description}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        {{/each}}
+                                    {{/if}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

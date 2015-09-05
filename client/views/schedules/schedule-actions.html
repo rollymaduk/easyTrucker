@@ -1,6 +1,12 @@
 <template name="schedule_actions">
     {{#unless item.canAssignResource}}
+        {{#if item.bidCount}}
+            {{#unless hideBids}}
+            <a href="{{pathFor 'bidList' _id=item._id }}" class="{{btnClasses}}"
+                  {{visibleWhen item.status 'new'}} {{Rp_allow 'canViewbidList'}}>View bids({{item.bidCount}})</a>
+            {{/unless}}
 
+        {{/if}}
             {{#if item.hasBid}}
                 <a href="{{pathFor 'bidDetail' _id=item.bid._id }}" class="{{btnClasses}}" {{visibleWhen item.status 'new'}} {{Rp_allow 'canEditbid,canCreatebid,canManagebid'}}>Manage bid</a>
             {{else}}

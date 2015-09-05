@@ -32,6 +32,17 @@ CommonHelpers.getNotificationAudience=(users,exlude)->
   users=if _.isArray(users) then users else []
   _.without(users,exlude)
 
+CommonHelpers.getTruckVolume=(context)->
+  if context.boxedVolume
+    width=Converters.convertSizeFromFeet(context.boxedVolume.width,context.boxedVolume.metric)
+    length=Converters.convertSizeFromFeet(context.boxedVolume.length,context.boxedVolume.metric)
+    height=Converters.convertSizeFromFeet(context.boxedVolume.height,context.boxedVolume.metric)
+
+    "W:#{width}#{context.boxedVolume.metric} x L:#{length}#{context.boxedVolume.metric} x H:#{height}#{context.boxedVolume.metric}"
+  else if context.liquidVolume
+    value=Converters.convertVolumeFromLitre(context.liquidVolume.value,context.liquidVolume.metric)
+    "#{value}#{context.liquidVolume.metric}"
+  else 'nil'
 
 CommonHelpers.buildFilterQry=(filters)->
   query=filter:{}
@@ -81,4 +92,8 @@ CommonHelpers.getFiltersForSchedule=(key)->
 CommonHelpers.getFiltersForTrucks=(key)->
   @buildFilterQry([{field:'_id',value:key?.split(",") or [],operator:'$in'}])
 
+CommonHelpers.getScheduleFieldsLight=()->
+  {fields:{dropOffLocation:1,pickupLocation:1,totalBids:1,truckers:1,bidders:1
+    ,wayBill:1,status:1,shipmentTitle:1,owner:1,pickupDate:1,dropOffDate:1
+    ,maximumBidPrice:1}}
 

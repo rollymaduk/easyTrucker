@@ -41,9 +41,15 @@
 </template>
 <template name="jobItem">
     <li class="{{formatElement state}} work-item">
-        {{shipmentTitle}}
+        <span class="label small {{formatStatus state}}">{{state}}</span><br/>
+        <small><i class="fa fa-bell"></i> {{summarizeText latestActivity.description 30}} </small>
+        {{#if latestMessage}}
+         <br/>
+            <small><i class="fa fa-envelope"></i> {{summarizeText latestMessage.message 30}} </small>
+        {{/if}}
         <div class="agile-detail">
-            {{>schedule_actions item=this btnClasses="pull-right btn btn-xs btn-white"}}
+
+            {{>schedule_actions item=this hideBids=canManageBid btnClasses="pull-right btn btn-xs btn-primary"}}
             <i class="fa fa-clock-o"></i>
             {{#if updatedAt}}
                 {{tm_cal updatedAt}}
@@ -51,6 +57,6 @@
                 {{tm_cal createdAt}}
             {{/if}}
         </div>
-        <span class="label {{formatStatus state}}">{{state}}</span>
+
     </li>
 </template>

@@ -57,6 +57,13 @@ Template.manageSchedule.helpers
         id:"dof"
         template:Template.dropOff
         data:@||{}
+        onValidate:(context,dropoff,currentStep)->
+          pickup=context.getPreviousData(currentStep)
+          pDate=pickup.pickupDate.dateField_2 or pickup.pickupDate.dateField_1
+          dDate=dropoff.dropOffDate.dateField_2 or dropoff.dropOffDate.dateField_1
+          isValid=dDate>=pDate
+          unless isValid then dropSchemaContext.addInvalidKeys [{name:'dropOffDate.context',type:'invalidDate'}]
+          isValid
       },
       {
         title:"Memo"

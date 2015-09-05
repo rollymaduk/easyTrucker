@@ -12,7 +12,7 @@ Bids.after.insert (user,doc)->
   qry=_id:doc.schedule
   Meteor.call "updateSchedule",qry,modifier,(err,res)->
     if res
-      message="NEW[BID]: #{schedule.wayBill}-#{Meteor.user().company()}"
-      activity={description:message,documentId:doc._id,collectionName:collectionName,audience:[schedule.owner]}
+      message="#{schedule.wayBill}-#{Meteor.user().company()}"
+      activity={title:"NEW[BID]",description:message,documentId:doc._id,collectionName:collectionName,audience:[schedule.owner]}
       Meteor.call 'createActivity',activity
 

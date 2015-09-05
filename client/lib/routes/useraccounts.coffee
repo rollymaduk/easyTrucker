@@ -13,7 +13,6 @@ Router.map ()->
     template:'manageProfile'
     waitOn:->
       Meteor.subscribe('userInfo',@params._id)
-      Meteor.subscribe('eZImages',{_id:photo})
     data:-> Meteor.users.findOne(@params._id)
 
   )
@@ -23,9 +22,8 @@ Router.map ()->
     template:'profileDetail'
     waitOn:->
       Meteor.subscribe('userInfo',@params._id,true)
-    data:->
-      user=Meteor.users.findOne(@params._id)
-      user
+    data:->Meteor.users.findOne(@params._id)
+
   )
 
   @route('userList',

@@ -2,16 +2,14 @@ Template.Wizard.created=->
   Template.Wizard.prepareOptions()
   Template.Wizard.prepareSteps()
 
-Template.Wizard.resizeContent=(template,id)->
+###Template.Wizard.resizeContent=(template,id)->
   resizeHeight=template.$("form[id='#{id}']").height()+100
   console.log resizeHeight
-  template.$(".wizard>div.content").height(resizeHeight)
+  template.$(".wizard>div.content").height(resizeHeight)###
 
 
 Template.Wizard.rendered=->
   that=@
-  console.log that
-  console.log Template.Wizard
   steps=Template.Wizard.getData().steps;
   @$('#wizard').steps
     bodyTag:Template.Wizard.getData().options.bodyTag
@@ -25,11 +23,8 @@ Template.Wizard.rendered=->
       console.log step
       unless currentIndex>newIndex
         isValid=AutoForm.validateForm(step.id)
-      switch
-        when isValid
-          if step.onSubmit then step.onSubmit.call that,step.data,step
-        else
-         ###_.delay Template.Wizard.resizeContent,200,that,step.id###
+        isValid=step.onValidate(that,step.data,step) if step.onValidate
+
       Blaze.remove Template.Wizard.myView if isValid
       isValid
 

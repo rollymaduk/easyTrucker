@@ -44,8 +44,12 @@
             </div>
             <a href="{{pathFor 'bidDetail'}}" >
                 <div class="ibox-content ibox-heading">
-                    <h3>Latest Activity!</h3>
-                    <small><i class="fa fa-bell"></i> {{notification.message}} {{tm_now notification.createdAt}}</small>
+                    <h4>Latest Activity!</h4>
+                    <small><span class="pull-right">{{tm_now activity.createdAt}}</span><i class="fa fa-bell"></i> {{summarizeText activity.description 30}} </small>
+                    {{#if message}}
+                    <br/>
+                    <small><span class="pull-right">{{tm_now message.createdAt}}</span><i class="fa fa-envelope"></i> {{summarizeText message.message 30}} </small>
+                    {{/if}}
                 </div>
             </a>
             <div class="ibox-content">

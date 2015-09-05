@@ -47,7 +47,6 @@ rzymek:fullcalendar
 zimme:select2-bootstrap3-css
 mologie:autoform-selectize
 mrt:selectize
-yogiben:autoform-file
 cfs:standard-packages
 cfs:gridfs
 perak:joins
@@ -57,3 +56,4 @@ aldeed:autoform-bs-datetimepicker
 tsega:bootstrap3-datetimepicker@=3.1.3_3
 meteorblackbelt:collection-tracker
 cfs:ui
+yogiben:autoform-file

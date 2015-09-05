@@ -13,7 +13,9 @@ Meteor.publishRelations('userInfo',(id,withImage)->
     withImage=withImage or false
     check(id,String)
     @cursor  Meteor.users.find(id,fields:profile:1),(docId,doc)->
-      @cursor eZImages.find({_id:doc.profile.photo}) if withImage
+      photo=Meteor._get(doc,'profile','photo')
+      console.log photo
+      if withImage and photo then @cursor eZImages.find(photo)
       null
   @ready()
 )
