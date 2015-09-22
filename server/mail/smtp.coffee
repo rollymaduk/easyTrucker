@@ -1,5 +1,15 @@
 Meteor.startup ()->
-  smtp = username: 'rolly.maduk@gmail.com', password: 'Allowme321^&*', server:'smtp.gmail.com', port: 25
-  ###process.env.MAIL_URL = "smtp:// #{encodeURIComponent(smtp.username)}:
-  #{encodeURIComponent(smtp.password)}@#{encodeURIComponent(smtp.server)}:#{smtp.port}"###
-  null
+  if Meteor.settings.configMail
+    process.env.MAIL_URL = "smtp:// #{encodeURIComponent(Meteor.settings.smtp.username)}:
+    #{encodeURIComponent(Meteor.settings.smtp.password)}@#{encodeURIComponent(Meteor.settings.smtp.server)}:#{Meteor.settings.smtp.port}"
+
+
+  PrettyEmail.options =
+    from: Meteor.settings.public.from,
+    logoUrl: Meteor.absoluteUrl(Meteor.settings.public.logoUrl),
+    companyName: Meteor.settings.public.companyName,
+    companyUrl: Meteor.settings.public.companyUrl,
+    companyAddress: Meteor.settings.public.companyAddress,
+    companyTelephone: Meteor.settings.public.companyTelephone,
+    companyEmail: Meteor.settings.public.companyEmail,
+    siteName: Meteor.settings.public.siteName

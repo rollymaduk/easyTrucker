@@ -11,43 +11,47 @@ Template.Wizard.created=->
 Template.Wizard.rendered=->
   that=@
   steps=Template.Wizard.getData().steps;
-  @$('#wizard').steps
-    bodyTag:Template.Wizard.getData().options.bodyTag
-    headerTag:Template.Wizard.getData().options.headerTag
-    onStepChanging: (event, currentIndex, newIndex)->
-      console.log 'step changing'
-      isValid=true
-      step=steps[currentIndex]
-      step.index=currentIndex
-      step.data=AutoForm.getFormValues(step.id).insertDoc
-      console.log step
-      unless currentIndex>newIndex
+  options=_.extend(Template.Wizard.getData().options
+  , {
+      onStepChanging: (event, currentIndex, newIndex)->
+        console.log 'step changing'
+        isValid = true
+        step = steps[currentIndex]
+        step.index = currentIndex
+        step.data = AutoForm.getFormValues(step.id).insertDoc
+        console.log step
+        unless currentIndex > newIndex
+          isValid = AutoForm.validateForm(step.id)
+          isValid = step.onValidate(that, step.data, step) if step.onValidate
+
+        Blaze.remove Template.Wizard.myView if isValid
+        isValid
+
+      onFinishing: (event, currIndx)->
+        step = steps[currIndx]
+        step.data = AutoForm.getFormValues(step.id).insertDoc
         isValid=AutoForm.validateForm(step.id)
-        isValid=step.onValidate(that,step.data,step) if step.onValidate
+        isValid=step.onValidate(that, step.data, step) if step.onValidate
+        isValid
 
-      Blaze.remove Template.Wizard.myView if isValid
-      isValid
+      onFinished: (event, currIndx)->
+        step = steps[currIndx]
+        if that.data.onFinished
+          that.data.onFinished.call(that, step.data, step)
+          null
 
-    onFinishing:(event,currIndx)->
-      step=steps[currIndx]
-      step.data=AutoForm.getFormValues(step.id).insertDoc
-      AutoForm.validateForm(step.id)
+      onCanceled: (evt)->
+        if that.data.onCanceled
+          that.data.onCanceled.call(that)
 
-    onFinished:(event,currIndx)->
-      step=steps[currIndx]
-      if that.data.onFinished
-       that.data.onFinished.call(that,step.data,step)
-       null
-
-    onCanceled:(evt)->
-      if that.data.onCanceled
-        that.data.onCanceled.call(that)
-
-    onStepChanged:(evt,currIndx,priorIndx)->
-      step=steps[currIndx]
-      console.log "step changed"
-      Template.Wizard.displayContent(step,that)
-      null
+      onStepChanged: (evt, currIndx, priorIndx)->
+        step = steps[currIndx]
+        console.log "step changed"
+        Template.Wizard.displayContent(step, that)
+        null
+    }
+  )
+  @$('#wizard').steps(options)
   Template.Wizard.initialize(that)
 
 getObjects=(steps)->
@@ -98,6 +102,7 @@ Template.Wizard.prepareOptions=()->
 Template.Wizard.defaultOptions=
   bodyTag:'section'
   headerTag:'h1'
+  showFinishButtonAlways:false
 
 
 Template.Wizard.getData=->

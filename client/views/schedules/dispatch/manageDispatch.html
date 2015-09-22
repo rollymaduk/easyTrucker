@@ -1,0 +1,12 @@
+<template name="manageDispatch">
+    <div class="col-lg-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Dispatch {{this.shipmentTitle}}</h5>
+            </div>
+            <div class="ibox-content">
+                {{>quickForm id='manageDispatchForm' type=docType doc=dispatchDoc collection='Dispatches'}}
+            </div>
+        </div>
+    </div>
+</template>

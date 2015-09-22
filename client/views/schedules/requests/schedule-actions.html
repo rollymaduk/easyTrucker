@@ -17,5 +17,7 @@
        <a {{Rp_allow 'canAssignTruck'}} {{visibleWhen item.status 'accepted'}} href="{{pathFor 'filteredTruckList' trucks=item.matchedTrucks  hash='assignMode'}}" class="assign-truck {{btnClasses}}">Assign Driver/Truck</a>
     {{/unless}}
         <a href="{{pathFor 'manageDispatch' _id=item._id shipmentTitle=item.shipmentTitle}}" {{Rp_allow 'canDispatchLoad'}} {{visibleWhen item.status 'booked'}} class="assign-truck {{btnClasses}}">Dispatch load</a>
-        <a href="#" {{Rp_allow 'canCloseRequest'}} class="{{btnClasses}}" {{visibleWhen item.status 'dispatched'}}>Deliver Load</a>
+        <a href="{{pathFor 'manageDelivery' _id=item._id shipmentTitle=item.shipmentTitle}}" {{Rp_allow 'canCloseRequest'}} class="{{btnClasses}}" {{visibleWhen item.status 'dispatched'}}>Deliver Load</a>
+        <a href="{{pathFor 'deliveryDetail' _id=item._id shipmentTitle=item.shipmentTitle}}" {{Rp_allow 'canGiveFeedback'}} class="{{btnClasses}}" {{visibleWhen item.status 'delivered,issue'}}>feedback</a>
+
 </template>

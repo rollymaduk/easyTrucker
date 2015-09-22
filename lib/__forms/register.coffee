@@ -14,6 +14,25 @@ Form.RegisterInfoDetail=new SimpleSchema
     autoform:
       label:false
       placeholder:'schemaLabel'
+  truckAuthorityType:
+    type:String
+    optional:true
+    allowedValues:['DOT','FF','MC','MX','NONE']
+    defaultValue:'NONE'
+    autoform:
+      options:{DOT:'DOT',FF:'FF',MC:'MC',MX:'MX',NONE:'NONE'}
+  truckAuthorityNumber:
+    type:String
+    optional:true
+    autoform:
+      class:'ctrl-visible'
+    custom:()->
+      if(Meteor.isClient)
+        console.log @siblingField('truckAuthorityType')
+        condition= ! _.isEqual(@siblingField('truckAuthorityType').value,'NONE')
+        if(condition and not @isSet)
+          "required"
+        else true
 
 Form.RegisterAccountDetail=new SimpleSchema
   accountType:
@@ -39,28 +58,34 @@ Form.RegisterAccountDetail=new SimpleSchema
 
 
 
-Form.TruckAuthority=new SimpleSchema
-  truckAuthorityType:
+Form.RegisterAccountLoginDetail=new SimpleSchema
+  username:
     type:String
-    optional:true
-    allowedValues:['DOT','FF','MC','MX','NONE']
-    defaultValue:'NONE'
     autoform:
-      options:{DOT:'DOT',FF:'FF',MC:'MC',MX:'MX',NONE:'NONE'}
-  truckAuthorityNumber:
+      label:false
+      placeholder:'schemaLabel'
+  password:
     type:String
-    optional:true
+    min:8
     autoform:
-      class:'ctrl-visible'
+      type:'password'
+      label:false
+      placeholder:'schemaLabel'
+  repeatPassword:
+    type:String
+    min:8
     custom:()->
-      if(Meteor.isClient)
-        console.log @siblingField('truckAuthorityType')
-        condition= ! _.isEqual(@siblingField('truckAuthorityType').value,'NONE')
-        if(condition and not @isSet)
-          "required"
-        else true
+      if this.value isnt this.field('password').value
+        "passwordMismatch";
+    autoform:
+      type:'password'
+      label:false
+      placeholder:'schemaLabel'
 
 
+
+@RegisterAccountDetailContext=Form.RegisterAccountDetail.namedContext('regAcctDetailForm')
+@RegisterAccountLoginDetailContext=Form.RegisterAccountLoginDetail.namedContext('regAccountLoginDetailForm')
 
 
 

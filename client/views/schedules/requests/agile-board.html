@@ -41,11 +41,12 @@
 </template>
 <template name="jobItem">
     <li class="{{formatElement state}} work-item">
-        <span class="label small {{formatStatus state}}">{{state}}</span><br/>
-        <small><i class="fa fa-bell"></i> {{summarizeText latestActivity.description 30}} </small>
+        <span class="label small {{formatStatus state}}" style="margin-bottom: 5px;">{{state}}</span>
+        <br/><br/>
+        <small><i class="fa fa-bell"></i>{{latestActivity.title}} - {{summarizeText latestActivity.description 30}} </small>
         {{#if latestMessage}}
-         <br/>
-            <small><i class="fa fa-envelope"></i> {{summarizeText latestMessage.message 30}} </small>
+         <br/><br/>
+            <small><i class="fa fa-comment"></i> {{summarizeText latestMessage.message 30}} </small>
         {{/if}}
         <div class="agile-detail">
 

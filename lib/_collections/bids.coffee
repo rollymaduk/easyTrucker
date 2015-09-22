@@ -2,7 +2,7 @@
 Bids.attachSchema Schema.Bid
 Bids.attachBehaviour('timestampable');
 Bids.attachBehaviour('trackable',{
-  include:['proposedPickup','proposedDelivery','qoute']
+  include:['proposedPickup','proposedDelivery','quote']
 });
 Bids.allow
   insert:(user,doc)->true

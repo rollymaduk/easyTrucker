@@ -2,6 +2,10 @@ Template.sidebar.events
   'click .logout':(evt,temp)->
     Meteor.logout()
 
+Template.toggleRoleItem.events
+  'click .toggleRole':(evt,temp)->
+    Session.set('currentRole',temp.data)
+
 
 Template.sidebar.helpers
   links:->

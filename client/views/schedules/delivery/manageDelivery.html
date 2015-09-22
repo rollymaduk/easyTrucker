@@ -1,12 +1,13 @@
-<template name="manageDispatch">
+<template name="manageDelivery">
     <div class="col-lg-8">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Dispatch {{this.shipmentTitle}}</h5>
+                <h5>Deliver  {{this.shipmentTitle}}</h5>
             </div>
             <div class="ibox-content">
-                {{>quickForm id='manageDispatchForm' type='insert' doc=dispatchDoc collection='Dispatches'}}
+                {{>quickForm id='manageDeliveryForm' type=docType doc=deliveryDoc collection='Deliveries'}}
             </div>
+
         </div>
     </div>
 </template>

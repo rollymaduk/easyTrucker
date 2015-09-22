@@ -24,9 +24,9 @@ CommonHelpers.generatePassword=()->
 CommonHelpers.getAllRoles=(type)->
   console.log type
   switch type
-    when 'shipper' then {clerk:'Clerk',shipper:'Administrator'}
-    when 'trucker' then {driver:'Driver',accountant:'Accountant',trucker:'Administrator'}
-    else null
+    when 'shipper' then [{val:'clerk',lbl:'Clerk'},{val:'shipper',lbl:'Administrator'}]
+    when 'trucker' then [{val:'driver',lbl:'Driver'},{val:'accountant',lbl:'Accountant'},{val:ROLE_TRUCKER,lbl:'Administrator'}]
+    else []
 
 CommonHelpers.getNotificationAudience=(users,exlude)->
   users=if _.isArray(users) then users else []
@@ -83,7 +83,7 @@ CommonHelpers.getFiltersForSchedule=(key)->
         @buildFilterQry([{field:'truckers.owner',value:true,operator:'$exists'},{field:'status',value:STATE_NEW}])
     when _.isEqual(key,STATE_BOOKED)
       if Meteor.user().isTrucker()
-        @buildFilterQry([{field:'shipper',value:Meteor.userId()},{field:'status',value:STATE_BOOKED}])
+        @buildFilterQry([{field:'winningBid.bidder',value:Meteor.userId()},{field:'status',value:STATE_BOOKED}])
       else
         @buildFilterQry([{field:'status',value:key}])
     else
@@ -95,5 +95,5 @@ CommonHelpers.getFiltersForTrucks=(key)->
 CommonHelpers.getScheduleFieldsLight=()->
   {fields:{dropOffLocation:1,pickupLocation:1,totalBids:1,truckers:1,bidders:1
     ,wayBill:1,status:1,shipmentTitle:1,owner:1,pickupDate:1,dropOffDate:1
-    ,maximumBidPrice:1}}
+    ,maximumBidPrice:1,receiver:1,sender:1,winningBid:1,resource:1}}
 

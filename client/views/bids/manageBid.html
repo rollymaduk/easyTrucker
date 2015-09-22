@@ -26,17 +26,17 @@
 
                     {{#autoForm id="placeBidForm" doc=this schema="Schema.Bid"}}
                         <fieldset>
-                            <div class="form-group{{#if afFieldIsInvalid name='qoute'}} has-error{{/if}}">
-                                <label class="control-label">Quote {{#if scheduleItem.maximumBidPrice}}<small>  max bid qoute: ({{scheduleItem.maximumBidPrice}})</small>{{/if}}</label>
+                            <div class="form-group{{#if afFieldIsInvalid name='quote'}} has-error{{/if}}">
+                                <label class="control-label">Quote {{#if scheduleItem.maximumBidPrice}}<small>  max bid quote: ({{scheduleItem.maximumBidPrice}})</small>{{/if}}</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">$ </div>
-                                    {{> afFieldInput name='qoute' placeholder="schemaLabel" }}
+                                    {{> afFieldInput name='quote' placeholder="Enter quote" }}
                                 </div>
-                                {{#if afFieldIsInvalid name='qoute'}}
-                                    <span class="help-block">{{afFieldMessage name='qoute'}} </span>
+                                {{#if afFieldIsInvalid name='quote'}}
+                                    <span class="help-block">{{afFieldMessage name='quote'}} </span>
                                 {{/if}}
                             </div>
-                        {{>afQuickField name="qoute"}}
+                       <!-- {{>afQuickField name="quote"}}-->
                         {{>timeFrame title="Pickup Date" context='proposedPickup.context' dateField_1='proposedPickup.dateField_1' dateField_2='proposedPickup.dateField_2'}}
                         {{>timeFrame title="DropOff Date" context='proposedDelivery.context' dateField_1='proposedDelivery.dateField_1' dateField_2='proposedDelivery.dateField_2'}}
                             {{>afQuickField name="schedule"}}

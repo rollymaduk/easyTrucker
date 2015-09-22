@@ -18,11 +18,9 @@
                         <i class="fa fa-envelope"></i>  <span class="label label-warning">{{messages.length}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
-
                         {{#each messages}}
                             {{>messageNotifyItem}}
                         {{/each}}
-
                     </ul>
                     <!--<ul class="dropdown-menu dropdown-messages">
                         <li>
@@ -109,7 +107,7 @@
         {{#if isBidAlert}}
             <a href="{{pathFor 'bidDetail' _id=notification.documentId }}">
                 <div>
-                    <i class="fa fa-bell"></i> {{notification.description}}
+                    <i class="fa fa-bell"></i>{{notification.title}}: {{notification.description}}
                     <span class="pull-right text-muted small">{{tm_cal createdAt}}</span>
                 </div>
             </a>

@@ -1,7 +1,6 @@
 class PermService
   constructor:->
     @currentPermissions=null
-
   subscribeHandle=null
   isActive=new ReactiveVar(false)
   _internalPerm=new ReactiveVar([])
@@ -40,6 +39,8 @@ class PermService
       else
         R_polly_permissions.find({permissions:$in:perm}).count()>0
 
+  setCurrentRole:(role)->
+    @getPermissionsForRoles(role)
 
   createPermissions:(permObj...)->
     if(Meteor.isServer and permObj.length>1)
@@ -64,18 +65,17 @@ class PermService
 
 RP_permissions=new PermService()
 
-getPermissionVisibility=(perm,rVar,deny)->
-  Tracker.autorun(()->
-    res='hidden'
-    if perm
-      arr=perm.split(',') or []
-      switch
-        when not deny
-          res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then null else  class: 'hidden'
-        else
-          res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then class:hidden else null
-    rVar.set(res)
-  )
+getPermissionVisibility=(perm,deny)->
+  res='hidden'
+  if perm
+    arr=perm.split(',') or []
+    switch
+      when not deny
+        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then null else  class: 'hidden'
+      else
+        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then class:hidden else null
+  res
+
 
 
 if Meteor.isClient
@@ -87,14 +87,10 @@ if Meteor.isClient
     )
 
     Template.registerHelper('Rp_allow',(perm)->
-      result=new ReactiveVar()
-      getPermissionVisibility(perm,result)
-      result.get()
+      getPermissionVisibility(perm)
     )
 
     Template.registerHelper('Rp_deny',(perm)->
-      result=new ReactiveVar()
-      getPermissionVisibility(perm,result,true)
-      result.get()
+      getPermissionVisibility(perm,true)
     )
 

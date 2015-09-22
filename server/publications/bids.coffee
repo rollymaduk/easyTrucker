@@ -1,24 +1,31 @@
 Meteor.publishRelations 'bids',(qry)->
-  isSchedule=isSchedule or false
   if(@userId)
     @cursor Bids.find(qry),(docId,doc)->
+      @cursor Schedules.find(doc.schedule,CommonHelpers.getScheduleFieldsLight()) if doc.schedule
       @cursor Activities.find({documentId:docId},{limit:1,sort:{createdAt:-1}}) if docId
       @cursor Messages.find({documentId:docId},{limit:1,sort:{createdAt:-1}}) if docId
       @cursor Meteor.users.find(doc.owner,{fields:profile:1}) if doc.owner
       null
     @ready()
 
+Meteor.publishRelations 'bidItem',(qry)->
+  if(@userId)
+    @cursor Bids.find(qry),(docId,doc)->
+      @cursor Schedules.find(doc.schedule,CommonHelpers.getScheduleFieldsLight()) if doc.schedule
+      null
+    @ready()
 
     ### Bids.publishJoinedCursors(cursor)###
 
-Meteor.publishRelations 'bidItem',(qry)->
-  @cursor Bids.find(qry),(docId,doc)->
-    @cursor Schedules.find(doc.schedule,{fields:{status:1,shipmentTitle:1,owner:1,pickupDate:1,dropOffDate:1,maximumBidPrice:1}}) if doc.schedule
-    @cursor Messages.find({documentId:docId}) if docId
-    @cursor Activities.find(documentId:docId) if docId
-    @cursor Meteor.users.find(doc.owner,{fields:profile:1}) if doc.owner
-    null
-  @ready()
+Meteor.publishRelations 'bidDetailItem',(qry)->
+  if @userId
+    @cursor Bids.find(qry),(docId,doc)->
+      @cursor Schedules.find(doc.schedule,CommonHelpers.getScheduleFieldsLight()) if doc.schedule
+      @cursor Messages.find({documentId:docId}) if docId
+      @cursor Activities.find(documentId:docId) if docId
+      @cursor Meteor.users.find(doc.owner,{fields:profile:1}) if doc.owner
+      null
+    @ready()
 ###
 Meteor.publishRelations 'bidList',(scheduleId)->
   if(@userId)

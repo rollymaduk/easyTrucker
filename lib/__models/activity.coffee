@@ -9,6 +9,9 @@ Schema.Activity=new SimpleSchema
     type:String
   description:
     type:String
+  parent:
+    type:String
+    optional:true
   documentId:
     type:String
     autoform:

@@ -8,22 +8,6 @@ Router.configure {
 
 Router.onBeforeAction(
   ->
-    unless Meteor.userId()
-      @layout 'user_account'
-      @render 'login'
-      ###Router.go 'login'###
-      null
-    else
-      profile=Meteor?.user()?.profile
-      if not profile.isActive
-        Meteor.logout()
-      @next()
-      null
-,{except: ['login','register','registrationSuccess','page']}
-)
-
-Router.onBeforeAction(
-  ->
     GoogleMaps.load
       key: 'AIzaSyD8H4hG0fxQxnWSrH98AjThWLA14tqYB80',
       libraries: 'places'

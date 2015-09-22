@@ -15,9 +15,12 @@ Router.map ()->
       query=service.scheduleListByRoles()
       console.log query
       if(query)
-        newJobFilters={status:STATE_NEW}
-        inProgFilters={status:$in:[STATE_BOOKED,STATE_ASSIGNED,STATE_DISPATCH,STATE_LATE]}
+        newJobFilters={status:$in:[STATE_NEW,STATE_BOOKED]}
+        inProgFilters={status:$in:[STATE_ASSIGNED,STATE_DISPATCH,STATE_LATE]}
         compFilters={status:$in:[STATE_CANCELLED,STATE_ISSUE,STATE_SUCCESS]}
+        if Meteor.user().isTrucker()
+          newJobFilters.status.$in.push(STATE_ASSIGNED)
+          inProgFilters.status.$in=_.without(inProgFilters.status.$in,STATE_ASSIGNED)
         {
           newJobs:Schedules.find(_.extend(query.filter,newJobFilters),query.modifier).fetch(),
           inProgressJobs:Schedules.find(_.extend(query.filter,inProgFilters),query.modifier).fetch(),
@@ -43,23 +46,6 @@ Router.map ()->
 
   )
 
-  @route('manageDispatch'
-    path:'dispatch/:_id/:shipmentTitle',
-    onBeforeAction:()->
-      if RP_permissions.hasPermissions(['canDispatchLoad'])
-        @next()
-      else
-        @render "home"
-        null
-    template:"manageDispatch"
-    data:->
-      dispatch=Dispatches.findOne() or {schedule:@params._id}
-      _.extend(dispatch,{shipmentTitle:@params.shipmentTitle})
-    waitOn:->
-      Meteor.subscribe('dispatches',@params._id)
-      Meteor.subscribe('eZFiles')
-  )
-
   @route('newSchedule',
     path:'/app/loads/new'
     onBeforeAction:()->
@@ -68,8 +54,6 @@ Router.map ()->
       else
         @render 'home'
         null
-    waitOn:->
-      Meteor.subscribe('eZFiles')
     template:"manageSchedule")
 
   @route('editSchedule',

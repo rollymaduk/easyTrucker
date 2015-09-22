@@ -14,8 +14,8 @@ Meteor.publishRelations 'scheduleList',(qry,limit)->
     ###console.log query.filter###
     @cursor Schedules.find(query.filter,query.modifier),(docId,doc)->
       @cursor(Bids.find({schedule:docId,owner:userId},fields:{proposedDelivery:1,proposedPickup:1,schedule:1,owner:1})) if docId
-      @cursor Activities.find(documentId:docId,{limit:1,sort:{createdAt:-1}}) if docId
-      @cursor Messages.find({documentId:docId},{limit:1,sort:{createdAt:-1}}) if docId
+      @cursor Activities.find(parent:docId,{limit:1,sort:{createdAt:-1}}) if docId
+      @cursor Messages.find({parent:docId},{limit:1,sort:{createdAt:-1}}) if docId
       null
   @ready()
 

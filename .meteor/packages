@@ -37,7 +37,6 @@ aldeed:autoform-bs-button-group-input
 manuelschoebel:wait-on-lib
 jeremy:geocomplete
 dburles:collection-helpers
-vazco:universe-autoform-select
 geojson-utils
 matb33:collection-hooks
 msavin:jetsetter
@@ -45,8 +44,6 @@ rollypolly:impersonate
 codechimera:meteor-bootstrap-sweetalert
 rzymek:fullcalendar
 zimme:select2-bootstrap3-css
-mologie:autoform-selectize
-mrt:selectize
 cfs:standard-packages
 cfs:gridfs
 perak:joins
@@ -57,3 +54,13 @@ tsega:bootstrap3-datetimepicker@=3.1.3_3
 meteorblackbelt:collection-tracker
 cfs:ui
 yogiben:autoform-file
+email
+mologie:autoform-selectize
+chhib:selectize-bootstrap-3
+ctjp:autoform-bootstrap-switch
+ctjp:meteor-bootstrap-switch
+yogiben:pretty-email
+useraccounts:bootstrap
+useraccounts:iron-routing
+barbatus:stars-rating
+digilord:sugarjs

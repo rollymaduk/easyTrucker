@@ -11,7 +11,10 @@
     'canManageUsers',
     'canViewMatchedLoads',
     'canViewUnmatchedLoads',
-    'canViewAcceptedLoads'
+    'canViewAcceptedLoads',
+    'canGiveFeedback',
+    'canRateDelivery',
+    'canRatePerformance'
   ]
 },{role:ROLE_TRUCKER,perm:['canCreateTruck',
                         'canEditTruck',
@@ -28,7 +31,9 @@
                         'canAssignTruck',
                         'canViewAcceptedLoads',
                         'canDispatchLoad',
-                        'canCloseRequest'
+                        'canCloseRequest',
+                        'canGiveFeedback',
+                        'canRatePerformance'
 ]},
   {
     role:ROLE_DRIVER
@@ -37,7 +42,8 @@
       'canViewbidList',
       'canViewDashboard',
       'canDispatchLoad',
-      'canCloseRequest'
+      'canCloseRequest',
+      'canGiveFeedback'
     ]
   }
 ]

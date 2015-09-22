@@ -11,7 +11,7 @@ Router.map ()->
     data:->
       Bids.findOne(@params._id)
     waitOn:->
-      Meteor.subscribe('bidItem',@params._id)
+      Meteor.subscribe('bidDetailItem',@params._id)
     template:"bidDetail"
   )
 
@@ -25,7 +25,7 @@ Router.map ()->
         @render 'home'
         null
     data:->Bids.findOne(@params._id),
-    waitOn:->Meteor.subscribe('bids',@params._id)
+    waitOn:->Meteor.subscribe('bidItem',@params._id)
     template:"manageBid")
 
   @route('newBid',

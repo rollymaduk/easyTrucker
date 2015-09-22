@@ -1,6 +1,6 @@
 Router.map ()->
   @route('home',
-    path:'/'
+    path:Meteor.settings.public.appPath
   )
 
   @route('registrationSuccess',

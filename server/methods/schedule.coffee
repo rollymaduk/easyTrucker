@@ -47,8 +47,8 @@ Meteor.methods
     Schedules.update(schedule,$addToSet:messages:comment)
 
   acceptScheduleBid:(schedule,wB)->
-    check(bid,String)
     check(schedule,String)
+    check(wB,{bidder:String,bid:String})
     Schedules.update(schedule,{$set:{'winningBid.bidder':wB.bidder,'winningBid.bid':wB.bid,status:STATE_BOOKED}})
 
   assignResource:(resource,schedule)->
@@ -57,3 +57,30 @@ Meteor.methods
 
   updateSchedule:(qry,modifier,options)->
     updateSchedule(qry,modifier,options)
+
+  removeSchedule:(schedule)->
+    item=Schedules.findOne(schedule)
+    messages=Messages.find({documentId:schedule}).map (doc)->doc._id
+    activities=Activities.find({documentId:schedule}).map (doc)->doc._id
+    if item
+      Activities.remove({documentId:schedule})
+      Messages.remove({documentId:schedule})
+      Bids.remove({schedule:schedule})
+      eZFiles.remove({_id:$in:item.files})  if item.files
+      Dispatches.remove({schedule:schedule})
+      Notifications.remove({documentId:$in:messages})
+      Notifications.remove({documentId:$in:activities})
+      Schedules.remove(schedule)
+
+  duplicateSchedule:(schedule)->
+    item=Schedules.findOne(schedule)
+    if item
+      item._id=undefined
+      item.bidders=[]
+      item.messages=[]
+      item.totalBids=0
+      item.truck=undefined
+      item.driver=undefined
+      item.status=STATE_NEW
+      Meteor.call('addUpdateSchedule',_.omit(item,['updatedAt','createdAt','updatedBy','createdBy']))
+

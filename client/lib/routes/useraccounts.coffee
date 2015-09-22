@@ -47,5 +47,5 @@ Router.map ()->
       $('.middle-box').toggleClass('loginscreen',false)
       $('.middle-box').toggleClass('registerscreen',true)
   )
-
   null
+

@@ -1,19 +1,7 @@
-kAdminConfig =
-  name: 'Admin',
-  roles:['admin']
-  collections:
-    "Meteor.users":
-      verbose: "Users"
-      templates:
-        "crud": {name: 'kAccountsAdminFluid'}
-
-
-
-
-
-@kAccountsAdminConfig = {
-  tableColumns: [
-    {label:'Username',name:'username'}
-  ]
-}
+AccountsTemplates.configure
+  showForgotPasswordLink:true
+  showLabels:false
+  hideSignUpLink:false
+  hideSignInLink:true
+  enablePasswordChange:true
 

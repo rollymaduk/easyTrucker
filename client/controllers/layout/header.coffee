@@ -16,3 +16,7 @@ Template.header.helpers
 Template.alertItem.helpers
   isBidAlert:()->
     @notification.collectionName is COLLECTION_BID
+
+Template.messageNotifyItem.helpers
+  isBidAlert:()->
+    @notification.collectionName is COLLECTION_BID

@@ -1,6 +1,9 @@
 <template name="manageRoles">
     {{#modal }}
-       {{>quickForm  doc=roles schema='Form.Role' buttonContent=false id='manageRoleForm'}}
+        {{#autoForm doc=roles schema='Form.Role' id='manageRoleForm' }}
+            {{> afQuickField   name='roles' type="selectize" multiple=true selectize=roleSelectize}}
+        {{/autoForm}}
+
         {{>modalfooter}}
     {{/modal}}
 </template>

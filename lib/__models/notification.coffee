@@ -6,6 +6,9 @@ Schema.Notification=new SimpleSchema
     type:String
   documentId:
     type:String
+  parent:
+    type:String
+    optional:true
   audience:
     type:[String]
     defaultValue:[]

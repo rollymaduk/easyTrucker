@@ -5,6 +5,12 @@ Schema.Message=new SimpleSchema
     autoform:
       type:'hidden'
       label:false
+  parent:
+    type:String
+    optional:true
+    autoform:
+      type:'hidden'
+      label:false
   message:
     type:String
     autoform:

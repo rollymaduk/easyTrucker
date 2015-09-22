@@ -61,6 +61,7 @@ Schema.Memo=new SimpleSchema
     type:[String]
   maximumBidPrice:
     type:Number
+    defaultValue:0
     optional:true
   memo:
     type:Object

@@ -3,8 +3,9 @@ Template.register.created=->
 
 toggleTruckAuthFormState=(type)->
   switch type
-    when 'shipper' then Session.set('truckAuthFormState','disabled')
-    else Session.set('truckAuthFormState',null)
+    when 'shipper' then Session.set('truckAuthFormState',false)
+    else Session.set('truckAuthFormState',true)
+
 
 
 Template.register.events
@@ -12,16 +13,16 @@ Template.register.events
     toggleTruckAuthFormState(evt.target.value)
 
 
-Template.truckAuthority.helpers
-  formType:()->
+Template.registerInfoDetail.helpers
+  hasTruckAuth:()->
     Session.get('truckAuthFormState')
 
-Template.truckAuthority.rendered=()->
+Template.registerInfoDetail.rendered=()->
   @autorun((c)=>
     $('input[data-schema-key="truckAuthState"]').val(Session.get('truckAuthState'))
   )
 
-
+Template.register.isValid=new ReactiveVar(false)
 
 Template.register.helpers
   onfinished:->
@@ -36,15 +37,10 @@ Template.register.helpers
       truckAuthorityType:truckAuthorityType,truckAuthorityNumber:truckAuthorityNumber,companyName:companyName,
       emails:[data.email],telephones:[data.telephoneNumber]
       }
-      username=CommonHelpers.generateUsername(data.email,profile.companyName)
 
-      password=CommonHelpers.generatePassword()
-
-      user={username:username,email:data.email,password:password,profile:profile}
+      user={username:data.username,email:data.email,password:data.password,profile:profile}
 
       role=data.accountType
-
-      console.log user
 
       service.registerNewUser user,role,null,(err,res)->
         if res
@@ -66,18 +62,26 @@ Template.register.helpers
     },
       {
         title:"Step 2"
-        id:"regInfoDetailForm"
-        template:Template.registerInfoDetail
+        id:'regAccountLoginDetailForm'
+        template:Template.registerAccountLoginDetail
         data:@data||{}
       },
       {
         title:"Step 3"
-        id:'regTruckAuthorityForm'
-        template:Template.truckAuthority
+        id:"regInfoDetailForm"
+        template:Template.registerInfoDetail
         data:@data||{}
+        onValidate: ()->
+          res=$('#checkbox-accept-terms').is(":checked")
+          unless res then swal 'Missing something there!','you have to accept our terms & conditions','warning'
+          console.log res
+          res
       }
     ]
 
+Template.body.events
+  'click .showDisclaimer':()->
+    Modal.show 'disclaimerModal'
 
 ###
 AutoForm.hooks

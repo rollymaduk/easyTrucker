@@ -17,6 +17,7 @@
     </div>
 </template>
 <template name="registerAccountDetail">
+
     <h2>User Detail</h2>
     {{#autoForm schema='Form.RegisterAccountDetail'  doc=this buttonContent=false id='regAcctDetailForm'}}
         {{>afQuickField name='accountType' options=accountTypes}}
@@ -27,12 +28,24 @@
 </template>
 <template name="registerInfoDetail">
     <h2>Company Detail</h2>
-    {{>quickForm schema='Form.RegisterInfoDetail'  doc=this buttonContent=false id='regInfoDetailForm'}}
-</template>
-<template name="truckAuthority">
-    <h2>Truck Authority</h2>
-    {{#autoForm schema='Form.TruckAuthority' type=formType doc=this.data id='regTruckAuthorityForm'}}
-        {{>truckAuthorityControl }}
+    {{#autoForm schema='Form.RegisterInfoDetail'  doc=this buttonContent=false id='regInfoDetailForm'}}
+        {{>afQuickField name='companyName' }}
+        {{>afQuickField name='companyAddress' }}
+        {{>afQuickField name='telephoneNumber' }}
+        {{#if hasTruckAuth}}
+            {{>truckAuthorityControl }}
+        {{/if}}
+        <div class="form-group">
+            <div class="checkbox checkbox-success checkbox-circle">
+                <input id="checkbox-accept-terms" type="checkbox" >
+                <label for="checkbox-accept-terms">
+                    <small> I have <a href="#" class="showDisclaimer">read and accept the terms</a> of use of EazyTrucker</small>
+                </label>
+            </div>
+        </div>
     {{/autoForm}}
-    <!--{{>quickForm schema='Form.TruckAuthority' type=formType doc=this.data buttonContent=false id='regTruckAuthorityForm'}}-->
+</template>
+<template name="registerAccountLoginDetail">
+    <h2>Account Info</h2>
+    {{>quickForm schema='Form.RegisterAccountLoginDetail' buttonContent=false  doc=this id='regAccountLoginDetailForm'}}
 </template>

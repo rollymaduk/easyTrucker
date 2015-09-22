@@ -7,8 +7,8 @@ Template.registerHelper 'formatStatus',(status)->
     when STATE_ASSIGNED then 'label-info'
     when STATE_DISPATCH then 'label-success'
     when STATE_CANCELLED then 'label-default'
-    when STATE_LATE  then  'label-magenta'
-    when STATE_ISSUE  then  'label-danger'
+    when STATE_LATE  then  'label-danger'
+    when STATE_ISSUE  then  'label-magenta'
     when STATE_SUCCESS  then  'label-primary'
 
 
@@ -26,6 +26,10 @@ Template.registerHelper 'formatElement',(status)->
 
 Template.registerHelper 'summarizeText',(text,length)->
   text.trimToLength(length)
+
+Template.registerHelper 'formatUserState',(state)->
+  if state then 'label-primary' else 'label-default'
+
 
 Template.registerHelper 'visibleWhen',(item,compare)->
   console.log item

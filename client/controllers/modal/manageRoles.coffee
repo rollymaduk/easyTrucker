@@ -1,8 +1,16 @@
 Template.manageRoles.helpers
   roles:->
     roles=Template.currentData()?.roles
+    console.log roles
     if roles
       {roles:_.values(roles)[0]}
+  roleSelectize:()->
+    options: ()->
+      CommonHelpers.getAllRoles(ROLE_TRUCKER)
+    valueField:"val"
+    labelField:"lbl"
+    plugins: ['remove_button']
+
 
 Template.manageRoles.events
   'click .save-modal':(evt,temp)->

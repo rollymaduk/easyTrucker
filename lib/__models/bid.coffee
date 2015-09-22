@@ -1,5 +1,5 @@
 Schema.Bid=new SimpleSchema
-  qoute:
+  quote:
     label:'Quote'
     type:Number
     defaultValue:0
@@ -35,3 +35,5 @@ Schema.Bid=new SimpleSchema
       else @unset()
     autoform:
       omit:true
+
+@bidSchemaContext=Schema.Bid.namedContext('placeBidForm')

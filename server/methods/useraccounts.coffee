@@ -18,3 +18,5 @@ Meteor.methods
       'done'
     else
       throw new Meteor.Error 'invalid user access!'
+  userExists:(user)->
+    !!Meteor.users.findOne($or:[{username:user},{emails:user}])

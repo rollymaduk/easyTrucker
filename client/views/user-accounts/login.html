@@ -12,7 +12,7 @@
         <p>Login in. To see it in action.</p>
         <div class="m-t">
           {{>quickForm schema='Form.Login' id='loginForm' buttonClasses='btn btn-primary block full-width m-b' buttonContent='Login' }}
-            <a href="#"><small>Forgot password?</small></a>
+            <a href="{{pathFor 'atForgotPwd'}}"><small>Forgot password?</small></a>
             <p class="text-muted text-center"><small>Do not have an account?</small></p>
             <a class="btn btn-sm btn-white btn-block" href="{{pathFor 'register'}}">Create an account</a>
         </div>

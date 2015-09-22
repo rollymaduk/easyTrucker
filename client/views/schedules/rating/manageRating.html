@@ -1,0 +1,39 @@
+<template name="manageRating">
+    <div class="col-lg-9">
+        <div class="ibox">
+            <div class="ibox-content">
+                {{#with this}}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="m-b-md">
+                                <div class="row pull-right" style="margin-right:1%">
+
+                                    <a href="{{pathFor 'deliveryDetail' _id=schedule}}" style="color: inherit" class=" close-bid">
+                                        <span class=" glyphicon gly glyphicon-remove"></span>
+                                    </a>
+
+                                </div>
+
+                                <div><h2> Rating for <a href="{{pathFor 'profile' _id=scheduleItem.owner}}">{{ownerItem.company}}</a></h2>
+                                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div> <span class="label {{formatStatus scheduleItem.status}}">{{scheduleItem.status}}</span> &nbsp;<small>({{scheduleItem.shipmentTitle}})</small></div>
+                            <br/>
+
+                            {{>quickForm id='manageRatingForm' doc=this type='update' collection='Ratings'}}
+
+                        </div>
+                    </div>
+                {{/with}}
+            </div>
+        </div>
+    </div>
+
+
+</template>
