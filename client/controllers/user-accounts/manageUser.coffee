@@ -1,8 +1,8 @@
 Template.manageUser.helpers
   userAccountTypes:->
-    roles=CommonHelpers.getRoles()
-    if _.contains(roles,'shipper') then CommonHelpers.getAllRoles('shipper')
-    else  CommonHelpers.getAllRoles('trucker')
+    role=Meteor.user().role()
+    CommonHelpers.getAllRoles(role)
+
 
 
 AutoForm.hooks

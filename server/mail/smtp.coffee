@@ -13,3 +13,11 @@ Meteor.startup ()->
     companyTelephone: Meteor.settings.public.companyTelephone,
     companyEmail: Meteor.settings.public.companyEmail,
     siteName: Meteor.settings.public.siteName
+
+  PrettyEmail.style =
+    fontFamily:  'Open Sans,sans-serif'
+    buttonColor: '#FFFFFF'
+    buttonBgColor: '#1ab394'
+
+  PrettyEmail.defaults.verifyEmail=
+    buttonUrl: Meteor.absoluteUrl(Meteor.settings.public.appPath)

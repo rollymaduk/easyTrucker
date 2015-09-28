@@ -65,15 +65,15 @@ class PermService
 
 RP_permissions=new PermService()
 
-getPermissionVisibility=(perm,deny)->
-  res='hidden'
+getPermissionVisibility=(perm,deny,show)->
+  res=if show then null else class:'hidden'
   if perm
     arr=perm.split(',') or []
     switch
       when not deny
-        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then null else  class: 'hidden'
+        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then null else  class:'hidden'
       else
-        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then class:hidden else null
+        res=if R_polly_permissions.find({permission:$in:arr}).count()>0 then class:'hidden' else null
   res
 
 
@@ -86,11 +86,11 @@ if Meteor.isClient
       RP_permissions.getPermissionsForRoles(roles)
     )
 
-    Template.registerHelper('Rp_allow',(perm)->
-      getPermissionVisibility(perm)
+    Template.registerHelper('Rp_allow',(perm,show)->
+      getPermissionVisibility(perm,false,show)
     )
 
-    Template.registerHelper('Rp_deny',(perm)->
-      getPermissionVisibility(perm,true)
+    Template.registerHelper('Rp_deny',(perm,show)->
+      getPermissionVisibility(perm,true,show)
     )
 

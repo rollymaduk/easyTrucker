@@ -1,13 +1,11 @@
 Template.manageDispatch.created=->
   unless @data._id
-    @dispatchObj={schedule:@data.schedule}
-    @docType='update'
-  else
-    @dispatchObj=@data
     @docType='insert'
+  else
+    @docType='update'
 
 Template.manageDispatch.helpers
   dispatchDoc:->
-    Template.instance().dispatchObj
+    Template.currentData()
   docType:->
     Template.instance().docType

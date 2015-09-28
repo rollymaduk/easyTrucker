@@ -1,12 +1,11 @@
 
 <template name="ratingIndicator">
-                {{#if mutable}}
-                    {{> starsRating size=size id=_id rating=value  mutable=mutable}}
-                    {{else}}
-                    {{#if value}}
-                        {{> starsRating size=size id=_id rating=value}}&nbsp;
+                    {{> starsRating size=size id=_id rating=value mutable=mutable}}&nbsp;
+                    {{#if editable}}
+                        {{#if value}}
                     <span><small><a href="{{pathFor this.link _id=id}}" class="text-muted">
                         <i class="glyphicon glyphicon-pencil"></i>change</a></small></span>
                     {{else}}<small><a href="{{pathFor this.link _id=id}}" class="{{class}}">unrated (click to rate)</a></small>{{/if}}
-                {{/if}}
+                    {{/if}}
+
 </template>

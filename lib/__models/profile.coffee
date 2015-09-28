@@ -1,6 +1,8 @@
 Schema.ProfileFormContact=new SimpleSchema
   companyName:
     type:String
+    autoform:
+      readonly:true
   emails:
     type:[String]
     autoform:
@@ -11,8 +13,6 @@ Schema.ProfileFormContact=new SimpleSchema
       type:'tags'
   companyAddress:
     type:String
-    autoform:
-      readonly:true
 
 Schema.ProfileFormMetaData=new SimpleSchema
   isActive:

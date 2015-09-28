@@ -1,11 +1,5 @@
 @CommonHelpers={}
-CommonHelpers.getRoles=()->
-  roles=Meteor?.user()?.roles
-  if roles
-    res=_.values(roles)[0]
-    console.log res
-    res
-  else []
+
 
 CommonHelpers.generateUsername=(useremail,companyName)->
   email=useremail.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
@@ -24,8 +18,8 @@ CommonHelpers.generatePassword=()->
 CommonHelpers.getAllRoles=(type)->
   console.log type
   switch type
-    when 'shipper' then [{val:'clerk',lbl:'Clerk'},{val:'shipper',lbl:'Administrator'}]
-    when 'trucker' then [{val:'driver',lbl:'Driver'},{val:'accountant',lbl:'Accountant'},{val:ROLE_TRUCKER,lbl:'Administrator'}]
+    when ROLE_SHIPPER then [{value:'clerk',label:'Clerk'},{value:'shipper',label:'Administrator'}]
+    when ROLE_TRUCKER then [{value:'driver',label:'Driver'},{value:'accountant',label:'Accountant'},{value:ROLE_TRUCKER,label:'Administrator'}]
     else []
 
 CommonHelpers.getNotificationAudience=(users,exlude)->
@@ -71,23 +65,20 @@ CommonHelpers.buildFilterQry=(filters)->
   query
 
 CommonHelpers.getFiltersForSchedule=(key)->
-  switch
-    when _.isEqual(key,STATE_BIDDED) then @buildFilterQry([{field:'bidders',value:Meteor.userId()}
-    ,{field:'status',value:STATE_NEW}])
-    when _.isEqual(key,STATE_UNMATCHED) then @buildFilterQry([{field:'truckers',value:0,operator:'$size'}
-    ,{field:'status',value:STATE_NEW}])
-    when _.isEqual(key,STATE_MATCHED)
-      if Meteor.user().isTrucker()
-        @buildFilterQry([{field:'truckers.owner',value:[Meteor.userId()],operator:'$in'},{field:'status',value:STATE_NEW}])
-      else
-        @buildFilterQry([{field:'truckers.owner',value:true,operator:'$exists'},{field:'status',value:STATE_NEW}])
-    when _.isEqual(key,STATE_BOOKED)
-      if Meteor.user().isTrucker()
-        @buildFilterQry([{field:'winningBid.bidder',value:Meteor.userId()},{field:'status',value:STATE_BOOKED}])
-      else
-        @buildFilterQry([{field:'status',value:key}])
+  qryObj=[]
+  switch key
+    when STATE_BIDDED,STATE_UNMATCHED,STATE_MATCHED then qryObj.push({field:'status',value:STATE_NEW})
+    else qryObj.push({field:'status',value:key})
+  switch key
+    when STATE_BIDDED then qryObj.push({field:'bidders',value:Meteor.userId()})
+    when STATE_UNMATCHED then qryObj.push({field:'truckers',value:0,operator:'$size'})
+    when STATE_MATCHED
+      unless Meteor.user().isTrucker() then qryObj.push({field:'truckers.owner',value:true,operator:'$exists'})
     else
-      @buildFilterQry([{field:'status',value:key}])
+      switch Meteor.user().role()
+        when ROLE_TRUCKER then qryObj.push({field:'winningBid.bidder',value:Meteor.userId()})
+  @buildFilterQry(qryObj)
+
 
 CommonHelpers.getFiltersForTrucks=(key)->
   @buildFilterQry([{field:'_id',value:key?.split(",") or [],operator:'$in'}])
@@ -95,5 +86,136 @@ CommonHelpers.getFiltersForTrucks=(key)->
 CommonHelpers.getScheduleFieldsLight=()->
   {fields:{dropOffLocation:1,pickupLocation:1,totalBids:1,truckers:1,bidders:1
     ,wayBill:1,status:1,shipmentTitle:1,owner:1,pickupDate:1,dropOffDate:1
-    ,maximumBidPrice:1,receiver:1,sender:1,winningBid:1,resource:1}}
+    ,maximumBidPrice:1,receiver:1,sender:1,winningBid:1,resource:1,nextStep:1}}
+
+CommonHelpers.getDashboardMetricsQuery=(role)->
+  colors={matched:'#f8ac59',success:'#1ab394',late:'#ED5565'
+    ,accepted:'#9370db',issue:'#EE82EE',cancel:'#c2c2c2',assigned:'#23c6c8',request:'#1c84c6'}
+  switch role
+    when ROLE_TRUCKER
+      [
+        [
+          {$match:{'truckers.owner':$in:[Meteor.userId()]}}
+          {$group:{_id:null,matched:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Matched"},description:{$literal:"Total number of matched Requests"}
+            ,color:{$literal:colors.matched},value:"$matched"}}
+        ]
+        [
+          {$match:{'winningBid.bidder':Meteor.userId()}}
+          {$group:{_id:null,accepted:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Accepted"},description:{$literal:"Total number of accepted Bids"}
+            ,color:{$literal:colors.accepted},value:"$accepted"}}
+        ]
+        [
+          {$match:{'winningBid.bidder':Meteor.userId(),status:STATE_SUCCESS}}
+          {$group:{_id:null,delivered:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Delivered"},description:{$literal:"Total number of successful Deliveries"}
+            ,color:{$literal:colors.success},value:"$delivered"}}
+        ]
+        [
+          {$match:{'winningBid.bidder':Meteor.userId(),isLate:true}}
+          {$group:{_id:null,late:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Late"},description:{$literal:"Total number of Late Deliveries"}
+            ,color:{$literal:colors.late} ,value:"$late"}}
+        ]
+        [
+          {$match:{'winningBid.bidder':Meteor.userId(),status:STATE_ISSUE}}
+          {$group:{_id:null,issues:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Issues"},description:{$literal:"Total number of deliveries with Issues"}
+            ,color:{$literal:colors.issue},value:"$issues"}}
+        ]
+        [
+          {$match:{'winningBid.bidder':Meteor.userId(),status:STATE_CANCELLED}}
+          {$group:{_id:null,cancelled:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Cancelled"},description:{$literal:"Total number of Cancelled Requests"}
+            ,color:{$literal:colors.cancel},value:"$cancelled"}}
+        ]
+
+      ]
+    when ROLE_SHIPPER
+      [
+        [
+          {$match:{owner:Meteor.userId()}}
+          {$group:{_id:null,requests:$sum:1}}
+          {$project:{title:{$literal:"Requests"},description:{$literal:"Total number of Requests"}
+            ,color:{$literal:colors.request},value:"$requests"}}
+        ]
+        [
+          {$match:{owner:Meteor.userId(),$nor:[truckers:{$exists:false},{truckers:$size:0}]}}
+          {$group:{_id:null,matched:$sum:1}}
+          {$project:{title:{$literal:"Matched"},description:{$literal:"Total number of matched Requests"}
+            ,color:{$literal:colors.matched},value:"$matched"}}
+        ]
+        [
+          {$match:{'owner':Meteor.userId(),status:STATE_SUCCESS}}
+          {$group:{_id:null,delivered:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Delivered"},description:{$literal:"Total number of successful Deliveries"}
+            ,color:{$literal:colors.success},value:"$delivered"}}
+        ]
+        [
+          {$match:{'owner':Meteor.userId(),isLate:true}}
+          {$group:{_id:null,late:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Late"},description:{$literal:"Total number of Late Deliveries"}
+            ,color:{$literal:colors.late},value:"$late"}}
+        ]
+        [
+          {$match:{'owner':Meteor.userId(),status:STATE_ISSUE}}
+          {$group:{_id:null,issues:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Issues"},description:{$literal:"Total number of deliveries with Issues"}
+            ,color:{$literal:colors.issue},value:"$issues"}}
+        ]
+        [
+          {$match:{'owner':Meteor.userId(),status:STATE_CANCELLED}}
+          {$group:{_id:null,cancelled:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Cancelled"},description:{$literal:"Total number of Cancelled Requests"}
+            ,color:{$literal:colors.cancel},value:"$cancelled"}}
+        ]
+      ]
+    when ROLE_DRIVER
+      [
+        [
+          {$match:{'resource.driver':Meteor.userId(),status:STATE_ASSIGNED}}
+          {$group:{_id:null,assigned:$sum:1}}
+          {$project:{title:{$literal:"Assigned"},description:{$literal:"Total number of assigned Requests"}
+            ,color:{$literal:colors.assigned},value:"$assigned"}}
+        ]
+        [
+          {$match:{'resource.driver':Meteor.userId(),status:STATE_SUCCESS}}
+          {$group:{_id:null,delivered:$sum:1}}
+          {$project:{title:{$literal:"Delivered"},description:{$literal:"Total number of successful Deliveries"}
+            ,color:{$literal:colors.success},value:"$delivered"}}
+        ]
+        [
+          {$match:{'resource.driver':Meteor.userId(),isLate:true}}
+          {$group:{_id:null,late:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Late"},description:{$literal:"Total number of Late Deliveries"}
+            ,color:{$literal:colors.late},value:"$late"}}
+        ]
+        [
+          {$match:{'resource.driver':Meteor.userId(),status:STATE_ISSUE}}
+          {$group:{_id:null,issues:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Issues"},description:{$literal:"Total number of deliveries with Issues"}
+            ,color:{$literal:colors.issue},value:"$issues"}}
+        ]
+        [
+          {$match:{'resource.driver':Meteor.userId(),status:STATE_CANCELLED}}
+          {$group:{_id:null,cancelled:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Cancelled"},description:{$literal:"Total number of Cancelled Requests"}
+            ,color:{$literal:colors.cancel},value:"$cancelled"}}
+        ]
+
+      ]
+    else []
+
+CommonHelpers.getUserStatisticsQuery=(userId)->
+  if userId
+    [
+      [
+        {$match:{'owner':userId}}
+        {$group:{_id:null,timeliness:{$sum:"$timeliness"},performance:{$sum:"$performance"}
+          ,accuracy:{$sum:"$accuracy"},delivery:{$sum:"$delivery"},average:{$sum:"$average"}}}
+      ]
+    ]
+  else
+    []
 

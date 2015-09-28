@@ -1,5 +1,3 @@
-
-
 AutoForm.hooks
   profileForm:
     onSubmit:(insertDoc,updateDoc,currDoc)->

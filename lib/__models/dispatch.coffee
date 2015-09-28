@@ -8,8 +8,8 @@ Schema.Dispatch=new SimpleSchema
   schedule:
     type:String
     autoform:
-      type:'hidden'
       label:false
+      type:'hidden'
   files:
     optional:true
     type:[String]

@@ -1,11 +1,10 @@
 <template name="sidebar">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
-            <ul class="nav" id="side-menu">
+            <ul class="nav metismenu" id="side-menu" style="display: block;">
                 {{#with currentUser}}
                     <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-
                             {{>imageControl class='img-circle' width=48 height=48 collection='eZImages' photoId=profile.photo }}
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -16,8 +15,6 @@
                             {{#each unLoggedRoles}}
                                {{>toggleRoleItem}}
                             {{/each}}
-                            <!--<li><a href="contacts.html">Contacts</a></li>-->
-                            <!--<li><a href="mailbox.html">Mailbox</a></li>-->
                             <li class="divider"></li>
                             <li><a href="{{pathFor 'atChangePwd'}}">Change Password</a></li>
                             <li class="logout"><a href="#">Logout</a></li>
@@ -29,7 +26,11 @@
                 </li>
                 {{/with}}
                 <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> <span class="nav-label">My Dashboard</span><!--<span class="fa arrow"></span>--></a>
+                    <a href="{{pathFor 'home'}}"><i class="fa fa-home"></i> <span class="nav-label">Home</span><!--<span class="fa arrow"></span>--></a>
+
+                </li>
+                <li>
+                    <a href="{{pathFor 'dashboard'}}"><i class="fa fa-dashboard"></i> <span class="nav-label">My Dashboard</span><!--<span class="fa arrow"></span>--></a>
 
                 </li>
                 <li>
@@ -37,9 +38,9 @@
                     <ul class="nav nav-second-level">
                         <li><a href="{{pathFor 'scheduleList'}}">All loads</a></li>
                         {{#each links}}
-                            {{#if this.children}}
-                                <li  {{Rp_allow this.permissions}} ><a href="#"><span class="nav-label">{{this.title}}</span><span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
+                            {{#if this.children.length}}
+                                <li  {{Rp_allow this.permissions}} ><a href="#">{{this.title}}<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
                                 {{#each this.children}}
                                     <li  {{Rp_allow this.permissions}}><a href="{{pathFor 'filteredSchedules'}}">{{this.status}}</a></li>
                                 {{/each}}
@@ -51,27 +52,19 @@
                         {{/each}}
                     </ul>
                 </li>
-                <!--<li>
-                    <a href="{{pathFor 'contactList'}}"><i class="fa fa-users"></i> <span class="nav-label">Contacts</span>&lt;!&ndash;<span class="fa arrow"></span>&ndash;&gt;</a>
-
-                </li>-->
                 <li>
+                    <a href="#"><i class="fa fa-map-marker"></i> <span class="nav-label">EazyTracker</span>
+                        <span class="label label-warning pull-right">coming soon</span>
+                    </a>
+
+                </li>
+                <li {{Rp_allow 'canViewTruck,canManageTruck,canManageUsers'}}>
                     <a href="#"><i class="fa fa-archive"></i> <span class="nav-label">My Assets</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li {{Rp_allow 'canViewTruck,canManageTruck'}}><a href="{{pathFor 'truckList'}}"><i class="fa fa-truck"></i>Trucks</a></li>
-                        <li {{Rp_allow 'canManageUsers'}}><a href="{{pathFor 'userList'}}"><i class="fa fa-users"></i>Users</a></li>
-                        <!--<li><a href="{{pathFor 'contactList'}}"><i class="fa fa-book"></i>Contacts</a></li>-->
+                        <li {{Rp_allow 'canViewTruck,canManageTruck'}}><a href="{{pathFor 'truckList'}}">Trucks</a></li>
+                        <li {{Rp_allow 'canManageUsers'}}><a href="{{pathFor 'userList'}}">Users</a></li>
                     </ul>
                 </li>
-                <!--<li>
-                    <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">Messages</span><span class="fa arrow"></span></a>
-
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
-
-                </li>-->
-
             </ul>
 
         </div>

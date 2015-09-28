@@ -20,8 +20,8 @@ Template.registerHelper 'formatElement',(status)->
     when STATE_ASSIGNED then 'info-element'
     when STATE_DISPATCH then 'success-element'
     when STATE_CANCELLED then 'default-element'
-    when STATE_LATE  then  'magenta-element'
-    when STATE_ISSUE  then  'danger-element'
+    when STATE_LATE  then  'danger-element'
+    when STATE_ISSUE  then  'magenta-element'
     when STATE_SUCCESS  then  'primary-element'
 
 Template.registerHelper 'summarizeText',(text,length)->
@@ -32,9 +32,7 @@ Template.registerHelper 'formatUserState',(state)->
 
 
 Template.registerHelper 'visibleWhen',(item,compare)->
-  console.log item
   compare=compare.split(',') or []
-  console.log compare
   isEqual=if _.isArray(item) then _.intersection(item,compare).length>0 else _.contains(compare,item)
   if isEqual then null else class:'hidden'
 

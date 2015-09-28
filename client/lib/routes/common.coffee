@@ -7,4 +7,8 @@ Router.map ()->
     path:'/app/registerSuccess'
     layoutTemplate:'user_account'
   )
+
+  @route('dashboard',
+    path:'/app/dashboard'
+  )
   null

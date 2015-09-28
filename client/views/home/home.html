@@ -1,0 +1,66 @@
+<template name="home">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content text-center p-md">
+
+                    <h2><span class="text-navy">Welcome {{currentUser.fullname}}</span> -  <span class="text-navy">Eazytrucker</span> helps to manage your shipments and loads.</h2>
+
+                    <p>
+                        You can begin with any of the actions below.
+                    </p>
+
+                    <div class="list-group text-justify">
+                        {{#placeHolderAction title='Enhance' class="active" show=true}}
+                            {{>placeHolderActionContent show=true content="Improve your personal profile and attract potential truckers and shippers by adding a photo or providing more information about yourself and business." link='manageProfile' id=currentUser._id}}
+
+                            {{>placeHolderActionContent show=true content="Personalize Eazytrucker by modifying your email notification settings" label='coming soon'}}
+                        {{/placeHolderAction}}
+
+                        {{#placeHolderAction title='SETUP' perm='canCreateLoad,canCreateTruck'}}
+                            {{>placeHolderActionContent content="Create your trucks to begin to enjoy automatic matching with potential shippers" perm='canCreateTruck' link='addTruck'}}
+
+                            {{>placeHolderActionContent content="Add your drivers to enable them get assigned to potential jobs"
+                            link='userlist' perm='canCreateTruck'}}
+
+                            {{>placeHolderActionContent  content="Create your first load and have it matched your request automatically with the best offerings" link='newSchedule' perm='canCreateLoad'}}
+
+                        {{/placeHolderAction}}
+
+                        {{#placeHolderAction title="LEARN" show=true}}
+                            {{>placeHolderActionContent content="Get familiar with your Eazytrucker workspace with our interactive online guide"
+                            label='coming soon' show=true}}
+                            {{>placeHolderActionContent show=true content="Download a user guide that teaches you how to use Eazytrucker"
+                            }}
+                        {{/placeHolderAction}}
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<template name="placeHolderAction">
+        <a {{Rp_allow perm show}} class="list-group-item {{class}}" href="#">
+            <h3 class="list-group-item-heading">{{title}}</h3>
+            {{> UI.contentBlock}}
+        </a>
+</template>
+<template name="placeHolderActionContent">
+    <p {{Rp_allow perm show}} class="unstyled-link">
+        <i class="fa fa-chevron-circle-right"></i>&nbsp;
+        {{#if link}}
+            {{#if id}}
+                <a href="{{pathFor link _id=id}}" >{{content}} </a>
+                {{else}}
+                <a href="{{pathFor link _id=id}}" >{{content}} </a>
+            {{/if}}
+        {{else}}
+            <a href="#" >{{content}}</a>
+        {{/if}}
+        &nbsp;<span class="label label-warning">{{label}}</span>
+    </p>
+</template>

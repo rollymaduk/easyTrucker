@@ -36,6 +36,7 @@ Meteor.methods
       {owner:key,trucks:trucks}
     )
     schedule.truckers=truckers
+    schedule.wayBill="EZT-#{new Date().getTime()}"
     service= new TransactionService()
     service.addUpdateSchedule(schedule)
 
@@ -49,11 +50,11 @@ Meteor.methods
   acceptScheduleBid:(schedule,wB)->
     check(schedule,String)
     check(wB,{bidder:String,bid:String})
-    Schedules.update(schedule,{$set:{'winningBid.bidder':wB.bidder,'winningBid.bid':wB.bid,status:STATE_BOOKED}})
+    Schedules.update(schedule,{$set:{'winningBid.bidder':wB.bidder,'winningBid.bid':wB.bid,status:STATE_BOOKED,nextStep:STATE_ASSIGNED}})
 
   assignResource:(resource,schedule)->
     check(resource,{driver:String,truck:String})
-    Schedules.update(schedule,{$set:{resource:resource,status:STATE_ASSIGNED}})
+    Schedules.update(schedule,{$set:{resource:resource,status:STATE_ASSIGNED,nextStep:STATE_DISPATCH}})
 
   updateSchedule:(qry,modifier,options)->
     updateSchedule(qry,modifier,options)
@@ -75,12 +76,24 @@ Meteor.methods
   duplicateSchedule:(schedule)->
     item=Schedules.findOne(schedule)
     if item
-      item._id=undefined
-      item.bidders=[]
-      item.messages=[]
-      item.totalBids=0
-      item.truck=undefined
-      item.driver=undefined
-      item.status=STATE_NEW
-      Meteor.call('addUpdateSchedule',_.omit(item,['updatedAt','createdAt','updatedBy','createdBy']))
+      Meteor.call('addUpdateSchedule',_.omit(item,['updatedAt','createdAt'
+      ,'updatedBy','createdBy','winningBid','isLate','_id','bidders','messages','totalBids','resource',
+        'status','wayBill','nextStep'
+      ]))
+
+  checkAndUpdateLateSchedules:()->
+    late=[];cancel=[];
+    Schedules.find({status:{$nin:[STATE_CANCELLED,STATE_LATE,STATE_SUCCESS,STATE_ISSUE]},$or:[
+      {$and:[{'pickupDate.dateField_2':$lte:new Date()},{'pickupDate.context':'between'}]}
+      {$and:[{'pickupDate.dateField_1':$lte:new Date()},{'pickupDate.context':$ne:'between'}]}
+      {$and:[{'dropOffDate.dateField_2':$lte:new Date()},{'dropOffDate.context':'between'}]}
+      {$and:[{'dropOffDate.dateField_1':$lte:new Date()},{'dropOffDate.context':$ne:'between'}]}
+    ]}).forEach (doc)->
+      switch doc.status
+        when STATE_NEW then cancel.push(doc._id)
+        else late.push(doc._id)
+    Schedules.update({_id:$in:cancel},$set:{status:STATE_CANCELLED},{multi:true}) if cancel.length
+    Schedules.update({_id:$in:late},$set:{status:STATE_LATE,isLate:true},{multi:true}) if late.length
+    late.length+cancel.length
+
 

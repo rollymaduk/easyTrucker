@@ -6,6 +6,8 @@ Template.toggleRoleItem.events
   'click .toggleRole':(evt,temp)->
     Session.set('currentRole',temp.data)
 
+Template.sidebar.rendered=->
+  console.log 'sidebar loaded'
 
 Template.sidebar.helpers
   links:->

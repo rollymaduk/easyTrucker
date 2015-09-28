@@ -13,12 +13,11 @@ Router.map ()->
     data:->
       service=new QueryFilterService(null)
       query=service.scheduleListByRoles()
-      console.log query
       if(query)
         newJobFilters={status:$in:[STATE_NEW,STATE_BOOKED]}
         inProgFilters={status:$in:[STATE_ASSIGNED,STATE_DISPATCH,STATE_LATE]}
-        compFilters={status:$in:[STATE_CANCELLED,STATE_ISSUE,STATE_SUCCESS]}
-        if Meteor.user().isTrucker()
+        compFilters={status:$in:[STATE_ISSUE,STATE_SUCCESS]}
+        if Meteor.user().role() is ROLE_DRIVER
           newJobFilters.status.$in.push(STATE_ASSIGNED)
           inProgFilters.status.$in=_.without(inProgFilters.status.$in,STATE_ASSIGNED)
         {

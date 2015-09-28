@@ -18,7 +18,8 @@ class @QueryFilterService
       switch
         when _.contains(roles,ROLE_TRUCKER) then filter:{'truckers.owner':{$in:[userId]}},modifier:sort:{createdAt:-1}
         when _.contains(roles,ROLE_SHIPPER) then filter:{owner:userId},modifier:sort:{createdAt:-1}
-        when _.contains(roles,ROLE_DRIVER) then filter:{'resource.driver':userId},modifier:sort:{createdAt:-1}
+        when _.contains(roles,ROLE_DRIVER) then filter:{'resource.driver':userId
+          ,status:{$nin:[STATE_BOOKED,STATE_NEW]}},modifier:sort:{createdAt:-1}
         else null
 
 

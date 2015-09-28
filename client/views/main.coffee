@@ -8,7 +8,7 @@ Template.main.created=->
 
 
 Template.main.rendered=->
-  $.getScript('js/inspinia.js')
+  $.getScript('/js/inspinia.js')
 
 
 Template.main.helpers

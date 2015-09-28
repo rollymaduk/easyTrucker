@@ -3,7 +3,10 @@ Schema.Pickup=new SimpleSchema
     type:String
   wayBill:
     type:String
+    optional:true
     label:"Way Bill #"
+    autoform:
+      readOnly:true
   sender:
     type:String
     label:"Pick up Customer"
@@ -91,6 +94,11 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
       allowedValues: [STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
                       STATE_ASSIGNED]
       defaultValue: STATE_NEW
+    nextStep:
+      type:String
+      allowedValues: [STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
+                      STATE_ASSIGNED]
+      defaultValue:STATE_BOOKED
     shipmentDistance:
       type: Number
       decimal: true
@@ -102,6 +110,10 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
       optional: true
       autoform:
         omit: true
+    isLate:
+      type:Boolean
+      defaultValue:false
+      optional:true
     bidders:
       type: [String]
       optional: true

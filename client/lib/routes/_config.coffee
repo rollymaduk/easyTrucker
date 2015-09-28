@@ -18,7 +18,6 @@ Router.onBeforeAction(
 
 Router.onAfterAction(
   ->
-    console.log 'loaded inspinia!'
     $('body').toggleClass('gray-bg',_.isEmpty(Meteor.userId()))
     ###if Meteor.userId()then $('body').removeClass('gray-bg') else $('body').addClass('gray-bg')###
     null)

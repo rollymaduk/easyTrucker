@@ -1,4 +1,4 @@
-describe 'Registration',()->
+xdescribe 'Registration',()->
   describe 'register a new user externally',()->
     userId=undefined
     role='trucker'

@@ -9,6 +9,7 @@ Router.map ()->
   )
   null
 
+
 Router.plugin('ensureSignedIn', {
   except: ['register','registrationSuccess','page','atForgotPwd','atSignUp']
 

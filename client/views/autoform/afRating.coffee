@@ -9,5 +9,7 @@ AutoForm.addInputType('rating'
 ,contextAdjust:(context)->
   if _.isUndefined(context.atts['id'])  and _.isString(context.atts["data-schema-key"])
     context.atts['id']=context.atts['data-schema-key']
+
+  unless context.atts['mutable'] then context.atts.hide=false
   context
 )

@@ -7,6 +7,7 @@ Schema.Rating=new SimpleSchema
       description:TEXT_ACCURACY
       mutable:true
       size:'lg'
+      label:false
   performance:
     type:Number
     defaultValue:0
@@ -16,7 +17,7 @@ Schema.Rating=new SimpleSchema
       mutable:true
       size:'lg'
       hide:()-> not RP_permissions.hasPermissions('canRatePerformance')
-      label:()-> not RP_permissions.hasPermissions('canRatePerformance')
+      label:false
   timeliness:
     type:Number
     defaultValue:0
@@ -25,6 +26,7 @@ Schema.Rating=new SimpleSchema
       description:TEXT_TIMELINESS
       mutable:true
       size:'lg'
+      label:false
   delivery:
     type:Number
     defaultValue:0
@@ -34,7 +36,7 @@ Schema.Rating=new SimpleSchema
       mutable:true
       size:'lg'
       hide:()-> not RP_permissions.hasPermissions('canRateDelivery')
-      label:()-> not RP_permissions.hasPermissions('canRateDelivery')
+      label:false
   average:
     type:Number
     optional:true

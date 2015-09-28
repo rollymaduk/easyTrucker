@@ -5,12 +5,13 @@
             <small class="pull-right text-muted">Last message:  Mon Jan 26 2015 - 18:39:23</small>
             <h4>Comments/Questions</h4>
         </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                        {{>commentControl formId='newCommentForm' doc=this.insertDoc }}
+            {{#if this.insertDoc}}
+                <div class="row">
+                    <div class="col-lg-12">
+                            {{>commentControl formId='newCommentForm' doc=this.insertDoc }}
+                    </div>
                 </div>
-            </div>
+            {{/if}}
             <br>
             {{#if this.comments.length}}
                 <div class="row">

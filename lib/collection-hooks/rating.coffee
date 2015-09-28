@@ -1,7 +1,8 @@
 getAverage=(item)->
   res=_.pick(item,TITLE_ACCURACY,TITLE_PERFORMANCE,TITLE_DELIVERY,TITLE_TIMELINESS)
   console.log res
-  _.compact(_.values(res)).average()
+  res=_.compact(_.values(res)).average()
+  res.toFixed(1)
 Ratings.before.insert (user,doc)->
   if Meteor.isServer
    doc.average= getAverage doc
