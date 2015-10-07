@@ -2,3 +2,10 @@ user_admin:
   email: admin@eztrucker.com
   username: admin
   password: password
+  profile:
+    firstname: Administrator
+    lastname: Eztrucker
+    telephones: []
+    emails: [admin@eztrucker.com]
+    companyName: admin@eztrucker.com
+    companyAddress: none

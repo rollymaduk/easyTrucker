@@ -11,4 +11,8 @@ Meteor.startup ->
       return false;
   if Meteor.settings.public.verifyEmailToLogin
     Accounts.validateLoginAttempt(loginAttemptVerifier)
-  null
+
+
+
+
+

@@ -2,8 +2,6 @@ loadUser=(user)->
  Meteor.users.remove(username:user.username);
  userAlreadyExists= _.isObject( Meteor.users.findOne({ username : user.username }))
  if (!userAlreadyExists)
-  profile={firstname:'Administrator',lastname:'Eztrucker',telephones:[],emails:[user.email],companyName:'Eztrucker',companyAddress:'none'}
-  user['profile']=profile
   userId=Accounts.createUser(user)
   Roles.addUsersToRoles userId,'admin',Roles.GLOBAL_GROUP if userId
   null

@@ -8,7 +8,8 @@ class @UserAccountService
     if userId
       groupName=groupName||username
       Roles.addUsersToRoles userId,role,groupName
-      Accounts.sendVerificationEmail(userId)
+
+      ###Accounts.sendVerificationEmail(userId)###
     userId
 
   updateProfile:(userId,profile)->

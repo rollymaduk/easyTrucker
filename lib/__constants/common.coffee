@@ -32,3 +32,7 @@
 @TEXT_TIMELINESS='was on time at pickup and delivery'
 @TEXT_DELIVERY='delivered goods safely with little or no issues/conflicts'
 @TEXT_PERFORMANCE='satisfied and or exceeded expectations of contract terms'
+
+@ACTIVATION_EMAIL='tem_w7EpAQqpd5vxdiQEetUBWi'
+@NOTIFICATION_EMAIL='tem_eb6DfapRU5GoPKGfbRkHwB'
+@NOTIFICATION_UPDATE_EMAIL='tem_BqMkUNwNiXKeTztpFRQkHm'

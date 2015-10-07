@@ -17,6 +17,8 @@ Meteor.users.helpers
     @profile.isActive
   getRoles:->
     _.values(@roles)[0].join()
+  defaultEmail:->@profile.emails[0]
+
 
 
 
