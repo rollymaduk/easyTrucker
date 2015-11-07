@@ -8,17 +8,11 @@ Meteor.publishRelations 'trucks',(qry,limit)->
     @cursor Trucks.find(filter,modifier),(docId,doc)->
       query='truckers.trucks':docId
       trucker=doc.owner
-      @cursor Schedules.find(query,{fields:{truckers:1,status:1,pickupDate:1,dropOffDate:1,wayBill:1,shipmentTitle:1}}),(docId,doc)->
-        @cursor Bids.find({schedule:docId,owner:trucker})
+      @cursor Schedules.find(query,{fields:{status:1,resource:1,_id:1,pickupDate:1,dropOffDate:1}}),(docId,doc)->
+        @cursor Bids.find({'schedule._id':docId,owner:trucker})
         null
       null
     @ready()
-
-###Meteor.publish 'truckList',(limit)->
-  unless not @userId
-    limit=limit||50
-    Trucks.find {owner:@userId},{limit:limit}###
-
 
 Meteor.publish 'truckItem',(id)->
   unless not @userId

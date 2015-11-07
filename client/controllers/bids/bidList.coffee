@@ -1,10 +1,10 @@
 
 Template.bidListItem.helpers
   activity:->
-    Activities.findOne({documentId:@_id},{sort:{createdAt:-1}})
+    ###Activities.findOne({documentId:@_id},{sort:{createdAt:-1}})###
 
   message:->
-    Messages.findOne({documentId:@_id},{sort:{createdAt:-1}})
+    ###Messages.findOne({documentId:@_id},{sort:{createdAt:-1}})###
 
 Template.bidList.helpers
   canInsert:()->

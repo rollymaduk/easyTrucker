@@ -43,10 +43,6 @@ Meteor.methods
   searchSchedules:(pipeline)->
     Schedules.aggregate(pipeline)
 
-  addScheduleComment:(schedule,comment)->
-    Form.Message.clean(comment)
-    Schedules.update(schedule,$addToSet:messages:comment)
-
   acceptScheduleBid:(schedule,wB)->
     check(schedule,String)
     check(wB,{bidder:String,bid:String})
@@ -61,24 +57,22 @@ Meteor.methods
 
   removeSchedule:(schedule)->
     item=Schedules.findOne(schedule)
-    messages=Messages.find({documentId:schedule}).map (doc)->doc._id
-    activities=Activities.find({documentId:schedule}).map (doc)->doc._id
     if item
-      Activities.remove({documentId:schedule})
-      Messages.remove({documentId:schedule})
-      Bids.remove({schedule:schedule})
       eZFiles.remove({_id:$in:item.files})  if item.files
       Dispatches.remove({schedule:schedule})
-      Notifications.remove({documentId:$in:messages})
-      Notifications.remove({documentId:$in:activities})
+      Bids.remove({"schedule._id":schedule})
+      Rp_Notification.removeNotifications(schedule)
+      Rp_Comment.removeComments(schedule)
       Schedules.remove(schedule)
 
-  duplicateSchedule:(schedule)->
+  duplicateSchedule:(schedule,doc)->
+    console.log schedule
     item=Schedules.findOne(schedule)
+    if doc then _.extend(item,doc)
     if item
       Meteor.call('addUpdateSchedule',_.omit(item,['updatedAt','createdAt'
       ,'updatedBy','createdBy','winningBid','isLate','_id','bidders','messages','totalBids','resource',
-        'status','wayBill','nextStep'
+        'status','wayBill','nextStep','charge'
       ]))
 
   checkAndUpdateLateSchedules:()->
@@ -96,4 +90,10 @@ Meteor.methods
     Schedules.update({_id:$in:late},$set:{status:STATE_LATE,isLate:true},{multi:true}) if late.length
     late.length+cancel.length
 
+  dispatchLoad:(dispatch)->
+    Schedules.update(dispatch.schedule,$set:{dispatch:dispatch,status:STATE_DISPATCH,nextStep:STATE_SUCCESS})
 
+
+  deliverLoad:(delivery)->
+    status=if delivery.hasIssue then STATE_ISSUE else STATE_SUCCESS
+    Schedules.update(delivery.schedule,$set:{delivery:delivery,status:status,nextStep:STATE_CLOSED})

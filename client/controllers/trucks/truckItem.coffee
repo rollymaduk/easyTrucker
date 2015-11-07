@@ -39,5 +39,4 @@ Template.truckItem.rendered=->
 Template.truckItem.helpers
   policyIsExpired:->Template.instance().expiredPolicy.get()
 
-  isAssignMode:->
-    Session.get('acceptedRequestItem')
+

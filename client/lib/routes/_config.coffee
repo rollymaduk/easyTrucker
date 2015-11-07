@@ -1,9 +1,5 @@
 Router.configure {
   layoutTemplate:'main'
-  waitOn:()->
-    Meteor.subscribe('notifications') if Meteor.userId()
-    photo=Meteor?.user()?.profile?.photo
-    Meteor.subscribe('eZImages',{_id:photo}) if photo
 }
 
 Router.onBeforeAction(
@@ -14,6 +10,17 @@ Router.onBeforeAction(
     @next()
 , { only: ['addTruck','editTruck','newSchedule','editSchedule','register','truckList'] }
 )
+
+Router.onBeforeAction ->
+  loadUploadcare()
+  @next()
+,{ only: ['viewSchedule'] }
+
+
+Router.onBeforeAction ->
+  Session.set('registerSubs',@params.hash) if @params.hash
+  @next()
+,{only:'atSignUp'}
 
 
 Router.onAfterAction(

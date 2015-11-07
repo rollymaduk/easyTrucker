@@ -29,7 +29,7 @@
                 {{/if}}
                 <div class="ibox-tools" >
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
+                        <i class="fa fa-wrench"></i> actions
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a   href="{{pathFor 'editTruck'}}">
@@ -53,13 +53,14 @@
                                 </a>
                             {{/if}}
                         {{/if}}
+                            <a class="remove-truck" href="#">
+                                <i class="fa fa-times"></i> Remove
+                            </a>
                         </li>
                     </ul>
 
 
-                    <a class="remove-schedule" href="#">
-                        <i class="fa fa-times"></i>
-                    </a>
+
                 </div>
             </div>
 

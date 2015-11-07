@@ -1,5 +1,5 @@
 Meteor.startup ->
-  sAlert.config
+  ###sAlert.config
     effect: 'genie',
     position: 'top-right',
     timeout: 5000,
@@ -8,4 +8,4 @@ Meteor.startup ->
     stack: true,
     offset: 0,
     beep:false
-  null
+  null###

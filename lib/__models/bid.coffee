@@ -1,3 +1,32 @@
+Schema.BidScheduleMeta=new SimpleSchema
+  _id:
+    type:String
+    autoform:
+      type:"hidden"
+      label:false
+  maximumBidPrice:
+    type:Number
+    defaultValue:0
+    optional:true
+    autoform:
+      type:"hidden"
+      label:false
+  shipmentTitle:
+    type:String
+    autoform:
+      type:"hidden"
+      label:false
+  pickupDate:
+    type:Form.TimeFrame
+  dropOffDate:
+    type:Form.TimeFrame
+  owner:
+    type:String
+    autoform:
+      type:"hidden"
+      label:false
+
+
 Schema.Bid=new SimpleSchema
   quote:
     label:'Quote'
@@ -12,21 +41,11 @@ Schema.Bid=new SimpleSchema
       else on
     autoform:
       omit:true
-  ###messages:
-    type:[Form.Message]
-    optional:true
-    defaultValue:[]###
-  proposedPickup:
-    type:Form.TimeFrame
-  proposedDelivery:
-    type:Form.TimeFrame
   schedule:
-    type:String
-    optional:true
+    type:Schema.BidScheduleMeta
     autoform:
       type:"hidden"
       label:false
-
   owner:
     type:String
     autoValue:()->

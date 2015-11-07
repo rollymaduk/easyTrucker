@@ -1,5 +1,5 @@
 loadUser=(user)->
- Meteor.users.remove(username:user.username);
+ ###Meteor.users.remove(username:user.username);###
  userAlreadyExists= _.isObject( Meteor.users.findOne({ username : user.username }))
  if (!userAlreadyExists)
   userId=Accounts.createUser(user)

@@ -1,4 +1,4 @@
-Schema.LatLngBounds=new SimpleSchema
+###Schema.LatLngBounds=new SimpleSchema
   'southwest.lat':
     type:Number
     decimal:true
@@ -10,7 +10,7 @@ Schema.LatLngBounds=new SimpleSchema
     decimal:true
   'northeast.lng':
     type:Number
-    decimal:true
+    decimal:true###
 
 Schema.AddressSchema =new SimpleSchema({
   formatted_address: {

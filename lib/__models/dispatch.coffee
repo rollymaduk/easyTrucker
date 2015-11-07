@@ -2,20 +2,18 @@ Schema.Dispatch=new SimpleSchema
   note:
     type:String
     optional:true
+    defaultValue:"Dispatched"
     autoform:
       afFieldInput:
         rows:5
   schedule:
     type:String
     autoform:
+      type:"hidden"
       label:false
-      type:'hidden'
-  files:
+  photos:
+    type:String
     optional:true
-    type:[String]
-    label: 'Choose file' # optional
-  "files.$":
     autoform:
-      afFieldInput:
-        type: 'fileUpload'
-        collection: 'eZFiles'
+      type:"hidden"
+      label:false

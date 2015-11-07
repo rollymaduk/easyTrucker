@@ -19,7 +19,7 @@ Template.chooseDriverModal.helpers
 
 Template.chooseDriverModal.events
   'click .save-modal':(evt,temp)->
-    schedule=Session.get('acceptedRequestItem').schedule
+    schedule=Session.get('assignMode')
     driver=AutoForm.getFormValues('chooseDriverForm').insertDoc.driver
     resource={driver:driver,truck:temp.data.data.truck}
     console.log resource

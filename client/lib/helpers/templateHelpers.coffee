@@ -25,7 +25,7 @@ Template.registerHelper 'formatElement',(status)->
     when STATE_SUCCESS  then  'primary-element'
 
 Template.registerHelper 'summarizeText',(text,length)->
-  text.trimToLength(length)
+  if text then text.trimToLength(length)
 
 Template.registerHelper 'formatUserState',(state)->
   if state then 'label-primary' else 'label-default'
@@ -40,7 +40,7 @@ Template.registerHelper 'accountTypes',->
   {shipper:'Shipper',trucker:'Trucker' }
 
 Template.registerHelper 'identity',(user)->
-  user.company() or user.fullname()
+  if user then user.company() or user.fullname()
 
 Template.registerHelper 'canEditProfile',(user)->
   user is Meteor.userId()

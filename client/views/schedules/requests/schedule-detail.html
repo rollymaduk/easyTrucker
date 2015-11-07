@@ -23,8 +23,10 @@
                                 </div>
 
                                <div><h2> {{shipmentTitle}}<span class="small">-{{wayBill}}</span></h2>
+                                   <span class="pull-right">{{>performanceWidget performance=performance size="lg"}}</span>
                                    <span class="label {{formatStatus state}}">{{state}} </span> &nbsp;&nbsp;
-                                   <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span></div>
+                                   <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span> &nbsp;&nbsp;
+                                   </div>
                             </div>
 
                         </div>
@@ -173,7 +175,9 @@
                                 <div class="panel-body">
                                     <div class="row m-t-sm">
                                         <div class="col-lg-12">
-                                            {{>comments insertDoc=commentInsertDoc comments=comments }}
+                                            {{#rp_comments docId=this._id collection="Schedules" name="request"}}
+                                                {{>imageControl collection='eZImages' class='message-avatar' photo=owner.profile.photo}}
+                                            {{/rp_comments}}
                                         </div>
                                     </div>
 

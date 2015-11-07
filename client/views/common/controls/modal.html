@@ -1,0 +1,30 @@
+<template name="modal">
+    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated bounceInRight">
+                {{#if this.title}}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+
+                    <h4 class="modal-title">{{this.title}}</h4>
+                </div>
+                    {{/if}}
+                <div class="modal-body">
+                    {{#unless this.title}}
+                        <button type="button" class="close pull-right" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    {{/unless}}
+                    {{> UI.contentBlock}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="modalfooter">
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+        {{#unless this.hideButton}}
+            <button type="button" class="btn btn-primary save-modal">Save changes</button>
+        {{/unless}}
+    </div>
+</template>

@@ -1,13 +1,5 @@
 Router.map ()->
-  @route('page',
-    path:Meteor.settings.public.pagePath
-    where:'server'
-    action:()->
-      html = SSR.render('layout')
-      @response.writeHead 200,'Content-Type':'text/html'
-      @response.end html
-  )
-  null
+
 
 
 Router.plugin('ensureSignedIn', {
@@ -23,7 +15,16 @@ AccountsTemplates.configureRoute('forgotPwd',{
 AccountsTemplates.configureRoute('signUp',{
   layoutTemplate: 'user_account'
   template:'register'
+  path:'/user/register'
+  onBeforeAction:()->
+    console.log 'here before we roll'
 })
+
+AccountsTemplates.configureRoute('signIn',
+  path:'/user/login'
+  layoutTemplate:'user_account'
+  template:'login'
+)
 
 AccountsTemplates.configureRoute('ensureSignedIn',{
   template:'login'

@@ -9,6 +9,8 @@
 @STATE_ISSUE='issue'
 @STATE_DISPATCH='dispatched'
 @STATE_BIDDED='bidded'
+@STATE_CLOSED='closed'
+
 
 @ROLE_DRIVER='driver'
 @ROLE_SHIPPER='shipper'
@@ -17,8 +19,9 @@
 
 @COLLECTION_BID='Bids'
 @COLLECTION_REQUEST='Schedules'
-@COLLECTION_MESSAGE='Messages'
-@COLLECTION_ACTIVITY='Activities'
+@COLLECTION_USER='Meteor.users'
+@COLLECTION_COMMENT='Rp_Comments'
+
 
 @ERROR_BID_QUOTE="Quoted price must be less or equal to max bid price"
 @ERROR_PASSWORD_MISMATCH="Passwords do not match"
@@ -33,6 +36,11 @@
 @TEXT_DELIVERY='delivered goods safely with little or no issues/conflicts'
 @TEXT_PERFORMANCE='satisfied and or exceeded expectations of contract terms'
 
-@ACTIVATION_EMAIL='tem_w7EpAQqpd5vxdiQEetUBWi'
-@NOTIFICATION_EMAIL='tem_eb6DfapRU5GoPKGfbRkHwB'
-@NOTIFICATION_UPDATE_EMAIL='tem_BqMkUNwNiXKeTztpFRQkHm'
+@TITLE_UPDATE='UPDATE'
+@TITLE_NEW='NEW'
+@TITLE_REQUEST='REQUEST'
+@TITLE_BID='BID'
+
+@SUBSCRIBE_ANNUAL="premium_yr"
+@SUBSCRIBE_MONTH="premium"
+@SUBSCRIBE_FREE="free"

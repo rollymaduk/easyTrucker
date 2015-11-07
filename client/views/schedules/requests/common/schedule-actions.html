@@ -1,0 +1,23 @@
+<template name="schedule_actions">
+    {{#unless item.canAssignResource}}
+        {{#if item.bidCount}}
+            {{#unless hideBids}}
+            <a href="{{pathFor 'bidList' _id=item._id }}" class="{{btnClasses}}"
+                  {{visibleWhen item.status 'new'}} {{Rp_allow 'canViewbidList'}}>View bids({{item.bidCount}})</a>
+            {{/unless}}
+
+        {{/if}}
+            {{#if item.hasBid}}
+                <a href="{{pathFor 'bidDetailBySchedule' _id=item._id bidder=currentUser._id}}" class="{{btnClasses}}" {{visibleWhen item.status 'new'}} {{Rp_allow 'canEditbid,canCreatebid,canManagebid'}}>Manage bid</a>
+            {{else}}
+                <a href="{{pathFor 'newBid' _id=item._id }}" class="{{btnClasses}}" {{visibleWhen item.status 'new'}} {{Rp_allow 'canEditbid,canCreatebid,canManagebid'}}>Place a bid</a>
+            {{/if}}
+
+    {{else}}
+       <a {{Rp_allow 'canAssignTruck'}} {{visibleWhen item.nextStep 'booked'}} href="#" class="assign-resource {{btnClasses}}">Assign Driver/Truck</a>
+    {{/unless}}
+        <a href="#" {{Rp_allow 'canDispatchLoad'}} {{visibleWhen item.nextStep 'dispatched'}} class="dispatch-load {{btnClasses}}">Dispatch load</a>
+        <a href="#" {{Rp_allow 'canCloseRequest'}} class="deliver-load {{btnClasses}}" {{visibleWhen item.nextStep 'delivered'}}>Deliver Load</a>
+        <span {{Rp_allow 'canGiveFeedback'}} {{visibleWhen item.nextStep 'closed'}}>{{>rp_create_rating  item.createRating class="btn btn-xs btn-primary"}}</span>
+
+</template>

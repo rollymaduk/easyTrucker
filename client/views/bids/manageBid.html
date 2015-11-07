@@ -8,7 +8,7 @@
                         <div class="m-b-md">
                             <div class="pull-right">
                                 {{#unless _id}}
-                                    <a href="{{pathFor 'viewSchedule' _id=schedule}}" style="color: inherit" class=" close-bid">
+                                    <a href="{{pathFor 'viewSchedule' _id=schedule._id}}" style="color: inherit" class=" close-bid">
                                         <span class=" glyphicon gly glyphicon-remove"></span>
                                     </a>
                                     {{else}}
@@ -17,7 +17,7 @@
                                     </a>
                                 {{/unless}}
                             </div>
-                            <h2>My Bid for <a href="{{pathFor "viewSchedule" _id=schedule}}">{{scheduleItem.shipmentTitle}}</a></h2>
+                            <h2>My Bid for <a href="{{pathFor "viewSchedule" _id=schedule._id}}">{{schedule.shipmentTitle}}</a></h2>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     {{#autoForm id="placeBidForm" doc=this schema="Schema.Bid"}}
                         <fieldset>
                             <div class="form-group{{#if afFieldIsInvalid name='quote'}} has-error{{/if}}">
-                                <label class="control-label">Quote {{#if scheduleItem.maximumBidPrice}}<small>  max bid quote: ({{scheduleItem.maximumBidPrice}})</small>{{/if}}</label>
+                                <label class="control-label">Quote {{#if schedule.maximumBidPrice}}<small>  max bid quote: ({{schedule.maximumBidPrice}})</small>{{/if}}</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">$ </div>
                                     {{> afFieldInput name='quote' placeholder="Enter quote" }}
@@ -37,9 +37,15 @@
                                 {{/if}}
                             </div>
                        <!-- {{>afQuickField name="quote"}}-->
-                        {{>timeFrame title="Pickup Date" context='proposedPickup.context' dateField_1='proposedPickup.dateField_1' dateField_2='proposedPickup.dateField_2'}}
-                        {{>timeFrame title="DropOff Date" context='proposedDelivery.context' dateField_1='proposedDelivery.dateField_1' dateField_2='proposedDelivery.dateField_2'}}
-                            {{>afQuickField name="schedule"}}
+
+                                {{>timeFrame title="Pickup Date" context='schedule.pickupDate.context' dateField_1='schedule.pickupDate.dateField_1' dateField_2='schedule.pickupDate.dateField_2'}}
+                                {{>timeFrame title="DropOff Date" context='schedule.dropOffDate.context' dateField_1='schedule.dropOffDate.dateField_1' dateField_2='schedule.dropOffDate.dateField_2'}}
+
+                            {{>afQuickField name="schedule._id"}}
+                            {{>afQuickField name="schedule.maximumBidPrice"}}
+                            {{>afQuickField name="schedule.owner"}}
+                            {{>afQuickField name="schedule.shipmentTitle"}}
+
                         </fieldset>
                             <button type="submit" class="btn btn-primary btn-xs pull-right">Place bid</button>
                     {{/autoForm}}

@@ -22,9 +22,10 @@ CommonHelpers.getAllRoles=(type)->
     when ROLE_TRUCKER then [{value:'driver',label:'Driver'},{value:'accountant',label:'Accountant'},{value:ROLE_TRUCKER,label:'Administrator'}]
     else []
 
-CommonHelpers.getNotificationAudience=(users,exlude)->
+CommonHelpers.getNotificationAudience=(users,exclude)->
   users=if _.isArray(users) then users else []
-  _.without(users,exlude)
+  morethanOnce=(users.join('').split(exclude).length-1)>1
+  unless morethanOnce then _.without(users,exclude) else _.unique(users)
 
 CommonHelpers.getTruckVolume=(context)->
   if context.boxedVolume

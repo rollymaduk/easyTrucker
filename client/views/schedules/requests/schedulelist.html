@@ -25,12 +25,12 @@
                 {{bidCount}} bid(s)</a> </span>
 
 
-            <span class="small ">&nbsp;|&nbsp;<a href="#" >{{messages.length}}<i class="fa fa-comments"></i> </a> </span>
+            <!--<span class="small ">&nbsp;|&nbsp;<a href="#" >{{messages.length}}<i class="fa fa-comments"></i> </a> </span>-->
 
             <div class="ibox-tools" >
                 <!--<a href="{{pathFor 'viewSchedule'}}"  class="label {{formatStatus status}} manage-bid">{{status}}</a>-->
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-wrench"></i>
+                    <i class="fa fa-wrench"></i> actions
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
@@ -42,11 +42,12 @@
                     <a href="#" class="duplicate-load" {{Rp_allow 'canEditLoad,canManageLoad'}}>Duplicate Load</a>
 
                     {{>schedule_actions item=this}}
+
+                    <a href="#" class="remove-schedule" {{Rp_allow 'canEditLoad,canManageLoad'}}>Remove</a>
+
                     </li>
                 </ul>
-                <a class="remove-schedule" href="">
-                    <i class="fa fa-times"></i>
-                </a>
+
             </div>
         </div>
 

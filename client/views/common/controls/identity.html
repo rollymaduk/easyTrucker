@@ -1,0 +1,5 @@
+<template name="identity">
+    {{#with owner}}
+        <a class="message-author" href="{{pathFor 'profile'}}">{{identity this}} </a>
+    {{/with}}
+</template>

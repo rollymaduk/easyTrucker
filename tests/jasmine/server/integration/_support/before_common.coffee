@@ -1,0 +1,3 @@
+beforeAll ()->
+  VelocityHelpers.exportGlobals()
+  null

@@ -1,6 +1,6 @@
-###
-Meteor.publish 'eZFiles',()->
-  if userId
-    eZFiles.find({owner:userId})
-  @ready()
-###
+Meteor.publish 'files',(qry)->
+  if @userId
+    qry=qry or {}
+    eZFiles.find(_.extend(qry,{owner:@userId}))
+  else
+    @ready()

@@ -1,13 +1,15 @@
 <template name="manageDelivery">
-    <div class="col-lg-8">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Deliver  {{this.shipmentTitle}}</h5>
-            </div>
-            <div class="ibox-content">
-                {{>quickForm id='manageDeliveryForm' type=docType doc=deliveryDoc collection='Deliveries'}}
-            </div>
-
-        </div>
-    </div>
+   <h5>Deliver  {{deliveryDoc.subject}}</h5>
+   {{>quickForm id='manageDeliveryForm' type=normal doc=deliveryDoc buttonContent=false schema='Schema.Delivery'}}
+    <p class="uploader-green-button">
+        <input type="hidden"
+               name="picture"
+               role="uploadcare-uploader"
+               data-multiple="true"
+               data-clearable="true"
+               data-image-shrink=""
+               data-images-only="true"
+               data-preview-step="true"
+               data-crop="400:300" />
+    </p>
 </template>

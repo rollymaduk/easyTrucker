@@ -1,7 +1,6 @@
 Template.scheduleItem.events
   'click .duplicate-load':(evt,temp)->
-    Meteor.call 'duplicateSchedule',temp.data._id,(err,res)->
-      console.log err or res
+    Modal.show 'duplicateScheduleModal',temp.data
 
   'click #toggleSchedule':(evt,temp)->
     id=".#{temp.data._id}"

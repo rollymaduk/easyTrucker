@@ -18,7 +18,6 @@ yogiben:autoform-map
 aldeed:template-extension
 peppelg:bootstrap-3-modal
 lukemadera:autoform-googleplace
-ogamedia:timer
 aldeed:delete-button
 meteorhacks:aggregate
 accounts-ui
@@ -41,12 +40,10 @@ geojson-utils
 matb33:collection-hooks
 msavin:jetsetter
 rollypolly:impersonate
-codechimera:meteor-bootstrap-sweetalert
 rzymek:fullcalendar
 zimme:select2-bootstrap3-css
 cfs:standard-packages
 cfs:gridfs
-perak:joins
 zimme:collection-softremovable
 zimme:collection-timestampable
 aldeed:autoform-bs-datetimepicker
@@ -59,7 +56,6 @@ mologie:autoform-selectize
 chhib:selectize-bootstrap-3
 ctjp:autoform-bootstrap-switch
 ctjp:meteor-bootstrap-switch
-yogiben:pretty-email
 useraccounts:bootstrap
 useraccounts:iron-routing
 barbatus:stars-rating
@@ -67,11 +63,23 @@ digilord:sugarjs
 dburles:mongo-collection-instances
 rollypolly:morris-charts
 percolate:synced-cron
-juliancwirko:s-alert
-juliancwirko:s-alert-genie
 rollypolly:sg-threads
-meteorhacks:npm
 
 
-npm-container
 eazytrucker:core
+
+
+velocity:helpers
+eazytrucker:fixtures
+http
+aldeed:plans-stripe
+aldeed:plans
+mrgalaxy:stripe
+rollypolly:comments
+rollypolly:notifications
+rollypolly:swu-mailer
+codechimera:meteor-bootstrap-sweetalert
+rollypolly:meteor-rating
+momentjs:twix
+ogamedia:timer
+petsetgo:uploadcare

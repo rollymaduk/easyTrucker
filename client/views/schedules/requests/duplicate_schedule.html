@@ -1,0 +1,9 @@
+<template name="duplicate_schedule">
+    {{#autoForm doc=this schema='Form.DuplicateScheduleForm' display_button='false' id='duplicateForm'}}
+        {{>afQuickField name='_id' type='hidden'}}
+        {{>afQuickField name='shipmentTitle'}}
+        {{>timeFrame title="Pickup Date" context='pickupDate.context' dateField_1='pickupDate.dateField_1' dateField_2='pickupDate.dateField_2'}}
+        {{>timeFrame title="DropOff Date" context='dropOffDate.context' dateField_1='dropOffDate.dateField_1' dateField_2='dropOffDate.dateField_2'}}
+
+    {{/autoForm}}
+</template>

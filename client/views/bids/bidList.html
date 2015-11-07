@@ -33,45 +33,23 @@
         <div class="ibox">
             <div class="ibox-title">
                 <div class="ibox-tools">
-
                     {{>acceptBidActions}}
                 </div>
-
                 <h2 class="no-margins pull-left">${{quote}}</h2>
-                {{#if messages.length}}&nbsp;&nbsp;
-                <span>{{messages.length}}<i class="fa fa-comments"></i></span>
-                {{/if}}
             </div>
             <a href="{{pathFor 'bidDetail'}}" >
                 <div class="ibox-content ibox-heading">
                     <h4>Latest Activity!</h4>
-                    <small><span class="pull-right">{{tm_now activity.createdAt}}</span><i class="fa fa-bell"></i> {{summarizeText activity.description 30}} </small>
-                    {{#if message}}
-                    <br/>
-                    <small><span class="pull-right">{{tm_now message.createdAt}}</span><i class="fa fa-envelope"></i> {{summarizeText message.message 30}} </small>
-                    {{/if}}
+                    <small>
+                        {{#if latestActivity}}
+                            <span class="pull-right"> {{tm_now latestActivity.createdAt}}</span><i class="fa fa-bell"></i>
+                            {{summarizeText latestActivity.description 30}}
+                        {{/if}}
+                    </small>
+
                 </div>
             </a>
             <div class="ibox-content">
-                <!--<div class="team-members">
-                    <a href="#"><img alt="member" class="img-circle" src="img/a1.jpg"></a>
-                    <a href="#"><img alt="member" class="img-circle" src="img/a2.jpg"></a>
-                    <a href="#"><img alt="member" class="img-circle" src="img/a3.jpg"></a>
-                    <a href="#"><img alt="member" class="img-circle" src="img/a5.jpg"></a>
-                    <a href="#"><img alt="member" class="img-circle" src="img/a6.jpg"></a>
-                </div>-->
-
-               <!-- <h4>Latest Activity</h4>
-                <p>
-                    {{notification.message}}
-                </p>-->
-                <!-- <div>
-                     <span>Status of current project:</span>
-                     <div class="stat-percent">48%</div>
-                     <div class="progress progress-mini">
-                         <div style="width: 48%;" class="progress-bar"></div>
-                     </div>
-                 </div>-->
                 <div class="row  m-t-sm ">
                     <div class="col-sm-6">
                         <div class="font-bold">Bidder</div>
@@ -87,7 +65,6 @@
                         {{>serviceCeritfication size=16 profile=bidder}}
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

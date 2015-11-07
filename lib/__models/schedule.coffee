@@ -92,12 +92,12 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
     status:
       type: String
       allowedValues: [STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
-                      STATE_ASSIGNED]
+                      STATE_ASSIGNED,STATE_CLOSED]
       defaultValue: STATE_NEW
     nextStep:
       type:String
       allowedValues: [STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
-                      STATE_ASSIGNED]
+                      STATE_ASSIGNED,STATE_CLOSED]
       defaultValue:STATE_BOOKED
     shipmentDistance:
       type: Number
@@ -128,6 +128,13 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
         if @isInsert then Meteor.userId()
         else if @isUpsert then $setOnInsert: Meteor.userId()
         else @unset()
+    charge:
+      type:[Object]
+      optional:true
+    'charge.$.group':
+      type:String
+    'charge.$.id':
+      type:String
     winningBid:
       type: Object
       optional: true
@@ -145,6 +152,12 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
       type: String
       max: 250
       optional: true
+    dispatch:
+      type:Schema.Dispatch
+      optional:true
+    delivery:
+      type:Schema.Delivery
+      optional:true
   }])
 
 

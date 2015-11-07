@@ -29,8 +29,6 @@ Template.register.helpers
     (e)->
       data=@getAllData()
 
-      service=new UserAccountService()
-
       {firstname,lastname,companyName,companyAddress,truckAuthorityType,truckAuthorityNumber}=data
 
       profile={firstname:firstname,lastname:lastname,companyAddress:companyAddress,
@@ -42,12 +40,9 @@ Template.register.helpers
 
       role=data.accountType
 
-      service.registerNewUser user,role,null,(err,res)->
-        if res
-          Router.go 'registrationSuccess'
-        else
-          swal 'Failure',err.message,'error'
-
+      Eztrucker.Utils.Registration.registerNewUser(user,role,null,Session.get('registerSubs'),(err,res)->
+        if res then Router.go 'registrationSuccess' else console.log err
+      )
 
   oncanceled:->
     (e)->

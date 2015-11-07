@@ -8,15 +8,17 @@ Template.header.events
 
 Template.header.helpers
   alerts:()->
-    Notifications.find({collectionName:COLLECTION_ACTIVITY}).fetch()
+    Rp_Notification.getAlerts({collection:$in:[COLLECTION_REQUEST,COLLECTION_BID]})
 
   messages:()->
-    Notifications.find({collectionName:COLLECTION_MESSAGE}).fetch()
+    Rp_Notification.getAlerts({collection:COLLECTION_COMMENT})
+
+###
 
 Template.alertItem.helpers
   isBidAlert:()->
-    @notification.collectionName is COLLECTION_BID
+    false
 
 Template.messageNotifyItem.helpers
   isBidAlert:()->
-    @notification.collectionName is COLLECTION_BID
+    false###

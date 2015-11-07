@@ -19,13 +19,10 @@ Schema.Delivery=new SimpleSchema
     autoform:
       type:'hidden'
       label:false
-  files:
+  photos:
     optional:true
-    type:[String]
-    label: 'Choose file' # optional
-  "files.$":
+    type:String
     autoform:
-      afFieldInput:
-        type: 'fileUpload'
-        collection: 'eZFiles'
+      type:'hidden'
+      label:false
 

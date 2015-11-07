@@ -2,12 +2,16 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        UPLOADCARE_PUBLIC_KEY = 'eca4d985c3e0b95a73e3';
+    </script>
     <!--<link href="/css/iCheck/custom.css" rel="stylesheet">-->
    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <title>EzTrucker | Schedule list</title>-->
 </head>
 
 <body>
+
 </body>
 <template name="main">
     <div id="wrapper">
@@ -21,12 +25,6 @@
 
                     <div class="wrapper wrapper-content animated fadeInUp">
 
-                        <!--{{#unless hasProfile}}
-                            <div id="profile_warning" class="alert alert-danger">
-                              <i class="fa fa-info-circle"></i>  To enjoy the complete features of this app, please update your profile information
-                                <a class="alert-link" href="{{pathFor 'profile'}}">here</a>.
-                            </div>
-                        {{/unless}}-->
                         {{>yield}}
 
                     </div>

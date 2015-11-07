@@ -1,19 +1,28 @@
-Template.manageDelivery.created=->
-  unless @data._id
-    @deliveryObj={schedule:@data.schedule}
-    @docType='insert'
-  else
-    @docType='update'
+
 
 Template.manageDelivery.helpers
   deliveryDoc:->
-    Template.currentData() or {schedule:@data.schedule}
-  docType:->
-    Template.instance().docType
+    Template.currentData()
+
 
 Template.manageDelivery.rendered=->
   AutoForm.hooks
     manageDeliveryForm:
-      onSuccess:(type,res)=>
-        id=if _.isString(res) then res else @data.schedule
-        Router.go 'deliveryDetail',{_id:id}
+      onSubmit:(insertDoc,updDoc,currDoc)->
+        that=@
+        swal
+          title:'Delivering Load!'
+          text:"Deliver #{currDoc.subject}"
+          showCancelButton: true,
+          closeOnConfirm:false
+        ,(isConfirmed)->
+          if isConfirmed
+            Meteor.call 'deliverLoad',insertDoc,(err,res)->
+              Modal.hide()
+              if  res then swal("Success", "Your delivery was successful",'success') else console.log err
+              that.done()
+              null
+          else
+            false
+        false
+  ,true
