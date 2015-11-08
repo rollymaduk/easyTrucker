@@ -37,9 +37,6 @@ Schema.ProfileFormDetail=new SimpleSchema
   photo:
     type:String
     optional:true
-    autoform:
-      type:'fileUpload'
-      collection:'eZImages'
 
 
 Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormContact

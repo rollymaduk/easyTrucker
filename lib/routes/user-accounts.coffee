@@ -8,27 +8,25 @@ Router.plugin('ensureSignedIn', {
 });
 
 AccountsTemplates.configureRoute('forgotPwd',{
-  layoutTemplate: 'user_account'
+  layoutTemplate: 'account_layout'
   template:'forgot_pass'
 })
 
 AccountsTemplates.configureRoute('signUp',{
-  layoutTemplate: 'user_account'
+  layoutTemplate: 'account_layout'
   template:'register'
   path:'/user/register'
-  onBeforeAction:()->
-    console.log 'here before we roll'
 })
 
 AccountsTemplates.configureRoute('signIn',
   path:'/user/login'
-  layoutTemplate:'user_account'
+  layoutTemplate:'account_layout'
   template:'login'
 )
 
 AccountsTemplates.configureRoute('ensureSignedIn',{
   template:'login'
-  layoutTemplate: 'user_account'
+  layoutTemplate: 'account_layout'
 })
 
 AccountsTemplates.configureRoute('changePwd',{

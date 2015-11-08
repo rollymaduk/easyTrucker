@@ -1,0 +1,28 @@
+<template name="userAccount">
+    <div class="tabs-container">
+        <div class="tabs-left">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-3" aria-expanded="true"> Profile</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false">Subscription</a></li>
+
+            </ul>
+            <div class="tab-content">
+
+                <div id="tab-3" class="tab-pane active">
+                    <div class="panel-body">
+
+                                {{>profileDetail}}
+
+                    </div>
+                </div>
+                <div id="tab-4" class="tab-pane">
+                    <div class="panel-body inspinia-timeline">
+
+                                    {{>manage_subscription}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

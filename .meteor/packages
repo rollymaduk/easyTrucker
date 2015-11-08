@@ -10,7 +10,6 @@ iron:router
 aldeed:collection2
 coffeescript
 chrismbeckett:toastr
-nemo64:bootstrap
 less
 aldeed:simple-schema
 reactive-var
@@ -18,7 +17,6 @@ yogiben:autoform-map
 aldeed:template-extension
 peppelg:bootstrap-3-modal
 lukemadera:autoform-googleplace
-aldeed:delete-button
 meteorhacks:aggregate
 accounts-ui
 accounts-password
@@ -26,14 +24,10 @@ alanning:roles
 sanjo:jasmine@0.13.0-rc.4
 velocity:html-reporter
 yogiben:autoform-tags
-markdown
-chuangbo:marked
 cottz:publish-relations
 msavin:mongol
 meteorhacks:ssr
 rollypolly:permissions
-aldeed:autoform-bs-button-group-input
-manuelschoebel:wait-on-lib
 jeremy:geocomplete
 dburles:collection-helpers
 geojson-utils
@@ -41,16 +35,10 @@ matb33:collection-hooks
 msavin:jetsetter
 rollypolly:impersonate
 rzymek:fullcalendar
-zimme:select2-bootstrap3-css
-cfs:standard-packages
-cfs:gridfs
 zimme:collection-softremovable
 zimme:collection-timestampable
 aldeed:autoform-bs-datetimepicker
 tsega:bootstrap3-datetimepicker@=3.1.3_3
-meteorblackbelt:collection-tracker
-cfs:ui
-yogiben:autoform-file
 email
 mologie:autoform-selectize
 chhib:selectize-bootstrap-3

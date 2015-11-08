@@ -76,15 +76,7 @@ Schema.Memo=new SimpleSchema
         rows:8
   'memo.files':
     optional:true
-    type:[String]
-    autoform:
-      template:'wizard_files'
-  "memo.files.$":
-    autoform:
-      afFieldInput:
-        type: 'fileUpload'
-        collection: 'eZFiles'
-        'remove-label':"change file"
+    type:String
 
 
 Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
