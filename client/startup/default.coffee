@@ -3,6 +3,7 @@ Meteor.startup ->
   Impersonate.field2='profile.lastname'
 
 
+
   swal.setDefaults
     allowEscapeKey:true
     allowOutsideClick:true
@@ -12,9 +13,10 @@ Meteor.startup ->
 
   Template.scheduleDate.replaces('afBootstrapDateTimePicker')
 
-  Accounts.onLogin ->
-    Tracker.autorun ->
-      Session.set('currentRole',_.values(Meteor.user().roles)[0][0])
 
   Tracker.autorun ->
-    RP_permissions.setCurrentRole(Session.get('currentRole'))
+    roles=Meteor?.user()?.roles
+    if roles
+      role=_.values(roles)[0][0]
+      RP_permissions.setCurrentRole(role)
+      Session.set('currentRole',role)

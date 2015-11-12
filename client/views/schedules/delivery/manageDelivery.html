@@ -1,15 +1,5 @@
 <template name="manageDelivery">
-   <h5>Deliver  {{deliveryDoc.subject}}</h5>
-   {{>quickForm id='manageDeliveryForm' type=normal doc=deliveryDoc buttonContent=false schema='Schema.Delivery'}}
-    <p class="uploader-green-button">
-        <input type="hidden"
-               name="picture"
-               role="uploadcare-uploader"
-               data-multiple="true"
-               data-clearable="true"
-               data-image-shrink=""
-               data-images-only="true"
-               data-preview-step="true"
-               data-crop="400:300" />
-    </p>
+   <h5>Deliver  {{this.subject}}</h5>
+   {{>quickForm id='manageDeliveryForm' type=normal doc=this buttonContent=false schema='Schema.Delivery'}}
+
 </template>

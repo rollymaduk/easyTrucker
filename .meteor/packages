@@ -11,7 +11,6 @@ aldeed:collection2
 coffeescript
 chrismbeckett:toastr
 less
-aldeed:simple-schema
 reactive-var
 yogiben:autoform-map
 aldeed:template-extension
@@ -22,7 +21,6 @@ accounts-ui
 accounts-password
 alanning:roles
 sanjo:jasmine@0.13.0-rc.4
-velocity:html-reporter
 yogiben:autoform-tags
 cottz:publish-relations
 msavin:mongol
@@ -33,7 +31,6 @@ dburles:collection-helpers
 geojson-utils
 matb33:collection-hooks
 msavin:jetsetter
-rollypolly:impersonate
 rzymek:fullcalendar
 zimme:collection-softremovable
 zimme:collection-timestampable
@@ -51,7 +48,6 @@ digilord:sugarjs
 dburles:mongo-collection-instances
 rollypolly:morris-charts
 percolate:synced-cron
-rollypolly:sg-threads
 
 
 eazytrucker:core
@@ -61,13 +57,20 @@ velocity:helpers
 eazytrucker:fixtures
 http
 aldeed:plans-stripe
-aldeed:plans
 mrgalaxy:stripe
 rollypolly:comments
 rollypolly:notifications
 rollypolly:swu-mailer
 codechimera:meteor-bootstrap-sweetalert
-rollypolly:meteor-rating
 momentjs:twix
 ogamedia:timer
 petsetgo:uploadcare
+twbs:bootstrap
+fortawesome:fontawesome
+rollypolly:sg-threads
+rollypolly:impersonate
+velocity:html-reporter
+kadira:debug
+aldeed:simple-schema
+percolate:paginated-subscription
+aldeed:plans

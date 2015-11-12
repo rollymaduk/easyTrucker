@@ -1,23 +1,4 @@
 <template name="manageDispatch">
-                <h5>Dispatch  {{dispatchDoc.subject}}</h5>
-                {{#autoForm id='manageDispatchForm' type=normal doc=dispatchDoc schema='Schema.Dispatch'}}
-
-                    {{>afQuickField name="note"}}
-                    {{>afQuickField name="schedule"}}
-
-                    {{>afQuickField name="photos"}}
-
-                    <p class="uploader-green-button">
-                        <input type="hidden"
-                               name="picture"
-                               role="uploadcare-uploader"
-                               data-multiple="true"
-                               data-clearable="true"
-                               data-image-shrink=""
-                               data-images-only="true"
-                               data-preview-step="true"
-                               data-crop="400:300" />
-                    </p>
-
-                {{/autoForm}}
+                <h5>Dispatch  {{this.subject}}</h5>
+                {{>quickForm id='manageDispatchForm' buttonContent=false type=normal doc=this schema='Schema.Dispatch'}}
 </template>

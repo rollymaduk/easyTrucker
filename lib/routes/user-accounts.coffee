@@ -3,30 +3,30 @@ Router.map ()->
 
 
 Router.plugin('ensureSignedIn', {
-  except: ['register','registrationSuccess','page','atForgotPwd','atSignUp']
+  except: ['registrationSuccess','page','atForgotPwd','atSignUp']
 
 });
 
 AccountsTemplates.configureRoute('forgotPwd',{
-  layoutTemplate: 'account_layout'
+  layoutTemplate: 'blankLayout'
   template:'forgot_pass'
 })
 
 AccountsTemplates.configureRoute('signUp',{
-  layoutTemplate: 'account_layout'
-  template:'register'
+  layoutTemplate: 'blankLayout'
+  template:'registerSimple'
   path:'/user/register'
 })
 
 AccountsTemplates.configureRoute('signIn',
   path:'/user/login'
-  layoutTemplate:'account_layout'
+  layoutTemplate:'blankLayout'
   template:'login'
 )
 
 AccountsTemplates.configureRoute('ensureSignedIn',{
   template:'login'
-  layoutTemplate: 'account_layout'
+  layoutTemplate: 'blankLayout'
 })
 
 AccountsTemplates.configureRoute('changePwd',{

@@ -5,7 +5,7 @@ Router.map ()->
 
   @route('registrationSuccess',
     path:'/registerSuccess'
-    layoutTemplate:'user_account'
+    layoutTemplate:'blankLayout'
   )
 
   @route('dashboard',

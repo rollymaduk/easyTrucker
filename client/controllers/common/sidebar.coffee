@@ -1,5 +1,6 @@
 Template.sidebar.events
   'click .logout':(evt,temp)->
+    console.log 'i am here as sidebar'
     Meteor.logout()
 
 Template.toggleRoleItem.events

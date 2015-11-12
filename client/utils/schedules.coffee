@@ -1,7 +1,7 @@
 getIdentity=(user)->
   user.company() or user.fullname()
 
-Eztrucker.Utils.Schedules={
+Eztrucker.Utils.Schedules=_.extend(Eztrucker.Utils.Schedules,{
   acceptBidAction:(temp)->
     swal
       title:'Accepting Bid!'
@@ -19,4 +19,4 @@ Eztrucker.Utils.Schedules={
           else
             console.log err
       else false
-}
+})

@@ -11,7 +11,9 @@ Router.map ()->
     data:->
       Trucks.find()
     waitOn:->
-      Meteor.subscribe('trucks')
+      handle=Meteor.subscribeWithPagination('trucks',{},10)
+      @state.set('subsHandle',handle)
+      handle
   )
 
   @route('filteredTruckList',
@@ -31,8 +33,9 @@ Router.map ()->
       Trucks.find()
     waitOn:->
       qry=CommonHelpers.getFiltersForTrucks(@params.trucks)
-      console.log qry
-      Meteor.subscribe('trucks',qry)
+      handle=Meteor.subscribeWithPagination('trucks',qry,10)
+      @state.set('subsHandle',handle)
+      handle
   )
 
   @route('addTruck',
@@ -57,7 +60,7 @@ Router.map ()->
         @render 'home'
         null
     data:->Trucks.findOne(@params._id),
-    waitOn:-> Meteor.subscribe('truckItem',@params._id)
+    waitOn:-> Meteor.subscribe('truckItem',{filter:@params._id})
     template:"manageTruck"
   )
 

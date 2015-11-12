@@ -10,32 +10,34 @@ Router.map ()->
   @route('scheduleList',
     path:'/loads'
     template:'agile_board'
-    data:->
-      newJobFilters={status:$in:[STATE_NEW,STATE_BOOKED]}
-      inProgressFilters={status:$in:[STATE_ASSIGNED,STATE_DISPATCH,STATE_LATE]}
-      completeFilters={status:$in:[STATE_ISSUE,STATE_SUCCESS]}
-      if Meteor.user().role() is ROLE_DRIVER
-        newJobFilters.status.$in.push(STATE_ASSIGNED)
-        inProgressFilters.status.$in=_.without(inProgressFilters.status.$in,STATE_ASSIGNED)
-      {
-        newJobs:Schedules.find(newJobFilters).fetch(),
-        inProgressJobs:Schedules.find(inProgressFilters).fetch(),
-        completeJobs:Schedules.find(completeFilters).fetch()
-      }
-    waitOn:->
-      Meteor.subscribe('schedules',{},true))
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewLoadList','canManageLoad'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
+    )
 
 
   @route('filteredSchedules',
     path:'/loads/filter/:status'
     template:'scheduleList'
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewLoadList','canManageLoad'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
     data:->
       filter=getFilter @params.status,@params.hash
       Schedules.find(filter.filter).fetch()
     waitOn:->
       filter=getFilter @params.status,@params.hash
-      Meteor.subscribe('schedules',filter,true)
-
+      handle=Meteor.subscribeWithPagination('schedules',filter,true,10)
+      @state.set('subsHandle',handle)
+      handle
   )
 
   @route('newSchedule',
@@ -59,14 +61,26 @@ Router.map ()->
         null
     data:->Schedules.findOne(@params._id),
     waitOn:->
+      Meteor.userId()
       Meteor.subscribe('schedules',{filter:{_id:@params._id}})
-    template:"manageSchedule")
+    template:"manageSchedule"
+  )
 
   @route('viewSchedule',
     path:'/loads/view/:_id',
     data:->Schedules.findOne(@params._id),
-    waitOn:->Meteor.subscribe('schedules',{filter:{_id:@params._id}})
-    template:"scheduleDetail")
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewLoad','canManageLoad'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
+    waitOn:->
+      Meteor.userId()
+      Meteor.subscribe('schedules',{filter:{_id:@params._id}})
+    template:"scheduleDetail"
+  )
 
 
 

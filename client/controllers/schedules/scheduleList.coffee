@@ -3,3 +3,9 @@ Template.scheduleList.helpers
     RP_permissions.hasPermissions(['canCreateLoad','canManageLoad'])
 
 
+
+
+
+
+
+

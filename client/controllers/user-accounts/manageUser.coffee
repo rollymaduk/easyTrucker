@@ -7,7 +7,6 @@ Template.manageUser.helpers
 
 AutoForm.hooks
   internalRegForm:onSubmit:(insertDoc,updDoc,currDoc)->
-    service=new UserAccountService()
     console.log 'internalReg called!'
     userProfile=Meteor?.user()?.profile
     profile= _.extend(_.pick(userProfile,'companyName','companyAddress','truckAuthorityType','truckAuthorityNumber'
@@ -25,7 +24,7 @@ AutoForm.hooks
 
     that=@
 
-    service.registerNewUser user,role,groupName,(err,res)->
+    Eztrucker.Utils.Registration.registerUser user,role,groupName,(err,res)->
       if res
         Router.go 'userList'
         that.done()

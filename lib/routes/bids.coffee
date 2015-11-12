@@ -2,14 +2,31 @@ Router.map ()->
   @route('bidList',
     path:'/bids/list/:_id'
     data:()->Bids.find({'schedule._id':@params._id})
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewbidList','canManagebid'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
     waitOn:()->
-      Meteor.subscribe('bids',{'schedule._id':@params._id})
+      handle=Meteor.subscribeWithPagination('bids',{'schedule._id':@params._id},true,10)
+      @state.set('subsHandle',handle)
+      handle
   )
 
   @route('bidDetail',
     path:'/bids/view/:_id'
     data:->
       Bids.findOne(@params._id)
+
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewbid','canManagebid'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
     waitOn:->
       Meteor.subscribe('bids',@params._id)
     template:"bidDetail"
@@ -19,6 +36,13 @@ Router.map ()->
     path:'/bids/view/schedule/:_id/:bidder'
     data:->
       Bids.findOne({'schedule._id':@params._id,owner:@params.bidder})
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewbid','canManagebid'])
+        @next()
+        null
+      else
+        @render 'home'
+        null
     waitOn:->
       Meteor.subscribe('bids',{'schedule._id':@params._id,owner:@params.bidder})
     template:"bidDetail"

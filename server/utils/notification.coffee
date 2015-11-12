@@ -24,16 +24,16 @@ Eztrucker.Utils.Notification={
       switch doc.status
         when STATE_NEW
           {title:TITLE_NEW,description:"Shipment request for #{doc.shipmentTitle}(#{doc.wayBill})"
-            ,collection:collection}
+            ,collection:collection,parent:doc._id}
         when STATE_ASSIGNED
           {title:TITLE_NEW,description:"Assignment for shipment Request: #{doc.shipmentTitle}(#{doc.wayBill})"
-            ,collection:collection}
+            ,collection:collection,parent:doc._id}
         when STATE_BOOKED
           {title:TITLE_UPDATE,description:"You won a bid for shipment Request: #{doc.shipmentTitle}(#{doc.wayBill})"
-            ,collection:collection}
+            ,collection:collection,parent:doc._id}
         else
           {title:TITLE_UPDATE,description:"Shipment status changed to #{doc.status} for Request: #{doc.shipmentTitle}(#{doc.wayBill})"
-            ,collection:collection}
+            ,collection:collection,parent:doc._id}
 
     catch err
       console.log err.message

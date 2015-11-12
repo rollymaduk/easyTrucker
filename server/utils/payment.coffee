@@ -20,4 +20,7 @@ Eztrucker.Utils.Payment={
       charge.id is chargeId
     catch err
       throw new Meteor.Error("6006",err.message)
+
+  getCustomerCards:(customer)->
+    try
 }

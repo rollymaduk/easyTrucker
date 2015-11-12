@@ -29,7 +29,6 @@
         </div>
 
     </div>
-
 </template>
 
 <template name="jobListItem">
@@ -42,9 +41,9 @@
 <template name="jobItem">
     <li class="{{formatElement state}} work-item">
         <div style="margin-bottom:5px;">
-            <span class="pull-right">{{>rp_view_rating values=performance }}</span>
+            <!--<span class="pull-right">{{>rp_view_rating values=performance }}</span>-->
             <span  class="label small {{formatStatus state}}" style="margin-right:2%;">{{state}}</span>
-            <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span>
+            <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-white"}}</span>
         </div>
 
         <i class="fa fa-bell"></i>{{latestActivity.title}} - {{summarizeText latestActivity.description 30}}
@@ -59,4 +58,5 @@
         </div>
 
     </li>
+
 </template>

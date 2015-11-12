@@ -1,14 +1,13 @@
 class @UserAccountService
   registerUser:(user,role,groupName)->
-    {profile,username,password,email}=user
-    newUser={username:username,password:password,email:email,profile:profile}
-    console.log newUser
-    userId=Accounts.createUser(newUser)
+    ###{profile,username,password,email}=user
+    newUser={username:username,password:password,email:email,profile:profile}###
+
+    userId=Accounts.createUser(user)
 
     if userId
       groupName=groupName||username
       Roles.addUsersToRoles userId,role,groupName
-
       ###Accounts.sendVerificationEmail(userId)###
     userId
 

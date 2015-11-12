@@ -6,10 +6,13 @@ if Meteor.isClient
       ###sAlert.success(notification.description)###
 if Meteor.isServer
   Rp_Notification.notificationAdded=(notification)->
-    template=Meteor.settings.public.Swu.templates[notification.collection]
     recipients=Eztrucker.Utils.User.getEmailsForUsers(notification.audience)
-    data={title:notification.title,description:notification.description,link:notification.link}
-    emails=Rp_swu_mailer.createMailItem(template,recipients,data)
+    console.log recipients
+    sender=Meteor.users.findOne(notification.createdBy).profile.companyName
+    link=Meteor.absoluteUrl(notification.link.substr(notification.link.indexOf('/') + 1))
+    console.log link
+    data={title:notification.title,description:notification.description,link_url:link,sender:sender}
+    emails=Rp_swu_mailer.createMailItems(notification.collection,recipients,data)
     Rp_swu_mailer.send(emails)
 
 ###

@@ -12,6 +12,18 @@ Meteor.startup ->
   if Meteor.settings.private.verifyEmailToLogin
     Accounts.validateLoginAttempt(loginAttemptVerifier)
 
+  Accounts.onCreateUser (options,user)->
+    console.log options
+    user.profile= options.profile if options.profile
+    email = user?.emails[0]?.address
+    user.appPlans=AppPlans.pullFromEmail(email) if email
+    user
+
+
+
+
+
+
 
 
 

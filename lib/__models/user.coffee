@@ -18,6 +18,10 @@ Schema.User=new SimpleSchema
   profile:
     type:Schema.Profile
     optional:true
+  appPlans:
+    type: Object,
+    optional: true,
+    blackbox: true
   roles:
     type:Object
     blackbox:true

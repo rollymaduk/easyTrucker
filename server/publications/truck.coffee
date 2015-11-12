@@ -1,9 +1,9 @@
-Meteor.publishRelations 'trucks',(qry,limit)->
+Meteor.publishRelations 'trucks',(qry,limit=10)->
   unless not @userId
-    limit=limit or 50
-    filter=qry?.filter or {}
-    modifier=qry?.modifier or {}
-    modifier['limit']=limit
+    {filter,modifier}=qry
+    filter=filter or {}
+    modifier=modifier or {}
+    _.extend(modifier,{limit:limit})
     _.extend(filter,{owner:@userId})
     @cursor Trucks.find(filter,modifier),(docId,doc)->
       query='truckers.trucks':docId

@@ -27,15 +27,16 @@
             {{>bidListItem}}
         {{/each}}
     </div>
+    {{>loadMore}}
 </template>
 <template name="bidListItem">
     <div class="col-lg-4">
         <div class="ibox">
             <div class="ibox-title">
-                <div class="ibox-tools">
+                <div class="ibox-tools pull-right">
                     {{>acceptBidActions}}
                 </div>
-                <h2 class="no-margins pull-left">${{quote}}</h2>
+                <h2 class="no-margins">${{quote}}</h2>
             </div>
             <a href="{{pathFor 'bidDetail'}}" >
                 <div class="ibox-content ibox-heading">

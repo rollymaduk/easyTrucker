@@ -7,7 +7,7 @@ Schedules.helpers
 
 
   createRating:()->
-    roles=Meteor?.user()?.roles
+   ### roles=Meteor?.user()?.roles
     if(_.contains(_.values(roles)[0],ROLE_TRUCKER) or _.contains(_.values(roles)[0],ROLE_DRIVER))
       audience=[@owner]
     else
@@ -18,18 +18,18 @@ Schedules.helpers
     if rating
       {id:rating._id}
     else
-      {collection:COLLECTION_REQUEST,docId:@_id,audience:audience,name:"shipperRating"}
+      {collection:COLLECTION_REQUEST,docId:@_id,audience:audience,name:"shipperRating"}###
 
   performance:->
-    res=Rp_Ratings.find({docId:@_id,audience:$in:[Meteor.userId()]}).map (doc)->
+    ###res=Rp_Ratings.find({docId:@_id,audience:$in:[Meteor.userId()]}).map (doc)->
       doc.data
-    res
+    res###
 
   activities:->
     Rp_Notification.getActivities(20)
 
   latestActivity:()->
-    Rp_Notifications.findOne({docId:@_id},{sort:createdAt:-1})
+    Rp_Notifications.findOne({parent:@_id},{sort:createdAt:-1}) or {description:@shipmentTitle}
 
   matchedTrucks:->
     trucker=_.findWhere(@truckers,{owner:Meteor.userId()})
@@ -55,8 +55,7 @@ Schedules.helpers
     CommonHelpers.getTruckVolume(@specs)
 
   files:->
-    files=@memo?.files
-    if files then eZFiles.find({_id:$in:files}).fetch() else []
+
 
 
 

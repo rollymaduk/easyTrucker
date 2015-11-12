@@ -1,10 +1,5 @@
 
 
-Template.manageDelivery.helpers
-  deliveryDoc:->
-    Template.currentData()
-
-
 Template.manageDelivery.rendered=->
   AutoForm.hooks
     manageDeliveryForm:

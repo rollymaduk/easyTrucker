@@ -16,6 +16,7 @@ Schema.Delivery=new SimpleSchema
         rows:5
   schedule:
     type:String
+    optional:true
     autoform:
       type:'hidden'
       label:false
@@ -23,6 +24,6 @@ Schema.Delivery=new SimpleSchema
     optional:true
     type:String
     autoform:
-      type:'hidden'
-      label:false
+      type:'uploadCare'
+
 

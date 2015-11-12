@@ -24,3 +24,91 @@
 .lightBoxGallery img {
   margin: 5px;
 }
+
+.uploader-green-button .uploadcare-widget-button-open {
+  background-color: #1ab394;
+}
+.uploader-green-button .uploadcare-widget-button-open:hover {
+  background-color: #1ab374;
+}
+.unstyled-link a{
+  color:inherit;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+.ibox-content,.contact-box
+{
+  // the icon
+  .icon {
+    position: absolute;
+    top: auto;
+    bottom: 5px;
+    right: 30px;
+    z-index: 0;
+    font-size: 90px;
+    color: rgba(0, 0, 0, 0.15);
+  }
+
+
+  // Small box hover state
+  &:hover {
+    text-decoration: none;
+
+    // Animate icons on small box hover
+    .icon {
+      animation-name: tansformAnimation;
+      animation-duration:.5s;
+      animation-iteration-count: 1;
+      animation-timing-function: ease;
+      animation-fill-mode: forwards;
+
+      -webkit-animation-name: tansformAnimation;
+      -webkit-animation-duration:.5s;
+      -webkit-animation-iteration-count: 1;
+      -webkit-animation-timing-function: ease;
+      -webkit-animation-fill-mode: forwards;
+
+      -moz-animation-name: tansformAnimation;
+      -moz-animation-duration:.5s;
+      -moz-animation-iteration-count: 1;
+      -moz-animation-timing-function: ease;
+      -moz-animation-fill-mode: forwards;
+    }
+  }
+
+  // Box overlay for LOADING STATE effect
+
+}
+
+// Transform: rotate -10 degrees within 500 milliseconds
+@keyframes tansformAnimation {
+  from {
+    font-size: 90px;
+  }
+  to {
+    font-size: 100px;
+  }
+}
+@-webkit-keyframes tansformAnimation {
+  from {
+    font-size: 90px;
+  }
+  to {
+    font-size: 100px;
+  }
+}
+
+@media screen and (max-width:480px) {
+  // No need for icons on very small devices
+  .ibox-content, .contact-box {
+    text-align: center;
+    .icon {
+      display: none;
+    }
+    p {
+      font-size: 12px;
+    }
+  }
+}

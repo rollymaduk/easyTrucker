@@ -9,12 +9,15 @@
         <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg">
 
+
             <!-- Page wrapper -->
             {{> topNavbar }}
-
+            <div class="wrapper wrapper-content animated fadeInUp">
             <!-- Main view  -->
-            {{> yield}}
-
+                <div class="row">
+                    {{> yield}}
+                </div>
+            </div>
             <!-- Footer -->
             {{> footer }}
 

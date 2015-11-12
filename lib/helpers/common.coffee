@@ -16,7 +16,6 @@ CommonHelpers.generatePassword=()->
   'password'
 
 CommonHelpers.getAllRoles=(type)->
-  console.log type
   switch type
     when ROLE_SHIPPER then [{value:'clerk',label:'Clerk'},{value:'shipper',label:'Administrator'}]
     when ROLE_TRUCKER then [{value:'driver',label:'Driver'},{value:'accountant',label:'Accountant'},{value:ROLE_TRUCKER,label:'Administrator'}]
@@ -88,6 +87,9 @@ CommonHelpers.getScheduleFieldsLight=()->
   {fields:{dropOffLocation:1,pickupLocation:1,totalBids:1,truckers:1,bidders:1
     ,wayBill:1,status:1,shipmentTitle:1,owner:1,pickupDate:1,dropOffDate:1
     ,maximumBidPrice:1,receiver:1,sender:1,winningBid:1,resource:1,nextStep:1}}
+
+CommonHelpers.getBidFieldsLight=->
+  {fields:{'schedule._id':1,'schedule.owner':1,'schedule.shipmentTitle':1,quote:1,owner:1}}
 
 CommonHelpers.getDashboardMetricsQuery=(role)->
   colors={matched:'#f8ac59',success:'#1ab394',late:'#ED5565'

@@ -77,6 +77,9 @@ Schema.Memo=new SimpleSchema
   'memo.files':
     optional:true
     type:String
+    autoform:
+      type:'uploadCare'
+
 
 
 Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
@@ -110,10 +113,6 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
       type: [String]
       optional: true
       defaultValue: []
-    messages:
-      type: [Form.Message]
-      defaultValue: []
-      optional: true
     owner:
       type: String
       autoValue: ()->
@@ -150,6 +149,7 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
     delivery:
       type:Schema.Delivery
       optional:true
+
   }])
 
 

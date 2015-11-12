@@ -58,21 +58,18 @@ Meteor.methods
   removeSchedule:(schedule)->
     item=Schedules.findOne(schedule)
     if item
-      eZFiles.remove({_id:$in:item.files})  if item.files
-      Dispatches.remove({schedule:schedule})
       Bids.remove({"schedule._id":schedule})
       Rp_Notification.removeNotifications(schedule)
       Rp_Comment.removeComments(schedule)
       Schedules.remove(schedule)
 
   duplicateSchedule:(schedule,doc)->
-    console.log schedule
     item=Schedules.findOne(schedule)
     if doc then _.extend(item,doc)
     if item
-      Meteor.call('addUpdateSchedule',_.omit(item,['updatedAt','createdAt'
+     Meteor.call('addUpdateSchedule',_.omit(item,['updatedAt','createdAt'
       ,'updatedBy','createdBy','winningBid','isLate','_id','bidders','messages','totalBids','resource',
-        'status','wayBill','nextStep','charge'
+                                                   'status','wayBill','nextStep','charge','memo','delivery','dispatch'
       ]))
 
   checkAndUpdateLateSchedules:()->

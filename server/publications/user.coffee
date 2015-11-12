@@ -8,14 +8,6 @@ Meteor.publish('userList',(domainroles)->
     @ready()
 )
 
-Meteor.publishRelations('userInfo',(id,withImage)->
-  if @userId
-    withImage=withImage or false
-    check(id,String)
-    @cursor  Meteor.users.find(id,fields:profile:1),(docId,doc)->
-      photo=Meteor._get(doc,'profile','photo')
-      console.log photo
-      if withImage and photo then @cursor eZImages.find(photo)
-      null
-  @ready()
-)
+Meteor.publish 'userInfo',(id,withImage)->
+  Meteor.users.find(id,fields:profile:1)
+

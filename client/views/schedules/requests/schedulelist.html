@@ -5,12 +5,13 @@
         {{>pageHeader title='Loads' btnTitle='create new Load' link='newSchedule'}}
     {{/unless}}
     {{#if this.length}}
-    {{#each this}}
-        <div class="col-md-4">
+        {{#each this}}
+            <div class="col-md-4">
 
-            {{>scheduleItem}}
-        </div>
-    {{/each}}
+                {{>scheduleItem}}
+            </div>
+        {{/each}}
+        {{>loadMore}}
     {{else}}
     <h2>No items found!</h2>
     {{/if}}
@@ -19,6 +20,28 @@
 <template name="scheduleItem">
     <div class="ibox ">
         <div class="ibox-title">
+            <div class="ibox-tools pull-right" >
+                <!--<a href="{{pathFor 'viewSchedule'}}"  class="label {{formatStatus status}} manage-bid">{{status}}</a>-->
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i> actions
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="{{pathFor 'viewSchedule'}}">View</a>
+
+                        <a href="{{pathFor 'editSchedule'}}" {{Rp_allow "canEditLoad,canManageLoad"  }}>Edit Load</a>
+
+
+                        <a href="#" class="duplicate-load" {{Rp_allow 'canEditLoad,canManageLoad'}}>Duplicate Load</a>
+
+                        {{>schedule_actions item=this}}
+
+                        <a href="#" class="remove-schedule" {{Rp_allow 'canEditLoad,canManageLoad'}}>Remove</a>
+
+                    </li>
+                </ul>
+
+            </div>
             <span class="label {{formatStatus state}}">{{state}}</span>&nbsp;
 
             <span class="small" {{Rp_allow 'canViewbidList'}} {{visibleWhen status 'new'}} >&nbsp;|&nbsp;<a href="{{pathFor 'bidList'}}">
@@ -27,28 +50,7 @@
 
             <!--<span class="small ">&nbsp;|&nbsp;<a href="#" >{{messages.length}}<i class="fa fa-comments"></i> </a> </span>-->
 
-            <div class="ibox-tools" >
-                <!--<a href="{{pathFor 'viewSchedule'}}"  class="label {{formatStatus status}} manage-bid">{{status}}</a>-->
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-wrench"></i> actions
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li>
-                    <a href="{{pathFor 'viewSchedule'}}">View</a>
 
-                    <a href="{{pathFor 'editSchedule'}}" {{Rp_allow "canEditLoad,canManageLoad"  }}>Edit Load</a>
-
-
-                    <a href="#" class="duplicate-load" {{Rp_allow 'canEditLoad,canManageLoad'}}>Duplicate Load</a>
-
-                    {{>schedule_actions item=this}}
-
-                    <a href="#" class="remove-schedule" {{Rp_allow 'canEditLoad,canManageLoad'}}>Remove</a>
-
-                    </li>
-                </ul>
-
-            </div>
         </div>
 
         <div  class="ibox-content {{_id}}">

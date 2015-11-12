@@ -8,6 +8,7 @@ Schema.Dispatch=new SimpleSchema
         rows:5
   schedule:
     type:String
+    optional:true
     autoform:
       type:"hidden"
       label:false
@@ -15,5 +16,6 @@ Schema.Dispatch=new SimpleSchema
     type:String
     optional:true
     autoform:
-      type:"hidden"
-      label:false
+      type:'uploadCare'
+      options:
+        classStyle:'uploader-green-button'

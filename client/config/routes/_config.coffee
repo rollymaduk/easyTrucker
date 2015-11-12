@@ -19,8 +19,3 @@ Router.onBeforeAction ->
 ,{only:'atSignUp'}
 
 
-Router.onAfterAction(
-  ->
-    $('body').toggleClass('gray-bg',_.isEmpty(Meteor.userId()))
-    ###if Meteor.userId()then $('body').removeClass('gray-bg') else $('body').addClass('gray-bg')###
-    null)

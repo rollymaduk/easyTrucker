@@ -7,6 +7,7 @@
     'canAcceptBid',
     'canEditLoad',
     'canViewLoad',
+    'canViewLoadList',
     'canViewDashboard',
     'canManageUsers',
     'canViewMatchedLoads',
@@ -22,6 +23,7 @@
                         'canCreatebid',
                         'canEditbid',
                         'canViewbidList',
+                        'canViewLoadList',
                         'canViewbid'
                         'canViewLoad',
                         'canViewDashboard',
@@ -39,8 +41,8 @@
     role:ROLE_DRIVER
     perm:[
       'canViewTruck',
-      'canViewbidList',
       'canViewDashboard',
+      'canViewLoadList',
       'canDispatchLoad',
       'canCloseRequest',
       'canGiveFeedback'
