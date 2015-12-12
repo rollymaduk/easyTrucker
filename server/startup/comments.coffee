@@ -4,7 +4,7 @@ Rp_Comment.setModel([ {
       driver=doc?.resource?.driver
       bidder=doc?.winningBid?.bidder
       owner=doc?.owner
-      _.uniq(_.compact([driver,bidder,owner]))
+      _.without(_.uniq(_.compact([driver,bidder,owner])),Meteor.userId())
   },
   {
     name: "bids"
@@ -16,9 +16,12 @@ Rp_Comment.commentChanged=(comment)->
   {message}=comment
   notification=_.extend(_.omit(comment,'updatedAt','updatedBy','createdAt','createdBy','_id'),{description:message})
   notification.collection=COLLECTION_COMMENT
+  notification.link="#{Router.path('viewSchedule',{_id:comment.docId})}##{comment.docId}"
   Rp_Notification.createNewNotification(notification)
 
-Rp_Comment.replyChanged=(reply,docId)->
-  notification={description:reply.message,collection:COLLECTION_COMMENT,docId:docId,audience:reply.audience}
+Rp_Comment.replyChanged=(reply)->
+  notification={description:reply.message,collection:COLLECTION_COMMENT,docId:reply.refId,audience:reply.audience}
+  comment=Rp_Comments.findOne(reply.refId)
+  notification.link="#{Router.path('viewSchedule',{_id:comment.docId})}##{reply.refId}-#{moment(reply.updatedAt).unix()}"
   Rp_Notification.createNewNotification(notification)
 
