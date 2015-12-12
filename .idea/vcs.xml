@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/packages/bootbar" vcs="Git" />
     <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\SWU_mailer" vcs="Git" />
     <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\comments" vcs="Git" />
     <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\impersonate" vcs="Git" />
     <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\meteor-autoform-file" vcs="Git" />
+    <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\meteor-desktop-notify" vcs="Git" />
     <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\meteor-plans" vcs="Git" />
     <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\meteor-rating" vcs="Git" />
     <mapping directory="C:\Users\rolly_000\WebstormProjects\easyTrucker\packages\meteor-uploadcare" vcs="Git" />
