@@ -1,0 +1,23 @@
+<template name="cardList">
+    <table id="cardList" class="footable table table-striped toggle-arrow-tiny default breakpoint">
+        <thead><tr>
+            <th data-toggle="true" class="footable-visible footable-first-column">card</th>
+            <th data-hide="tablet,phone">source</th>
+            <th data-hide="tablet,phone">expires</th>
+            <th></th>
+        </tr></thead>
+
+        {{#each cards}}
+            {{>cardItem}}
+        {{/each}}
+    </table>
+</template>
+
+<template name="cardItem">
+    <tr>
+        <td>****{{last4}}</td>
+        <td>{{country}}</td>
+        <td>{{exp_month}}/{{exp_year}}</td>
+        <td><a href="#" class="change-card btn btn-xs btn-primary">change</a></td>
+    </tr>
+</template>

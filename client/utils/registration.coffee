@@ -15,9 +15,6 @@ Eztrucker.Utils.Registration={
           unless error
             @registerUser(user, role,groupName,callback)
           else
-            throw new Meteor.Error 2001,error.message
+            callback.call this,error,null
         )
-      else
-
-
 }

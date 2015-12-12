@@ -1,6 +1,9 @@
 Meteor.users.helpers
   isTrucker:->
     _.contains(_.values(@roles)[0],ROLE_TRUCKER)
+
+  stats:->
+    {collection:"Schedules",name:"shipperRating",query:{audience:$in:[@_id]}}
   role:->
     if (Meteor.userId() is @_id) then Session.get('currentRole') else _.values(@roles)[0][0]
   unLoggedRoles:->

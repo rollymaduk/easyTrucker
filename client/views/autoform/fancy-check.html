@@ -1,4 +1,4 @@
-<template name="afFancyCheck">
+<!--<template name="afFancyCheck">
 
     <div class="checkbox checkbox-{{atts.class}}">
 
@@ -6,4 +6,16 @@
         <label for="{{atts.id}}">{{afFieldLabelText name=this.name}}</label>
     </div>
 
+</template>-->
+
+<template name="afFancyCheckboxGroup">
+    <div class="af-checkbox-group" {{dsk}}>
+        {{#each this.items}}
+            <div class="checkbox {{checkClass}}"><input id="{{this._id}}" type="checkbox" value="{{this.value}}" {{atts}} />
+                <label for="{{this._id}}">
+                    {{this.label}}
+                </label>
+            </div>
+        {{/each}}
+    </div>
 </template>

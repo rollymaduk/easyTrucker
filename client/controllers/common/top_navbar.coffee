@@ -43,6 +43,11 @@ Template.topNavbar.events
   'click .right-sidebar-toggle':(evt,temp)->
     $('#right-sidebar').toggleClass('sidebar-open')
 
+  'click .comment-link':(evt,temp)->
+    console.log evt.target
+    hash=Router.current()?.params?.hash
+    Eztrucker.Utils.General.navigateToContent(hash)
+    return
 
 
 Template.topNavbar.helpers

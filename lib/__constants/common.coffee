@@ -10,6 +10,7 @@
 @STATE_DISPATCH='dispatched'
 @STATE_BIDDED='bidded'
 @STATE_CLOSED='closed'
+@STATE_EXPIRE='expired'
 
 
 @ROLE_DRIVER='driver'
@@ -21,6 +22,8 @@
 @COLLECTION_REQUEST='Schedules'
 @COLLECTION_USER='Meteor.users'
 @COLLECTION_COMMENT='Rp_Comments'
+
+@TEMPLATE_REMINDER="Reminders"
 
 
 @ERROR_BID_QUOTE="Quoted price must be less or equal to max bid price"
@@ -35,6 +38,7 @@
 @TEXT_TIMELINESS='was on time at pickup and delivery'
 @TEXT_DELIVERY='delivered goods safely with little or no issues/conflicts'
 @TEXT_PERFORMANCE='satisfied and or exceeded expectations of contract terms'
+@TEXT_NONE='None'
 
 @TITLE_UPDATE='UPDATE'
 @TITLE_NEW='NEW'
@@ -44,3 +48,11 @@
 @SUBSCRIBE_ANNUAL="premium_yr"
 @SUBSCRIBE_MONTH="premium"
 @SUBSCRIBE_FREE="free"
+
+@ACCOUNT_INDIVIDUAL="Individual"
+@ACCOUNT_GROUP="Organization"
+
+@SOUNDS=["cabin_hum","welcome","arrived","its_here"
+,"inspinia","spritely","zingy_blip","new_alert","uh_oh"
+,"pixel","new_mail","you_got_mail","chimming"
+,"whispy_chimes","fairy_bells","willows_call","clip_it"]

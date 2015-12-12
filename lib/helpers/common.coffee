@@ -222,3 +222,9 @@ CommonHelpers.getUserStatisticsQuery=(userId)->
   else
     []
 
+CommonHelpers.getFilterForScheduleExtended=(value,field)->
+  unless field
+    CommonHelpers.getFiltersForSchedule(value)
+  else
+    CommonHelpers.buildFilterQry([{field:field,value:value?.split(',') or [],operator:'$in'}])
+

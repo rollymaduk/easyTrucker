@@ -11,7 +11,9 @@
                 {{>scheduleItem}}
             </div>
         {{/each}}
-        {{>loadMore}}
+        {{#if canLoadMore}}
+            {{>loadMore}}
+        {{/if}}
     {{else}}
     <h2>No items found!</h2>
     {{/if}}

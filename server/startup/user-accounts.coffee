@@ -1,5 +1,5 @@
 Meteor.startup ->
-  loginAttemptVerifier =(parameters)->
+  ###loginAttemptVerifier =(parameters)->
     if (parameters.user && parameters.user.emails && (parameters.user.emails.length > 0))
       found = _.find(parameters.user.emails,(thisEmail)->thisEmail.verified)
       unless found
@@ -10,7 +10,7 @@ Meteor.startup ->
       console.log("user has no registered emails.")
       return false;
   if Meteor.settings.private.verifyEmailToLogin
-    Accounts.validateLoginAttempt(loginAttemptVerifier)
+    Accounts.validateLoginAttempt(loginAttemptVerifier)###
 
   Accounts.onCreateUser (options,user)->
     console.log options

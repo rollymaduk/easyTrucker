@@ -25,9 +25,6 @@ Eztrucker.Utils.Notification={
         when STATE_NEW
           {title:TITLE_NEW,description:"Shipment request for #{doc.shipmentTitle}(#{doc.wayBill})"
             ,collection:collection,parent:doc._id}
-        when STATE_ASSIGNED
-          {title:TITLE_NEW,description:"Assignment for shipment Request: #{doc.shipmentTitle}(#{doc.wayBill})"
-            ,collection:collection,parent:doc._id}
         when STATE_BOOKED
           {title:TITLE_UPDATE,description:"You won a bid for shipment Request: #{doc.shipmentTitle}(#{doc.wayBill})"
             ,collection:collection,parent:doc._id}
@@ -62,6 +59,46 @@ Eztrucker.Utils.Notification={
         Meteor.absoluteUrl("app/loads/view/#{params.id}")
       when COLLECTION_USER
         Meteor.absoluteUrl("#/verify-email/#{params.token}")
+
+  getRequestReminderMessage:(request,refDate)->
+    refDate=refDate or new Date()
+    pickup=request.pickupDate.dateField_2 or request.pickupDate.dateField_1
+    period=moment(moment(pickup)).from(moment(refDate))
+    switch request.nextStep
+      when STATE_EXPIRE
+        {title:"#{request.wayBill} - Expires #{period}",description:"#{request.wayBill} - #{request.shipmentTitle} expires #{period}"}
+      when STATE_DISPATCH
+        {title:"#{request.wayBill} - Dispatches #{period}",description:"#{request.wayBill} - #{request.shipmentTitle} will dispatch #{period}"}
+      when STATE_SUCCESS
+        {title:"#{request.wayBill} - Delivers #{period}",description:"#{request.wayBill} - #{request.shipmentTitle} will deliver #{period}"}
+
+
+  getRequestReminderAudience:(request)->
+    switch request.nextStep
+      when STATE_EXPIRE
+        _.union(request.truckers.owner,[request.owner])
+      when STATE_DISPATCH
+        [request.owner,request.resource.driver,request.winningBid.bidder]
+      when STATE_SUCCESS
+        [request.owner,request.winningBid.bidder]
+
+  getBaselineDate:(state,bidItem)->
+    check(state,String)
+    check(bidItem,Match.ObjectIncluding(schedule:Match.ObjectIncluding({dropOffDate:Object,pickupDate:Object})))
+    switch state
+      when STATE_EXPIRE,STATE_DISPATCH
+        bidItem.schedule.pickupDate.dateField_2 or bidItem.schedule.pickupDate.dateField_1
+      when STATE_SUCCESS
+        bidItem.schedule.dropOffDate.dateField_2 or bidItem.schedule.dropOffDate.dateField_1
+
+  filterUsersByReminderSettings:(users,baselineDate,refDate=new Date())->
+    addresses=users.map (user)->
+      if(_.intersection(user.settings.reminder,[STATE_EXPIRE,STATE_DISPATCH,STATE_SUCCESS]).length>0 and user.settings.reminderPeriod >= 1)
+        if(moment.duration(user.settings.reminderPeriod,"days").beforeMoment(moment(baselineDate)).contains(moment(refDate)))
+          user.emails[0].address
+    _.compact(addresses)
+
+
 
 
 

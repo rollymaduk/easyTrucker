@@ -23,7 +23,7 @@
                                 </div>
 
                                <div><h2> {{shipmentTitle}}<span class="small">-{{wayBill}}</span></h2>
-                                   <span class="pull-right">{{>performanceWidget performance=performance size="lg"}}</span>
+                                   <span class="pull-right">{{>rp_view_rating values=performance size="lg"}}</span>
                                    <span class="label {{formatStatus state}}">{{state}} </span> &nbsp;&nbsp;
                                    <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span> &nbsp;&nbsp;
                                    </div>
@@ -139,37 +139,27 @@
                                       </div>
                                     </div>
                                 {{/if}}
-                                {{#if files.length}}
                                     <div class="row">
                                         <div class="col-lg-12 ">
 
-                                                <dl class="dl-horizontal" >
-                                                    <dt >files: </dt>
-                                                    <dd >
-                                                        <ul class="tag-list" style="padding: 0">
-                                                            {{#each files}}
-                                                                <li><a href="{{this.url}}"><i class="fa fa-file"></i> {{this.name}}</a></li>
-                                                            {{/each}}
-                                                        </ul>
+                                                <dl class="dl-horizontal pull-left" >
+                                                    <dt >photos: </dt>
+                                                    <dd>
+                                                       {{>gallery photos=files}}
                                                     </dd>
                                                 </dl>
-
                                         </div>
-
                                     </div>
-                                {{/if}}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tabs-container">
-                       <ul class="nav nav-tabs">
+                            <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-3" aria-expanded="true"> Comments</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false">Activities</a></li>
-
                             </ul>
                        <div class="tab-content">
-
                             <div id="tab-3" class="tab-pane active">
                                 <div class="panel-body">
                                     <div class="row m-t-sm">

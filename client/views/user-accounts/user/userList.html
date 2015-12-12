@@ -13,9 +13,10 @@
     <div class="col-lg-3">
         <div class="contact-box center-version">
 
-            <a href="#">
+            <a href="{{pathFor 'account'}}" >
 
-                {{>imageControl collection='eZImages' class="img-circle" photo=profile.photo}}
+                {{>imageControl class='img-circle' uuid=profile.photo transform="-/scale_crop/48x48/center/" width=48 height=48 collection='eZImages' photoId=profile.photo }}
+
 
 
                 <h3 class="m-b-xs"><strong>{{fullname}}</strong></h3>

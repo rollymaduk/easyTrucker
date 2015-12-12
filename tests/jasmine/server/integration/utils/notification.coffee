@@ -1,4 +1,103 @@
-describe 'notification/utility/getRequestNotificationItems',()->
+describe 'notification/utility/getRequestReminderMessage',()->
+  beforeEach (done)->
+    Meteor.call 'fixture/getSchedule',(err,res)=>
+      if res then @doc=_.omit(res,'_id') else console.log err
+      done()
+  it 'should return valid reminder message item for nextStep expire request',(done)->
+    @doc.nextStep=STATE_EXPIRE
+    res=Eztrucker.Utils.Notification.getRequestReminderMessage(@doc,"2015-09-26T16:12:00.000Z")
+    expect(res.title).toEqual("#{@doc.wayBill} - Expires in 2 days")
+    expect(res.description).toEqual("#{@doc.wayBill} - #{@doc.shipmentTitle} expires in 2 days")
+    done()
+  it 'should return valid reminder message item for nextStep dispatch request',(done)->
+    @doc.nextStep=STATE_DISPATCH
+    res=Eztrucker.Utils.Notification.getRequestReminderMessage(@doc,"2015-09-26T16:12:00.000Z")
+    expect(res.title).toEqual("#{@doc.wayBill} - Dispatches in 2 days")
+    expect(res.description).toEqual("#{@doc.wayBill} - #{@doc.shipmentTitle} will dispatch in 2 days")
+    done()
+  it 'should return valid reminder message item for nextStep delivery request',(done)->
+    @doc.nextStep=STATE_SUCCESS
+    res=Eztrucker.Utils.Notification.getRequestReminderMessage(@doc,"2015-09-26T16:12:00.000Z")
+    expect(res.title).toEqual("#{@doc.wayBill} - Delivers in 2 days")
+    expect(res.description).toEqual("#{@doc.wayBill} - #{@doc.shipmentTitle} will deliver in 2 days")
+    done()
+
+describe 'notification/utility/getRequestReminderAudience',()->
+  beforeEach (done)->
+    Meteor.call 'fixture/getSchedule',(err,res)=>
+      if res then @doc=_.omit(res,'_id') else console.log err
+      done()
+  it 'should return shipper and matched truckers  for nextStep expire request',(done)->
+    @doc.nextStep=STATE_EXPIRE
+    res=Eztrucker.Utils.Notification.getRequestReminderAudience(@doc)
+    expect(res,_.union(@doc.truckers.owner,@doc.owner))
+    done()
+  it 'should return winningBidder,shipper and driver for nextStep dispatch request',(done)->
+    @doc.nextStep=STATE_DISPATCH
+    res=Eztrucker.Utils.Notification.getRequestReminderAudience(@doc)
+    expect(res,[@doc.winningBid.bidder,@doc.owner,@doc.resource.driver])
+    done()
+  it 'should return winningBidder and shipper for nextStep delivery request',(done)->
+    @doc.nextStep=STATE_SUCCESS
+    res=Eztrucker.Utils.Notification.getRequestReminderAudience(@doc)
+    expect(res,[@doc.winningBid.bidder,@doc.owner])
+    done()
+
+describe 'schedules/Utils/getBaselineDate',()->
+  beforeEach (done)->
+    Meteor.call 'fixture/getBid',(err,res)=>
+      if res then @doc=_.omit(res,'_id') else console.log err
+      done()
+
+  it 'should return pickupDate for Request with nextStep in Expire state',(done)->
+    res=Eztrucker.Utils.Notification.getBaselineDate(STATE_EXPIRE,@doc)
+    expect(res).toEqual(@doc.schedule.pickupDate.dateField_1)
+    done()
+
+  it 'should return pickupDate for Request with nextStep in Dispatch state',(done)->
+    res=Eztrucker.Utils.Notification.getBaselineDate(STATE_DISPATCH,@doc)
+    expect(res).toEqual(@doc.schedule.pickupDate.dateField_1)
+    done()
+
+
+
+  it 'should return dropoffDate for Request with nextStep in Success state',(done)->
+    res=Eztrucker.Utils.Notification.getBaselineDate(STATE_SUCCESS,@doc)
+    expect(res).toEqual(@doc.schedule.dropOffDate.dateField_1)
+    done()
+
+
+describe 'schedules/Utils/filterUserByReminderSettings',()->
+  beforeEach (done)->
+     @users=[
+          {emails:[address:"email_1@mail.com"],settings:{reminder:[STATE_EXPIRE,STATE_SUCCESS,STATE_DISPATCH],reminderPeriod:1}}
+          {emails:[address:"email_2@mail.com"],settings:{reminder:[],reminderPeriod:1}}
+        ]
+     done()
+
+  it 'should only return user with valid reminder',(done)->
+     res=Eztrucker.Utils.Notification.filterUsersByReminderSettings(@users,"2015-09-26T16:12:00.000Z"
+     ,"2015-09-25T16:12:00.000Z")
+     expect(res).toEqual(["email_1@mail.com"])
+     done()
+
+  it 'should not allow reminders for reminder periods less than 1 day',(done)->
+    userNoReminder=_.clone(@users)
+    userNoReminder[0].settings.reminderPeriod=0
+    res=Eztrucker.Utils.Notification.filterUsersByReminderSettings(userNoReminder,"2015-09-26T16:12:00.000Z",
+      "2015-09-25T16:12:00.000Z")
+    expect(res).toEqual([])
+    done()
+
+  it 'should not allow reminders for reminder not within valid period ',(done)->
+    users=_.clone(@users)
+    users[1].settings={reminder:[STATE_EXPIRE],reminderPeriod:2}
+    res=Eztrucker.Utils.Notification.filterUsersByReminderSettings(users,"2015-09-26T16:12:00.000Z"
+    ,"2015-09-24T16:12:00.000Z")
+    expect(res).toEqual(["email_2@mail.com"])
+    done()
+
+xdescribe 'notification/utility/getRequestNotificationItems',()->
   beforeEach (done)->
     Meteor.call 'fixture/getSchedule',(err,res)=>
       if res then @doc=_.omit(res,'_id') else console.log err
@@ -43,7 +142,7 @@ describe 'notification/utility/getRequestNotificationItems',()->
 
 
 
-describe 'notification/utility/getBidNotificationItems',()->
+xdescribe 'notification/utility/getBidNotificationItems',()->
   beforeEach (done)->
     Meteor.call 'fixture/getBid',(err,res)=>
       if res then @doc=_.omit(res,'_id') else console.log err
@@ -66,7 +165,7 @@ describe 'notification/utility/getBidNotificationItems',()->
     expect(res.collection).toEqual(COLLECTION_BID)
     done()
 
-describe 'notification/utility/getRequestNotificationRecipients',()->
+xdescribe 'notification/utility/getRequestNotificationRecipients',()->
   beforeEach (done)->
     Meteor.call 'fixture/getSchedule',(err,res)=>
       if res then @doc=_.omit(res,'_id') else console.log err

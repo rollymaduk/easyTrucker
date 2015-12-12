@@ -4,7 +4,8 @@ Template.manageDelivery.rendered=->
   AutoForm.hooks
     manageDeliveryForm:
       onSubmit:(insertDoc,updDoc,currDoc)->
-        that=@
+        @done()
+        Modal.hide()
         swal
           title:'Delivering Load!'
           text:"Deliver #{currDoc.subject}"
@@ -13,9 +14,7 @@ Template.manageDelivery.rendered=->
         ,(isConfirmed)->
           if isConfirmed
             Meteor.call 'deliverLoad',insertDoc,(err,res)->
-              Modal.hide()
               if  res then swal("Success", "Your delivery was successful",'success') else console.log err
-              that.done()
               null
           else
             false

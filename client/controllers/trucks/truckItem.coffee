@@ -12,6 +12,7 @@ Template.truckItem.events
 
   'click .duplicate-truck':(evt,temp)->
     temp.data._id=undefined
+    temp.data=_.omit(temp.data,'updatedAt','updatedBy','createdBy','createdAt')
     Meteor.call 'addUpdateTruck',temp.data,(err,res)->
       console.log err or res
 

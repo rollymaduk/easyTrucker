@@ -1,4 +1,4 @@
-describe 'client/registration/utility/registerNewUser',()->
+xdescribe 'client/registration/utility/registerNewUser',()->
   beforeEach (done)->
     MeteorStubs.install()
     spyOn(AppPlans,'set')

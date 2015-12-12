@@ -1,10 +1,6 @@
 ###hacky method to get filters for load requests based on the url hash value as field name or using d
   default status from helper library###
-getFilter=(value,field)->
-  unless field
-    CommonHelpers.getFiltersForSchedule(value)
-  else
-    CommonHelpers.buildFilterQry([{field:field,value:value?.split(',') or [],operator:'$in'}])
+
 
 Router.map ()->
   @route('scheduleList',
@@ -31,13 +27,8 @@ Router.map ()->
         @render 'home'
         null
     data:->
-      filter=getFilter @params.status,@params.hash
+      filter=CommonHelpers.getFilterForScheduleExtended @params.status,@params.hash
       Schedules.find(filter.filter).fetch()
-    waitOn:->
-      filter=getFilter @params.status,@params.hash
-      handle=Meteor.subscribeWithPagination('schedules',filter,true,10)
-      @state.set('subsHandle',handle)
-      handle
   )
 
   @route('newSchedule',

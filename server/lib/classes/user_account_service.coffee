@@ -1,5 +1,8 @@
 class @UserAccountService
   registerUser:(user,role,groupName)->
+    ###for demo create password to allow entry without verify email###
+    unless Meteor.settings.private.verifyEmailToLogin
+      user.password="password"
     ###{profile,username,password,email}=user
     newUser={username:username,password:password,email:email,profile:profile}###
 

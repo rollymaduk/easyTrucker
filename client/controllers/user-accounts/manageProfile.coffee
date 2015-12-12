@@ -5,7 +5,7 @@ AutoForm.hooks
       console.log Meteor.userId()
       Meteor.call('updateUserProfile',Meteor.userId(),insertDoc,(err,res)=>
         throw new Meteor.Error err if err
-        Router.go 'profile'
+        Router.go 'account',Meteor.user()
         @done()
         null
       )

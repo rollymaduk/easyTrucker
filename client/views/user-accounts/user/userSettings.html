@@ -1,0 +1,49 @@
+<template name="userSettings">
+    <h3><i class="fa fa-gears"></i> Settings</h3>
+    {{#autoForm schema="Schema.userSettings" doc=settingsDoc type="normal" id="userSettingForm"}}
+    <div class="tabs-container">
+
+        <div class="tabs-left">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-6">Notifications</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-7">Emails</a></li>
+            </ul>
+            <div class="tab-content ">
+                <div id="tab-6" class="tab-pane active">
+                    <div class="panel-body">
+
+                            <div class="toggleNotification"><strong>Higly Recommended:</strong> Enabling your notification ensure's that you don't
+                                miss a thing on your Eazytrucker activities.</div>
+                            <a href="#" id="enable-notification" class="btn btn-primary   toggleNotification toggleNotificationButton">Enable Notification</a>
+                            <a href="#" id="disable-notification" style="display:none;" class="btn btn-primary  toggleNotification toggleNotificationButton btn-outline">Disable Notification</a>
+                            <div style="display:none;" class="toggleNotification">
+                                <div class="hr-line-dashed"></div>
+                                {{>afQuickField class="small" name="defaultAlertSound" }}
+                                <div><a id="test-notify" href="#"><i class=" fa fa-play-circle"></i> Test notification</a></div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            {{>afQuickField name="reminder"}}
+                            {{>afQuickField class="small" name="reminderPeriod"}}
+                            <!-- <div class="hr-line-dashed"> </div>
+
+                                 <a href="#" class="btn  btn-primary btn-sm">Save Preferences</a>-->
+
+
+
+                    </div>
+                </div>
+                <div id="tab-7" class="tab-pane">
+                    <div class="panel-body">
+                        {{>afQuickField name="emailTypes"}}
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {{/autoForm}}
+
+</template>

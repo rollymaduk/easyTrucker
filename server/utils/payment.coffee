@@ -23,4 +23,17 @@ Eztrucker.Utils.Payment={
 
   getCustomerCards:(customer)->
     try
+      cardListSync=Meteor.wrapAsync(Stripe.customers.listCards,Stripe.customers)
+      list=cardListSync(customer)
+      list.data
+    catch err
+      throw new Meteor.Error('6007',err.message)
+
+  changeCardDetails:(cardId,customerId,card)->
+    try
+      changeCardSync=Meteor.wrapAsync(Stripe.customers.updateCard,Stripe.customers)
+      card=changeCardSync(customerId,cardId,card)
+    catch err
+      throw new Meteor.Error('6008',err.message)
+
 }

@@ -45,4 +45,10 @@ Eztrucker.Utils.Payment= {
           console.log err
     else
       callback.call this
+
+  getCustomerCards:(customerId,callback)->
+    Meteor.call 'getCustomerCards',customerId,(err,res)->
+      callback.call null,err,res
+
+
 }

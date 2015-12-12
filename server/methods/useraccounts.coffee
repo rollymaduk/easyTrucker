@@ -3,9 +3,16 @@ Meteor.methods
     service= new UserAccountService()
     service.registerUser(user,role,groupName)
   updateUserProfile:(userId,profile)->
-    console.log profile
     service=new UserAccountService()
     service.updateProfile(userId,profile)
+  updateProfileSetting:(userId,setting)->
+    try
+      check(userId,String)
+      check(setting,Object)
+      Meteor.users.update userId,{$set:settings:setting}
+    catch
+      throw new Meteor.Error "14100","Invalid input or user"
+
   toggleUserState:(user)->
     if user.profile and  Meteor.userId() != user._id
       state=!user.profile.isActive

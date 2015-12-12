@@ -6,7 +6,7 @@
                     <li class="nav-header">
                         <div class="dropdown profile-element">
                             <span>
-                                {{>imageControl class='img-circle' width=48 height=48 collection='eZImages' photoId=profile.photo }}
+                                {{>imageControl class='img-circle' uuid=profile.photo transform="-/scale_crop/48x48/center/" width=48 height=48 collection='eZImages' photoId=profile.photo }}
                             </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{fullname}}</strong>

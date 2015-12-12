@@ -25,6 +25,7 @@ Template.sidebar.helpers
         {status:STATE_ASSIGNED},
         {status:STATE_DISPATCH},
         {status:STATE_CANCELLED},
+        {status:STATE_EXPIRE},
         {status:STATE_LATE},
       ]},
       {title:"Fulfilled Loads",children:[

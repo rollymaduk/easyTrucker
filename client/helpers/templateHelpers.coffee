@@ -1,4 +1,4 @@
-Template.registerHelper 'photoPlaceHolder','/img/profile-shadow.png'
+Template.registerHelper 'photoPlaceHolder','/img/profile-shadow-sm.png'
 Template.registerHelper 'formatStatus',(status)->
   switch status
     when STATE_UNMATCHED then 'label-default'

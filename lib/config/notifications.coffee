@@ -1,7 +1,8 @@
 if Meteor.isClient
   Rp_Notification.notificationAdded=(notification)->
     if _.contains(notification.audience,Meteor.userId())
-      toastr.success(notification.description, notification.title);
+      notification.title=notification.title or "Eztrucker Notification"
+      Rp_notify_js.show(notification.title,notification.description)
 
       ###sAlert.success(notification.description)###
 if Meteor.isServer
@@ -9,9 +10,10 @@ if Meteor.isServer
     recipients=Eztrucker.Utils.User.getEmailsForUsers(notification.audience)
     console.log recipients
     sender=Meteor.users.findOne(notification.createdBy).profile.companyName
-    link=Meteor.absoluteUrl(notification.link.substr(notification.link.indexOf('/') + 1))
+    if notification.link
+      link=Meteor.absoluteUrl(notification.link.substr(notification.link.indexOf('/') + 1))
     console.log link
-    data={title:notification.title,description:notification.description,link_url:link,sender:sender}
+    data={title:notification.title,description:notification.description,link_url:link or null,sender:sender}
     emails=Rp_swu_mailer.createMailItems(notification.collection,recipients,data)
     Rp_swu_mailer.send(emails)
 

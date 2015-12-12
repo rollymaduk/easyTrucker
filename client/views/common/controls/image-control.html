@@ -1,14 +1,8 @@
 <template name="imageControl">
-    <img class="{{class}}" height="{{height}}" width="{{width}}" src="{{photoPlaceHolder}}" alt="alternate text">
-    <!--{{#if photoId}}
-        {{#with FS.GetFile collection photoId}}
-            {{#if this.isImage }}
-                <img class="{{../class}}" height="{{../height}}" width="{{../width}}" src="{{this.url }}" alt="profile image">
-            {{else}}
-                <img class="{{../class}}" height="{{../height}}" width="{{../width}}" src="{{photoPlaceHolder}}" alt="alternate text">
-            {{/if}}
-        {{/with}}
-    {{else}}
+    {{#unless uuid}}
         <img class="{{class}}" height="{{height}}" width="{{width}}" src="{{photoPlaceHolder}}" alt="alternate text">
-    {{/if}}-->
+        {{else}}
+        <img class="{{class}}"  src="{{uuid}}{{transform}}" alt="alternate text">
+    {{/unless}}
+
 </template>

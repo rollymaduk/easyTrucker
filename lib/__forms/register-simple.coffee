@@ -18,5 +18,13 @@ Form.RegisterSimple=new SimpleSchema
       type:'email'
       label:false
       placeholder:'schemaLabel'
+  referredBy:
+    type:String
+    optional:true
+    autoform:
+      label:false
+      placeholder:'schemaLabel'
+
+
 
 

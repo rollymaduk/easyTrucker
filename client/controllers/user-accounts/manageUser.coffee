@@ -1,7 +1,9 @@
 Template.manageUser.helpers
   userAccountTypes:->
     role=Meteor.user().role()
-    CommonHelpers.getAllRoles(role)
+    res=CommonHelpers.getAllRoles(role)
+    debugger
+    res
 
 
 
@@ -12,19 +14,19 @@ AutoForm.hooks
     profile= _.extend(_.pick(userProfile,'companyName','companyAddress','truckAuthorityType','truckAuthorityNumber'
       ,'telephones'),_.pick(insertDoc,'firstname','lastname'),{emails:[insertDoc.email]}) if userProfile
 
-    username=CommonHelpers.generateUsername(insertDoc.email,profile.companyName)
+    ###username=CommonHelpers.generateUsername(insertDoc.email,profile.companyName)###
 
-    password=CommonHelpers.generatePassword()
+    ###password=CommonHelpers.generatePassword()###
 
-    user={username:username,email:insertDoc.email,password:password,profile:profile}
+    user={email:insertDoc.email,profile:profile}
 
     role=insertDoc.accountType
 
-    groupName=Meteor.user().username
+    groupName=Roles.getGroupsForUser(Meteor.userId())
 
     that=@
 
-    Eztrucker.Utils.Registration.registerUser user,role,groupName,(err,res)->
+    Eztrucker.Utils.Registration.registerUser user,role,groupName[0],(err,res)->
       if res
         Router.go 'userList'
         that.done()
@@ -32,5 +34,6 @@ AutoForm.hooks
         swal 'Failure',err.message,'error'
         that.done()
     false
+  ,true
 
 AutoForm.debug()

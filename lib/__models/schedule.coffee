@@ -87,13 +87,13 @@ Schema.Schedule=new SimpleSchema([Schema.Pickup,Schema.DropOff,Schema.Memo,
     status:
       type: String
       allowedValues: [STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
-                      STATE_ASSIGNED,STATE_CLOSED]
+                      STATE_ASSIGNED,STATE_CLOSED,STATE_EXPIRE]
       defaultValue: STATE_NEW
     nextStep:
       type:String
       allowedValues: [STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
-                      STATE_ASSIGNED,STATE_CLOSED]
-      defaultValue:STATE_BOOKED
+                      STATE_ASSIGNED,STATE_CLOSED,STATE_EXPIRE]
+      defaultValue:STATE_EXPIRE
     shipmentDistance:
       type: Number
       decimal: true

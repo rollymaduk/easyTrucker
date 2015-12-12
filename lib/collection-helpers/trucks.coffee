@@ -13,8 +13,9 @@ Trucks.helpers
     "#{@InsuranceCompany} (#{@policyNumber})"
 
   drivers:->
+    group=Roles.getGroupsForUser(Meteor.userId())
     busyDrivers=Schedules.find({status:$in:[STATE_ASSIGNED,STATE_DISPATCH]}).map (doc)->doc.resource.driver
-    drivers=Roles.getUsersInRole(ROLE_DRIVER,Meteor.user().username).map (doc)->
+    drivers=Roles.getUsersInRole(ROLE_DRIVER,group[0]).map (doc)->
       doc.userProfile() if !_.contains(busyDrivers,doc._id)
     _.compact(drivers)
 

@@ -1,0 +1,18 @@
+<template name="registerStep2">
+    <h2>Hi there! just a few more steps... </h2>
+    {{#autoForm id ="registerStep2" type=normal   schema="Schema.ProfileFormContact"}}
+        {{>afQuickField name='accountType'}}
+        {{#if isCompany}}
+            {{>afQuickField name='companyName' readonly=false}}
+            {{>afQuickField  name='companyAddress' readonly=false}}
+        {{/if}}
+        {{>afQuickField name='telephones'}}
+        {{#if isTrucker}}
+            {{>afQuickField  name='truckAuthorityType'}}
+            {{#if hasAuth}}
+                {{>afQuickField class=isTrucker name='truckAuthorityNumber'}}
+            {{/if}}
+        {{/if}}
+
+    {{/autoForm}}
+</template>

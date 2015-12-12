@@ -1,16 +1,20 @@
 <template name="registrationSuccess">
-    <div>
+    <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
-
-            <h1 class="logo-name">eZ+</h1>
-
+            <div>
+                <div class="col-md-12">
+                    <div>
+                        <img src="/img/ezlogo4.png" alt="Eazytrucke logo"/>
+                    </div>
+                    <h3>Verify Your Email</h3>
+                    <p>Congratulations! you are just one step away from enjoying eZtrucker's awesome features, simply go to your
+                        registered email and click the verification link to complete your registration.If you have been verified
+                        then you can <a class="alert-link" href="{{pathFor 'atSignIn'}}">Login here</a> <br>
+                        <button type=button class="btn btn-primary btn-xs send-verify-link" >resend verification mail</button>.
+                        <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+                    </p>
+                </div>
+            </div>
         </div>
-        <h3>Verify Your Email</h3>
-        <p>Congratulations! you are just one step away from enjoying eZtrucker's awesome features, simply go to your
-            registered email and click the verification link to complete your registration.If you have been verified
-            then you can <a class="alert-link" href="{{pathFor 'login'}}">Login here</a> <br>
-            <button type=button class="btn btn-primary btn-xs send-verify-link" >resend verification mail</button>.
-            <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-        </p>
     </div>
 </template>

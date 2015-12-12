@@ -22,7 +22,6 @@ accounts-password
 alanning:roles
 sanjo:jasmine@0.13.0-rc.4
 yogiben:autoform-tags
-cottz:publish-relations
 msavin:mongol
 meteorhacks:ssr
 rollypolly:permissions
@@ -72,5 +71,10 @@ rollypolly:impersonate
 velocity:html-reporter
 kadira:debug
 aldeed:simple-schema
-percolate:paginated-subscription
 aldeed:plans
+rollypolly:meteor-rating
+reywood:publish-composite
+rollypolly:meteor-notify
+rollypolly:bootbar
+verron:paginated-subscription
+tmeasday:publish-counts

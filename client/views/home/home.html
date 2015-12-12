@@ -14,7 +14,7 @@
                         {{#placeHolderAction title='Enhance' class="active" show=true}}
                             {{>placeHolderActionContent show=true content="Improve your personal profile and attract potential truckers and shippers by adding a photo or providing more information about yourself and business." link='manageProfile' id=currentUser._id}}
 
-                            {{>placeHolderActionContent show=true content="Personalize Eazytrucker by modifying your email notification settings" label='coming soon'}}
+                            {{>placeHolderActionContent link_class="showUserSettings" show=true content="Personalize Eazytrucker by modifying your email notification settings" }}
                         {{/placeHolderAction}}
 
                         {{#placeHolderAction title='SETUP' perm='canCreateLoad,canCreateTruck'}}
@@ -54,12 +54,12 @@
         <i class="fa fa-chevron-circle-right"></i>&nbsp;
         {{#if link}}
             {{#if id}}
-                <a href="{{pathFor link _id=id}}" >{{content}} </a>
+                <a href="{{pathFor link _id=id}}" class="{{link_class}}" >{{content}} </a>
                 {{else}}
-                <a href="{{pathFor link _id=id}}" >{{content}} </a>
+                <a href="{{pathFor link _id=id}}" class="{{link_class}}">{{content}} </a>
             {{/if}}
         {{else}}
-            <a href="#" >{{content}}</a>
+            <a href="#" class="{{link_class}}" >{{content}}</a>
         {{/if}}
         &nbsp;<span class="label label-warning">{{label}}</span>
     </p>

@@ -27,7 +27,9 @@
             {{>bidListItem}}
         {{/each}}
     </div>
-    {{>loadMore}}
+    {{#if canLoadMore}}
+        {{>loadMore}}
+    {{/if}}
 </template>
 <template name="bidListItem">
     <div class="col-lg-4">

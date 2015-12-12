@@ -10,10 +10,7 @@ Router.map ()->
         null
     data:->
       Trucks.find()
-    waitOn:->
-      handle=Meteor.subscribeWithPagination('trucks',{},10)
-      @state.set('subsHandle',handle)
-      handle
+
   )
 
   @route('filteredTruckList',
@@ -31,11 +28,7 @@ Router.map ()->
       if Session.get('assignMode') then Session.set('assignMode',undefined)
     data:->
       Trucks.find()
-    waitOn:->
-      qry=CommonHelpers.getFiltersForTrucks(@params.trucks)
-      handle=Meteor.subscribeWithPagination('trucks',qry,10)
-      @state.set('subsHandle',handle)
-      handle
+
   )
 
   @route('addTruck',

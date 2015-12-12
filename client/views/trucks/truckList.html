@@ -3,12 +3,14 @@
     {{#each this}}
         {{>truckItem}}
     {{/each}}
-    {{>loadMore}}
+    {{#if canLoadMore}}
+        {{>loadMore}}
+    {{/if}}
 </template>
 <template name="truckItem">
     <div class="col-lg-4">
         <div class="ibox ">
-            <div class="ibox-title">
+            <div class="ibox-title mb">
                 <h5>{{title}}</h5>
                 {{#if policyIsExpired}}
                  <span class="label label-danger">expired!</span>
@@ -79,7 +81,7 @@
                         {{#if volume}}
                            <strong>Load volume:</strong> {{volume}}<br>
                         {{/if}}
-                        <span  class="icon"><i class="fa fa-truck"></i></span>
+                        <!--<span  class="icon"><i class="fa fa-truck"></i></span>-->
                     </address>
                 <!--</a>-->
                 <a href='#' id="toggleSchedule" class="btn btn-primary btn-xs"><i class="fa fa-arrow-down"></i> more...</a>

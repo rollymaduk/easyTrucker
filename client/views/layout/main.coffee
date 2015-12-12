@@ -2,8 +2,11 @@ Template.main.destroyed=->
   Session.set('userType',null)
   Session.set('domainRoles',null)
 
-Template.main.rendered = ->
-  loadUploadcare()
+Template.main.created=->
+  @autorun ->
+    unless Session.get("registerComplete") then Modal.show 'registerStep2Modal' else Modal.hide()
+
+Template.main.rendered =->
   # Minimalize menu when screen is less than 768px
   $(window).bind 'resize load', ->
     if $(this).width() < 769

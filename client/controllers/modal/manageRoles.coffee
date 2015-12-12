@@ -6,9 +6,10 @@ Template.manageRoles.helpers
       {roles:_.values(roles)[0]}
   roleSelectize:()->
     options: ()->
-      CommonHelpers.getAllRoles(ROLE_TRUCKER)
-    valueField:"val"
-    labelField:"lbl"
+      role=Meteor.user().role()
+      CommonHelpers.getAllRoles(role)
+    valueField:"value"
+    labelField:"label"
     plugins: ['remove_button']
 
 

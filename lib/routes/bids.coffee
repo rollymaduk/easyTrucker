@@ -9,10 +9,7 @@ Router.map ()->
       else
         @render 'home'
         null
-    waitOn:()->
-      handle=Meteor.subscribeWithPagination('bids',{'schedule._id':@params._id},true,10)
-      @state.set('subsHandle',handle)
-      handle
+
   )
 
   @route('bidDetail',
