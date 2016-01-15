@@ -1,22 +1,3 @@
-Template.truckItem.events
-  'click .view-schedule':(evt,temp)->
-    Modal.show 'calendarModal',temp.data.schedule()
-
-  'click .assign-driver':(evt,temp)->
-    item= {truck:temp.data._id,drivers:temp.data.drivers()}
-    Modal.show 'chooseDriverModal',{data:item}
-
-  'click #toggleSchedule':(evt,temp)->
-    id=".#{temp.data._id}"
-    $(id).toggle('slow');
-
-  'click .duplicate-truck':(evt,temp)->
-    temp.data._id=undefined
-    temp.data=_.omit(temp.data,'updatedAt','updatedBy','createdBy','createdAt')
-    Meteor.call 'addUpdateTruck',temp.data,(err,res)->
-      console.log err or res
-
-
 checkForPolicyValidity=(policyDate)->
   new Date()>policyDate
 

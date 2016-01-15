@@ -17,6 +17,9 @@ updateScheduleTrucker=(schedules,trucker,truck)->
 
 Meteor.methods
   addUpdateTruck:(truck)->
+    check(truck,Object)
+    check(@userId,String)
+    @unblock()
     truck.baseLocation.geometry.loc=
       GeoDataHelper.createPointGeoJSON(truck.baseLocation.geometry.lng,truck.baseLocation.geometry.lat)
     cloned=_.extend({},truck)
@@ -38,5 +41,15 @@ Meteor.methods
 
 
   searchTrucks:(pipeline)->
+    check(@userId,String)
+    check(pipeline,Object)
+    @unblock()
     Trucks.aggregate(pipeline)
+
+  removeTruck:(truck)->
+    check(@userId,String)
+    check(truck,Match.OneOf(String,Object))
+    @unblock()
+    id=if _.isObject(truck) then truck._id else truck
+    Trucks.remove({_id:id})
 

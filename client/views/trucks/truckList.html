@@ -35,30 +35,8 @@
                         <i class="fa fa-wrench"></i> actions
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a   href="{{pathFor 'editTruck'}}">
-                            <i class="fa fa-edit"></i> Edit Truck
-                        </a>
-                            <a   href="#" class="duplicate-truck">
-                                <i class="fa fa-user "></i> Duplicate Truck
-                            </a>
-
-                            <a href="{{pathFor 'viewTruckSchedule'}}" class="view-schedule">
-                            <i class="fa fa-calendar"></i> View Schedule
-                            </a>
-                            {{#if isAssignMode}}
-                             <a   href="#" class="assign-driver">
-                                <i class="fa fa-user"></i> Assign Driver
-                            </a>
-                            {{else}}
-                            {{#if matches.length}}
-                                <a href="{{pathFor 'filteredSchedules' status=matches hash='_id' }}" class="view-matches">
-                                    <i class="fa fa-binoculars"></i> View Matches
-                                </a>
-                            {{/if}}
-                        {{/if}}
-                            <a class="remove-truck" href="#">
-                                <i class="fa fa-times"></i> Remove
-                            </a>
+                        <li>
+                            {{>truckActions}}
                         </li>
                     </ul>
 

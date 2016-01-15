@@ -15,7 +15,10 @@ Template.scheduleDetail.rendered=()->
   hash=Router.current()?.params?.hash
   if hash
     $(document).arrive("##{hash}",()->
-      Eztrucker.Utils.General.navigateToContent(hash)
+      Eztrucker.Utils.General.navigateToContent(hash,()->
+        $(document).unbindArrive("##{hash}");
+      )
+
       return
     )
     return

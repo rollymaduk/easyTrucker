@@ -21,7 +21,8 @@ Meteor.startup ->
     allowOutsideClick:true
 
   String.prototype.trimToLength = (m)->
-    if(@length > m) then $.trim(@).substring(0, m).split(" ").slice(0, -1).join(" ") + "..." else @;
+      @.split("-").join(" ")
+      if(@length > m) then $.trim(@).substring(0, m).split(" ").slice(0, -1).join(" ") + "..." else @;
 
   Template.scheduleDate.replaces('afBootstrapDateTimePicker')
 
@@ -60,6 +61,8 @@ Meteor.startup ->
   Template.body.events
     'click .showUserSettings':(evt,data,temp)->
       Modal.show 'userSettingsModal'
+
+
 
 
 

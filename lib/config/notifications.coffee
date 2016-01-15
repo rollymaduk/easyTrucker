@@ -7,6 +7,11 @@ if Meteor.isClient
       ###sAlert.success(notification.description)###
 if Meteor.isServer
   Rp_Notification.notificationAdded=(notification)->
+    canSendMail=true
+    if notification.collection is COLLECTION_REQUEST
+      state=Schedules.findOne(notification.docId)?.status
+      activeMailtypes=Meteor.user().settings.emailTypes
+      if activeMailtypes then canSendMail=_.contains(activeMailtypes,state)
     recipients=Eztrucker.Utils.User.getEmailsForUsers(notification.audience)
     console.log recipients
     sender=Meteor.users.findOne(notification.createdBy).profile.companyName
@@ -14,8 +19,9 @@ if Meteor.isServer
       link=Meteor.absoluteUrl(notification.link.substr(notification.link.indexOf('/') + 1))
     console.log link
     data={title:notification.title,description:notification.description,link_url:link or null,sender:sender}
-    emails=Rp_swu_mailer.createMailItems(notification.collection,recipients,data)
-    Rp_swu_mailer.send(emails)
+    emails=Rp_swu_mailer.createMailItems(notification.collection,recipients,data) if recipients
+    if canSendMail
+      Rp_swu_mailer.send(emails) if emails
 
 ###
 if Meteor.isServer

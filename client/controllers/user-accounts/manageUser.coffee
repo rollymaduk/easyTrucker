@@ -2,7 +2,6 @@ Template.manageUser.helpers
   userAccountTypes:->
     role=Meteor.user().role()
     res=CommonHelpers.getAllRoles(role)
-    debugger
     res
 
 
@@ -11,16 +10,18 @@ AutoForm.hooks
   internalRegForm:onSubmit:(insertDoc,updDoc,currDoc)->
     console.log 'internalReg called!'
     userProfile=Meteor?.user()?.profile
-    profile= _.extend(_.pick(userProfile,'companyName','companyAddress','truckAuthorityType','truckAuthorityNumber'
-      ,'telephones'),_.pick(insertDoc,'firstname','lastname'),{emails:[insertDoc.email]}) if userProfile
+    settings=Schema.userSettings.clean({})
+    profile= _.extend(_.pick(userProfile,'companyName','accountType','companyAddress','truckAuthorityType','truckAuthorityNumber'
+      ,'telephones'),_.pick(insertDoc,'firstname','lastname'),{emails:[insertDoc.email]},{settings:settings}) if userProfile
 
     ###username=CommonHelpers.generateUsername(insertDoc.email,profile.companyName)###
 
     ###password=CommonHelpers.generatePassword()###
 
-    user={email:insertDoc.email,profile:profile}
 
-    role=insertDoc.accountType
+    user=_.extend({email:insertDoc.email},{profile:profile})
+
+    role=insertDoc.userType
 
     groupName=Roles.getGroupsForUser(Meteor.userId())
 

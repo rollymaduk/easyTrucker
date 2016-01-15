@@ -27,15 +27,16 @@ CommonHelpers.getNotificationAudience=(users,exclude)->
   unless morethanOnce then _.without(users,exclude) else _.unique(users)
 
 CommonHelpers.getTruckVolume=(context)->
-  if context.boxedVolume
-    width=Converters.convertSizeFromFeet(context.boxedVolume.width,context.boxedVolume.metric)
-    length=Converters.convertSizeFromFeet(context.boxedVolume.length,context.boxedVolume.metric)
-    height=Converters.convertSizeFromFeet(context.boxedVolume.height,context.boxedVolume.metric)
+  if context
+    if context.boxedVolume
+      width=Converters.convertSizeFromFeet(context.boxedVolume.width,context.boxedVolume.metric)
+      length=Converters.convertSizeFromFeet(context.boxedVolume.length,context.boxedVolume.metric)
+      height=Converters.convertSizeFromFeet(context.boxedVolume.height,context.boxedVolume.metric)
 
-    "W:#{width}#{context.boxedVolume.metric} x L:#{length}#{context.boxedVolume.metric} x H:#{height}#{context.boxedVolume.metric}"
-  else if context.liquidVolume
-    value=Converters.convertVolumeFromLitre(context.liquidVolume.value,context.liquidVolume.metric)
-    "#{value}#{context.liquidVolume.metric}"
+      "W:#{width}#{context.boxedVolume.metric} x L:#{length}#{context.boxedVolume.metric} x H:#{height}#{context.boxedVolume.metric}"
+    else if context.liquidVolume
+      value=Converters.convertVolumeFromLitre(context.liquidVolume.value,context.liquidVolume.metric)
+      "#{value}#{context.liquidVolume.metric}"
   else 'nil'
 
 CommonHelpers.buildFilterQry=(filters)->
@@ -74,6 +75,7 @@ CommonHelpers.getFiltersForSchedule=(key)->
     when STATE_UNMATCHED then qryObj.push({field:'truckers',value:0,operator:'$size'})
     when STATE_MATCHED
       unless Meteor.user().isTrucker() then qryObj.push({field:'truckers.owner',value:true,operator:'$exists'})
+    when STATE_EXPIRE,STATE_CANCELLED then  qryObj
     else
       switch Meteor.user().role()
         when ROLE_TRUCKER then qryObj.push({field:'winningBid.bidder',value:Meteor.userId()})
@@ -93,7 +95,8 @@ CommonHelpers.getBidFieldsLight=->
 
 CommonHelpers.getDashboardMetricsQuery=(role)->
   colors={matched:'#f8ac59',success:'#1ab394',late:'#ED5565'
-    ,accepted:'#9370db',issue:'#EE82EE',cancel:'#c2c2c2',assigned:'#23c6c8',request:'#1c84c6'}
+    ,accepted:'#9370db',issue:'#EE82EE',cancel:'#c2c2c2',assigned:'#23c6c8',request:'#1c84c6',unmatched:'#23c6c8'
+    ,unaccepted:'#23c6c8'}
   switch role
     when ROLE_TRUCKER
       [
@@ -102,6 +105,12 @@ CommonHelpers.getDashboardMetricsQuery=(role)->
           {$group:{_id:null,matched:$sum:1}}
           {$project:{_id:0,title:{$literal:"Matched"},description:{$literal:"Total number of matched Requests"}
             ,color:{$literal:colors.matched},value:"$matched"}}
+        ]
+        [
+          {$match:{$and:[{'winningBid.bidder':{$ne:Meteor.userId()}},{'truckers.owner':$in:[Meteor.userId()]}]}}
+          {$group:{_id:null,unaccepted:$sum:1}}
+          {$project:{_id:0,title:{$literal:"UnAccepted"},description:{$literal:"Total number of unaccepted Bids"}
+            ,color:{$literal:colors.unaccepted},value:"$unaccepted"}}
         ]
         [
           {$match:{'winningBid.bidder':Meteor.userId()}}
@@ -128,12 +137,17 @@ CommonHelpers.getDashboardMetricsQuery=(role)->
             ,color:{$literal:colors.issue},value:"$issues"}}
         ]
         [
-          {$match:{'winningBid.bidder':Meteor.userId(),status:STATE_CANCELLED}}
+          {$match:{'truckers.owner':{$in:[Meteor.userId()]},status:STATE_CANCELLED}}
           {$group:{_id:null,cancelled:$sum:1}}
           {$project:{_id:0,title:{$literal:"Cancelled"},description:{$literal:"Total number of Cancelled Requests"}
             ,color:{$literal:colors.cancel},value:"$cancelled"}}
         ]
-
+        [
+          {$match:{'truckers.owner':{$in:[Meteor.userId()]},status:STATE_EXPIRE}}
+          {$group:{_id:null,expired:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Expired"},description:{$literal:"Total number of expired Requests"}
+            ,color:{$literal:colors.expired},value:"$expired"}}
+        ]
       ]
     when ROLE_SHIPPER
       [
@@ -142,6 +156,12 @@ CommonHelpers.getDashboardMetricsQuery=(role)->
           {$group:{_id:null,requests:$sum:1}}
           {$project:{title:{$literal:"Requests"},description:{$literal:"Total number of Requests"}
             ,color:{$literal:colors.request},value:"$requests"}}
+        ]
+        [
+          {$match:{owner:Meteor.userId(),$or:[truckers:{$exists:false},{truckers:$size:0}]}}
+          {$group:{_id:null,unmatched:$sum:1}}
+          {$project:{title:{$literal:"UnMatched"},description:{$literal:"Total number of unmatched Requests"}
+            ,color:{$literal:colors.unmatched},value:"$unmatched"}}
         ]
         [
           {$match:{owner:Meteor.userId(),$nor:[truckers:{$exists:false},{truckers:$size:0}]}}
@@ -172,6 +192,12 @@ CommonHelpers.getDashboardMetricsQuery=(role)->
           {$group:{_id:null,cancelled:$sum:1}}
           {$project:{_id:0,title:{$literal:"Cancelled"},description:{$literal:"Total number of Cancelled Requests"}
             ,color:{$literal:colors.cancel},value:"$cancelled"}}
+        ]
+        [
+          {$match:{'owner':Meteor.userId(),status:STATE_EXPIRE}}
+          {$group:{_id:null,expired:$sum:1}}
+          {$project:{_id:0,title:{$literal:"Expired"},description:{$literal:"Total number of Expired Requests"}
+            ,color:{$literal:colors.cancel},value:"$expired"}}
         ]
       ]
     when ROLE_DRIVER

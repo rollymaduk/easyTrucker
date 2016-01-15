@@ -4,42 +4,46 @@ updateSchedule=(qry,modifier,options)->
 Meteor.methods
   addUpdateSchedule:(schedule)->
     @unblock()
-    schedule.pickupLocation.geometry.loc=
-      GeoDataHelper.createPointGeoJSON(schedule.pickupLocation.geometry.lng,schedule.pickupLocation.geometry.lat)
+    ###check for request status before an update###
+    if schedule.totalBids > 0
+      return
+    else
+      schedule.pickupLocation.geometry.loc=
+        GeoDataHelper.createPointGeoJSON(schedule.pickupLocation.geometry.lng,schedule.pickupLocation.geometry.lat)
 
-    schedule.dropOffLocation.geometry.loc=
-      GeoDataHelper.createPointGeoJSON(schedule.dropOffLocation.geometry.lng,schedule.dropOffLocation.geometry.lat)
+      schedule.dropOffLocation.geometry.loc=
+        GeoDataHelper.createPointGeoJSON(schedule.dropOffLocation.geometry.lng,schedule.dropOffLocation.geometry.lat)
 
-    distFromPickup=GeoJSON.pointDistance(schedule.pickupLocation.geometry.loc,schedule.dropOffLocation.geometry.loc)
+      distFromPickup=GeoJSON.pointDistance(schedule.pickupLocation.geometry.loc,schedule.dropOffLocation.geometry.loc)
 
-    schedule.shipmentDistance=distFromPickup
+      schedule.shipmentDistance=distFromPickup
 
-    Schema.TruckSpecs.clean(schedule.specs)
+      Schema.TruckSpecs.clean(schedule.specs)
 
-    truckqry=TruckHelpers.getTruckSpecsQuery(schedule.specs)
-    truckqry=_.extend(truckqry,{$or:['dropoffSettings.coverage':$in:['international','usa']
-    ,{'dropoffSettings.coverageDistance.value':$gte:distFromPickup}
-    ,{'pickupSettings.coverage':$in:['international','usa']}]})
+      truckqry=TruckHelpers.getTruckSpecsQuery(schedule.specs)
+      truckqry=_.extend(truckqry,{$or:['dropoffSettings.coverage':$in:['international','usa']
+      ,{'dropoffSettings.coverageDistance.value':$gte:distFromPickup}
+      ,{'pickupSettings.coverage':$in:['international','usa']}]})
 
-    trucks=Trucks.find(truckqry).map (doc)->
-      baseDist=doc.pickupSettings?.coverageDistance?.value
-      if baseDist
-        dist=GeoJSON.pointDistance(doc.baseLocation.geometry.loc,schedule.pickupLocation.geometry.loc)
-        if dist<=baseDist
+      trucks=Trucks.find(truckqry).map (doc)->
+        baseDist=doc.pickupSettings?.coverageDistance?.value
+        if baseDist
+          dist=GeoJSON.pointDistance(doc.baseLocation.geometry.loc,schedule.pickupLocation.geometry.loc)
+          if dist<=baseDist
+            _.pick(doc,'_id','owner')
+        else
           _.pick(doc,'_id','owner')
-      else
-        _.pick(doc,'_id','owner')
 
-    truckers=_.map(_.groupBy(trucks,'owner'),(val,key)->
-      trucks=_.map(val,(doc)->
-        doc._id
+      truckers=_.map(_.groupBy(trucks,'owner'),(val,key)->
+        trucks=_.map(val,(doc)->
+          doc._id
+        )
+        {owner:key,trucks:trucks}
       )
-      {owner:key,trucks:trucks}
-    )
-    schedule.truckers=truckers
-    schedule.wayBill="EZT-#{new Date().getTime()}"
-    service= new TransactionService()
-    service.addUpdateSchedule(schedule)
+      schedule.truckers=truckers
+      schedule.wayBill="EZT-#{new Date().getTime()}"
+      service= new TransactionService()
+      service.addUpdateSchedule(schedule)
 
   searchSchedules:(pipeline)->
     @unblock()
@@ -60,14 +64,13 @@ Meteor.methods
     @unblock()
     updateSchedule(qry,modifier,options)
 
-  removeSchedule:(schedule)->
+  cancelSchedule:(schedule)->
     @unblock()
     item=Schedules.findOne(schedule)
-    if item
-      Bids.remove({"schedule._id":schedule})
-      Rp_Notification.removeNotifications(schedule)
-      Rp_Comment.removeComments(schedule)
-      Schedules.remove(schedule)
+    states=NON_CANCEL_STATES
+    unless _.contains(states,item.status)
+      updateSchedule(schedule,$set:{status:STATE_CANCELLED})
+
 
   duplicateSchedule:(schedule,doc)->
     @unblock()
@@ -80,6 +83,7 @@ Meteor.methods
       ]))
 
   checkAndSendReminders:(refDate)->
+    @unblock()
     reminders=Schedules.find({nextStep:$in:[STATE_EXPIRE,STATE_DISPATCH,STATE_SUCCESS]}).map (schedule)->
       data=Eztrucker.Utils.Notification.getRequestReminderMessage(schedule,refDate)
       users=Eztrucker.Utils.Notification.getRequestReminderAudience(schedule)
@@ -94,10 +98,6 @@ Meteor.methods
         Rp_swu_mailer.send(emailObjs)
     )
     reminders.length
-
-
-
-
 
 
   checkAndUpdateLateSchedules:()->

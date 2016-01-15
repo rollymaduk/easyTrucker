@@ -16,10 +16,8 @@ Schema.userSettings=new SimpleSchema
     optional:true
     label: "Send emails for transaction states"
     type:[String]
-    defaultValue:[STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
-                  STATE_ASSIGNED,STATE_CLOSED,STATE_EXPIRE]
-    allowedValues:[STATE_NEW, STATE_BOOKED, STATE_DISPATCH, STATE_CANCELLED, STATE_LATE, STATE_ISSUE, STATE_SUCCESS,
-                   STATE_ASSIGNED,STATE_CLOSED,STATE_EXPIRE]
+    defaultValue:ALL_ACTIVE_STATES
+    allowedValues:ALL_ACTIVE_STATES
     autoform:
       options:"allowed"
       type:"fancy-checkbox"

@@ -19,7 +19,7 @@ Meteor.users.helpers
   isActive:->
     @profile.isActive
   getRoles:->
-    _.values(@roles)[0].join()
+    if @roles then _.values(@roles)[0].join()
   defaultEmail:->@profile.emails[0]
 
 

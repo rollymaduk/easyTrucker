@@ -1,6 +1,9 @@
 Form.DuplicateScheduleForm=new SimpleSchema
   _id:
     type:String
+    autoform:
+      label:false
+      type:"hidden"
   shipmentTitle:
     type:String
   pickupDate:

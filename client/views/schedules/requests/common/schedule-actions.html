@@ -19,4 +19,7 @@
         <a href="#" {{Rp_allow 'canDispatchLoad'}} {{visibleWhen item.nextStep 'dispatched'}} class="dispatch-load {{btnClasses}}">Dispatch load</a>
         <a href="#" {{Rp_allow 'canCloseRequest'}} class="deliver-load {{btnClasses}}" {{visibleWhen item.nextStep 'delivered'}}>Deliver Load</a>
         <span {{Rp_allow 'canGiveFeedback'}} {{visibleWhen item.nextStep 'closed'}}>{{>rp_create_rating  item.createRating }}</span>
+        {{#if item.canCancelLoad}}
+         <a href="#" class="cancel-schedule {{btnClasses}}" {{Rp_allow 'canEditLoad,canManageLoad'}}>Cancel</a>
+        {{/if}}
 </template>

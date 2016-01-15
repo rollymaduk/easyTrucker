@@ -168,18 +168,12 @@ Schema.TruckGeneral=new SimpleSchema
   make:
     type:String
     optional:true
-    autoform:
-      placeholder:"schemaLabel"
   registration:
     type:String
     optional:true
-    autoform:
-      placeholder:"schemaLabel"
   chasis:
     type:String
     optional:true
-    autoform:
-      placeholder:"schemaLabel"
   isActive:
     type:Boolean
     defaultValue:true

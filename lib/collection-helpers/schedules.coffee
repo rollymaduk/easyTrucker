@@ -48,6 +48,9 @@ Schedules.helpers
   canManageBid:->
     RP_permissions.hasPermissions(['canCreatebid','canManagebid'])
 
+  canCancelLoad:->
+    !_.contains(NON_CANCEL_STATES,@status)
+
   truckSpecsVolume:()->
     CommonHelpers.getTruckVolume(@specs)
 

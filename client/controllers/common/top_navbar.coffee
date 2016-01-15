@@ -45,9 +45,9 @@ Template.topNavbar.events
 
   'click .comment-link':(evt,temp)->
     console.log evt.target
-    hash=Router.current()?.params?.hash
+    ###hash=Router.current()?.params?.hash
     Eztrucker.Utils.General.navigateToContent(hash)
-    return
+    return###
 
 
 Template.topNavbar.helpers

@@ -98,21 +98,9 @@ Schema.Profile=new SimpleSchema([Schema.ProfileFormDetail,Schema.ProfileFormCont
 Form.RegisterAccountDetail=new SimpleSchema
   userType:
     type:String
-    autoform:
-      label:false
-      placeholder:'schemaLabel'
   firstname:
     type:String
-    autoform:
-      label:false
-      placeholder:'schemaLabel'
   lastname:
     type:String
-    autoform:
-      label:false
-      placeholder:'schemaLabel'
   email:
     type:String
-    autoform:
-      label:false
-      placeholder:'schemaLabel'

@@ -8,7 +8,7 @@
 
             <div class="row m-b-lg m-t-lg">
                 <div class="col-md-8">
-                    <div class="col-md-6">
+                    <div class="col-md-6  m-b-lg">
 
                         <div class="profile-image">
                             {{>imageControl class="img-circle circle-border m-b-md" transform="-/scale_crop/128x128/center/"  uuid=this.profile.photo}}
@@ -30,23 +30,23 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h3>Performance</h3>
+                        <h2 class="no-margins">Performance</h2>
                         {{>rp_view_rating size="lg" query=ratingListQuery}}
-                        {{>rp_rating_count size="lg" query=ratingListQuery}}
+                        {{>rp_rating_count query=ratingListQuery}}
                     </div>
 
-                        <div class="row">
 
-                            <div class="col-md-12">
-                                {{>rp_rating_list query=ratingListQuery}}
-                            </div>
-                        </div>
+
+                    <div class="col-md-12">
+                        {{>rp_rating_list query=ratingListQuery}}
+                    </div>
+
 
 
                 </div>
 
                 <div class="col-md-4">
-            <h3>Breakdown</h3>
+            <h2 class="no-margins">Breakdown</h2>
             {{>rp_rating_detail  stats}}
        </div>
 

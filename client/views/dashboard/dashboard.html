@@ -1,16 +1,30 @@
 <template name="dashboard">
     {{#if numbers.length}}
-        {{#if doughnut.datasource.length}}
-            <div class="col-lg-4">
-                <div class="ibox">
-                    <div class="ibox-content">
-                        <h5>Requests</h5>
-                        {{>rp_morris_chart type=doughnut.type options=doughnut.options
-                        datasource=doughnut.datasource delay=doughnut.delay}}
+
+                {{#if doughnut.datasource.length}}
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Requests</h5>
+                                {{#if filters.length}}
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            {{#each filters}}
+                                            <button type="button" id class="btn btn-xs btn-white active">{{this.title}}</button>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            </div>
+                            <div class="ibox-content">
+
+                                {{>rp_morris_chart type=doughnut.type options=doughnut.options
+                                datasource=doughnut.datasource delay=doughnut.delay}}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        {{/if}}
+                {{/if}}
+
             {{#each numbers}}
                 {{>numberItem}}
             {{/each}}

@@ -11,7 +11,7 @@ Eztrucker.Utils.Notification={
         when STATE_BOOKED
           {audience:[doc.winningBid.bidder]}
         else
-          res=CommonHelpers.getNotificationAudience([doc.winningBid.bidder,doc.owner,doc.resource.driver],userId)
+          res=CommonHelpers.getNotificationAudience(_.compact([doc?.winningBid?.bidder,doc?.owner,doc?.resource?.driver]),userId)
           {audience:res}
     catch err
       console.log err.message

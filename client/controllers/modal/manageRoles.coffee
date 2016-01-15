@@ -17,14 +17,14 @@ Template.manageRoles.events
   'click .save-modal':(evt,temp)->
     values=AutoForm.getFormValues 'manageRoleForm'
     roles= values.insertDoc.roles
+    console.log temp.data
     console.log roles
     Meteor.call 'updateRoles',temp.data,roles,(err,res)->
-      if res
-        Modal.hide()
-        null
-      else
+      Modal.hide()
+      if err
         swal 'Failure',err.message,'error'
-        null
+        return
+      return
 
 
 
