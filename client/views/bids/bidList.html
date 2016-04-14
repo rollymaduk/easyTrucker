@@ -36,7 +36,7 @@
         <div class="ibox">
             <div class="ibox-title">
                 <div class="ibox-tools pull-right">
-                    {{>acceptBidActions}}
+                    {{>acceptBidActions bid=this}}
                 </div>
                 <h2 class="no-margins">${{quote}}</h2>
             </div>
@@ -65,7 +65,7 @@
                     </div>-->
                     <div class="col-sm-6 text-right">
                         <div class="font-bold">Authorization</div>
-                        {{>serviceCeritfication size=16 profile=bidder}}
+                        {{>serviceCeritfication size=38 profile=bidder.profile}}
                     </div>
                 </div>
             </div>

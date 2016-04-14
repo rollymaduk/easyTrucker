@@ -1,29 +1,35 @@
-Form.Card=new SimpleSchema
-   name:
+Form.ChangeCard=new SimpleSchema
+   customer:
      type:String
      optional:true
+     autoform:
+      type:"hidden"
+      label:false
    exp_month:
-     type:Number
+     type:String
      optional:true
    exp_year:
-     type:Number
-     optional:true
-   address_city:
      type:String
      optional:true
-   address_country:
+   id:
      type:String
      optional:true
-   address_line1:
-     type:String
-     optional:true
-   address_line2 :
-     type:String
-     optional:true
-   address_state:
-     type:String
-     optional:true
-   address_zip :
-     type:String
-     optional:true
+     autoform:
+      type:"hidden"
+      label:false
+
+
+Form.AddCard=new SimpleSchema
+  cvc:
+    type:String
+    optional:true
+  exp_month:
+    type:String
+    optional:true
+  exp_year:
+    type:String
+    optional:true
+  number:
+    type:String
+    optional:true
 

@@ -1,13 +1,10 @@
 Template.scheduleDetail.created=()->
   @photos=new ReactiveVar([])
-  files=@data.memo?.files
-  Rp_Notification.setActivityFilter(parent:@data._id)
+  files=@data?.memo?.files
   if files
-    Eztrucker.Utils.Photo.getGroupPhotosFromSrc(files,80,(err,res)=>
+    uploader_utils.getGroupPhotosFromSrc(files,80,(err,res)=>
       if res then @photos.set(res) else console.log err
     )
-  @autorun ->
-    Rp_Notification.initActivities(10)
 
 
 Template.scheduleDetail.rendered=()->

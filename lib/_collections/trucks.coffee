@@ -1,4 +1,4 @@
-@Trucks=new Meteor.Collection 'trucks'
+@Trucks=new Meteor.Collection "#{Meteor.settings.public.dbPrefix}trucks"
 
 Trucks.attachSchema Schema.Truck
 

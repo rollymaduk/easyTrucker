@@ -21,13 +21,14 @@ Template.jobItem.events
 
 
 Template.agile_board.created=->
-  @newJobFilters=if Session.get('currentRole') is ROLE_DRIVER then {status:$in:[STATE_ASSIGNED]} else {status:$in:[STATE_NEW,STATE_BOOKED]}
-  @inProgressFilters=if Session.get('currentRole') is ROLE_DRIVER then {status:$in:[STATE_DISPATCH,STATE_LATE]} else {status:$in:[STATE_ASSIGNED,STATE_DISPATCH,STATE_LATE]}
+  @newJobFilters=if Session.get('currentRole') is ROLE_DRIVER then {status:$in:[STATE_ASSIGNED]} else {status:$in:[STATE_NEW]}
+  @inProgressFilters=if Session.get('currentRole') is ROLE_DRIVER then {status:$in:[STATE_DISPATCH,STATE_LATE]} else {status:$in:[STATE_ASSIGNED,STATE_DISPATCH,STATE_LATE,STATE_BOOKED]}
   @completeFilters={status:$in:[STATE_ISSUE,STATE_SUCCESS]}
   @autorun =>
     Meteor.userId()
+
     @subscribe('schedules',{filter:@newJobFilters},true,5)
-    @subscribe('schedules',{filter:@inProgressFilters},true,5)
-    @subscribe('schedules',{filter:@completeFilters},true,5)
+    @subscribe('schedules',{filter:_.extend(CommonHelpers.getFiltersForSchedule(null).filter,@inProgressFilters)},true,5)
+    @subscribe('schedules',{filter:_.extend(CommonHelpers.getFiltersForSchedule(null).filter,@completeFilters)},true,5)
 
 

@@ -16,7 +16,6 @@ Router.map ()->
     path:'/bids/view/:_id'
     data:->
       Bids.findOne(@params._id)
-
     onBeforeAction:()->
       if RP_permissions.hasPermissions(['canViewbid','canManagebid'])
         @next()

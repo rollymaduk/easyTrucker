@@ -1,10 +1,11 @@
-Meteor.publishComposite 'trucks',(qry,limit)->
+Meteor.publishComposite 'trucks',(qry,isLight=false,limit)->
   unless @userId
     return
   {filter,modifier}=qry
+  console.log modifier
   filter=filter or {}
   modifier=modifier or {}
-  _.extend(modifier,{limit:limit})
+  unless isLight then _.extend(modifier,{limit:limit}) else _.extend(modifier,{limit:limit},CommonHelpers.getTruckFieldsLight())
   _.extend(filter,{owner:@userId})
   find:()->
     cursor=Trucks.find(filter,modifier)

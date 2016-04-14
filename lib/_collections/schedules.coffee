@@ -1,4 +1,4 @@
-@Schedules=new Meteor.Collection 'schedules'
+@Schedules=new Meteor.Collection "#{Meteor.settings.public.dbPrefix}schedules"
 Schedules.attachSchema Schema.Schedule
 Schedules.attachBehaviour('timestampable');
 Schedules.allow

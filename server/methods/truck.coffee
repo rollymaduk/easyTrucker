@@ -17,19 +17,22 @@ updateScheduleTrucker=(schedules,trucker,truck)->
 
 Meteor.methods
   addUpdateTruck:(truck)->
-    check(truck,Object)
+    truck=if _.isString(truck) then Trucks.findOne(truck,{fields:{updatedAt:0,updatedBy:0,createdBy:0,createdAt:0}}) else truck
+    truck=_.omit(truck,'_id')
     check(@userId,String)
     @unblock()
     truck.baseLocation.geometry.loc=
       GeoDataHelper.createPointGeoJSON(truck.baseLocation.geometry.lng,truck.baseLocation.geometry.lat)
-    cloned=_.extend({},truck)
+    cloned=_.omit(_.extend({},truck),"type","typeId")
     Schema.TruckSpecs.clean(cloned)
     radius=truck.pickupSettings?.coverageDistance?.value
     distance=truck.dropoffSettings?.coverageDistance?.value
     truck_qry=TruckHelpers.buildTruckMatchQuery(cloned,'specs.'
     ,true,truck.baseLocation.geometry.loc.coordinates,radius,distance)
+    console.log truck_qry
     schedules=Schedules.find(truck_qry).map (doc)->
       doc._id
+    console.log schedules
     _truckId=truck._id
     unless truck._id
       _truckId=Trucks.insert truck
@@ -38,6 +41,10 @@ Meteor.methods
     updateScheduleTrucker(schedules,Meteor.userId(),_truckId)
     _truckId
 
+  checkAndUpdatePolicyValidity:()->
+   invalidPolicies= Trucks.find({isPolicyValid:$ne:false}).map (doc)->
+     if Date()>doc.policyDate then doc._id else null
+   Trucks.update({_id:$in:_.compact(invalidPolicies)},{$set:isPolicyValid:false})
 
 
   searchTrucks:(pipeline)->

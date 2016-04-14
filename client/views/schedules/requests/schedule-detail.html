@@ -12,9 +12,14 @@
 
                                     &nbsp;&nbsp;
                                         <!--  {{/unless}}-->
-                                    <a href="{{pathFor 'editSchedule'}}" style="color: inherit" class=" edit-request">
-                                        <span class=" glyphicon  glyphicon-pencil"></span>
+                                    <a class="dropdown-toggle" style="color:inherit" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i> actions
                                     </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li>
+                                            {{>schedule_actions allowMenus=true item=this}}
+                                        </li>
+                                    </ul>
                                     &nbsp;&nbsp;
                                     <a href="{{pathFor 'scheduleList'}}" style="color: inherit" class=" close-bid">
                                         <span class=" glyphicon  glyphicon-remove"></span>
@@ -23,9 +28,10 @@
                                 </div>
 
                                <div><h2> {{shipmentTitle}}<span class="small">-{{wayBill}}</span></h2>
-                                   <span class="pull-right">{{>rp_view_rating values=performance size="lg"}}</span>
-                                   <span class="label {{formatStatus state}}">{{state}} </span> &nbsp;&nbsp;
-                                   <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span> &nbsp;&nbsp;
+                                   <span class="pull-right">{{>rp_view_rating values=performance size="lg" docId=_id user=currentUser._id}}</span>
+
+                                    {{>statusLabel schedule=this}}&nbsp;&nbsp;
+                                   <span>{{>schedule_actions  item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span> &nbsp;&nbsp;
                                    </div>
                             </div>
 
@@ -46,6 +52,7 @@
                                                 <dt>Pickup Date:</dt> <dd>{{>dateFormatter date=pickupDate}}</dd>
                                                 <dt>Pickup Location:</dt> <dd>{{pickupLocation.address}}</dd>
                                                 <dt>Pickup Client:</dt> <dd>{{sender}}</dd>
+                                                <dt>Shipper:</dt> <dd>{{shipper}}</dd>
                                             </dl>
                                         </div>
                                         <div class="col-lg-7" id="cluster_info">
@@ -53,6 +60,7 @@
                                                 <dt>DropOff Date:</dt> <dd>{{>dateFormatter date=dropOffDate}}</dd>
                                                 <dt>DropOff Location:</dt> <dd>{{dropOffLocation.address}}</dd>
                                                 <dt>DropOff Client:</dt> <dd>{{receiver}}</dd>
+                                                <dt>Transporter:</dt> <dd>{{transporter}}</dd>
                                             </dl>
                                         </div>
                                     </div>
@@ -93,26 +101,27 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Vehicle Specs</a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Specs</a>
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-lg-5">
+                                        <div class="col-lg-12">
                                             <dl class="dl-horizontal">
-                                                <dt>Truck type:</dt> <dd>{{specs.type}}</dd>
-                                                <dt>Truck doors:</dt> <dd>{{specs.doors}}</dd>
-                                                <dt>Truck weight</dt> <dd>{{specs.weight}}</dd>
+                                                <dt>Type:</dt> <dd>{{typeOfGood.name}}</dd>
+                                                <dt>Dimensions:</dt> <dd>{{truckSpecsVolume}}</dd>
+                                                <!--<dt>Truck doors:</dt> <dd>{{specs.doors}}</dd>-->
+                                                <dt>Weight</dt> <dd>{{truckSpecsWeight}}</dd>
                                             </dl>
                                         </div>
-                                        <div class="col-lg-7" id="cluster_info">
+                                        <!--<div class="col-lg-7" id="cluster_info">
                                             <dl class="dl-horizontal">
                                                 <dt>Truck volume Type:</dt> <dd>{{specs.volumeType}}</dd>
                                                 <dt>Truck volume:</dt> <dd>{{truckSpecsVolume}}</dd>
-                                                <!--<dt>DropOff Client:</dt> <dd>{{receiver}}</dd>-->
+                                                &lt;!&ndash;<dt>DropOff Client:</dt> <dd>{{receiver}}</dd>&ndash;&gt;
                                             </dl>
-                                        </div>
+                                        </div>-->
                                     </div>
 
                                 </div>

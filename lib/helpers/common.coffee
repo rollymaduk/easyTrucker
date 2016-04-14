@@ -26,6 +26,14 @@ CommonHelpers.getNotificationAudience=(users,exclude)->
   morethanOnce=(users.join('').split(exclude).length-1)>1
   unless morethanOnce then _.without(users,exclude) else _.unique(users)
 
+CommonHelpers.getTruckWeight=(context)->
+  if context
+    value=Converters.convertWeightFromKg(context.weight.value,context.weight.metric)
+    "#{value}#{context.weight.metric}"
+  else "nil"
+
+
+
 CommonHelpers.getTruckVolume=(context)->
   if context
     if context.boxedVolume
@@ -90,6 +98,9 @@ CommonHelpers.getScheduleFieldsLight=()->
     ,wayBill:1,status:1,shipmentTitle:1,owner:1,pickupDate:1,dropOffDate:1
     ,maximumBidPrice:1,receiver:1,sender:1,winningBid:1,resource:1,nextStep:1}}
 
+CommonHelpers.getTruckFieldsLight=->
+  {fields:{make:1,type:1,weight:1,liquidVolume:1,boxedVolume:1,goodsType:1,isPolicyValid:1,registration:1,pickupSettings:1,dropoffSettings:1}}
+
 CommonHelpers.getBidFieldsLight=->
   {fields:{'schedule._id':1,'schedule.owner':1,'schedule.shipmentTitle':1,quote:1,owner:1}}
 
@@ -97,6 +108,19 @@ CommonHelpers.getDashboardMetricsQuery=(role)->
   colors={matched:'#f8ac59',success:'#1ab394',late:'#ED5565'
     ,accepted:'#9370db',issue:'#EE82EE',cancel:'#c2c2c2',assigned:'#23c6c8',request:'#1c84c6',unmatched:'#23c6c8'
     ,unaccepted:'#23c6c8'}
+  {
+    all:switch role
+      when ROLE_TRUCKER
+        [
+          [
+            {$match:{'truckers.owner':$in:[Meteor.userId()]}}
+            {$group:{_id:null,matched:$sum:1}}
+            {$project:{_id:0,title:{$literal:"Matched"},description:{$literal:"Total number of matched Requests"}
+              ,color:{$literal:colors.matched},value:"$matched"}}
+          ]
+        ]
+
+  }
   switch role
     when ROLE_TRUCKER
       [

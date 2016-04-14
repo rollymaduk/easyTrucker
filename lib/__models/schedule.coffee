@@ -1,6 +1,4 @@
 Schema.Pickup=new SimpleSchema
-  shipmentTitle:
-    type:String
   wayBill:
     type:String
     optional:true
@@ -47,10 +45,19 @@ Schema.DropOff=new SimpleSchema
       type:'googleplace'###
 
 Schema.Memo=new SimpleSchema
+  shipmentTitle:
+    type:String
+  typeOfGood:
+    type:Object
+    blackbox:true
   specs:
     label:"Van Specifications"
     type:Schema.TruckSpecs
     optional:true
+    autoValue:()->
+      goodType=@field('typeOfGood')
+      if goodType.isSet
+        _.extend(@value,{goodsType:[goodType.value]})
   truckers:
     type:[Object]
     defaultValue:[]

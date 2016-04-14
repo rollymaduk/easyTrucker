@@ -3,8 +3,9 @@
     <h2>Pickup Information</h2>
     {{#autoForm schema='Schema.Pickup' doc=pickupDoc buttonContent=false id='puf' }}
 
-        {{>afQuickField name='shipmentTitle'}}
-        <div class="form-group{{#if afFieldIsInvalid name='wayBill'}} has-error{{/if}}">
+        <!--{{>afQuickField name='shipmentTitle'}}-->
+        {{>afQuickField name='wayBill' type="hidden"}}
+        <!--<div class="form-group{{#if afFieldIsInvalid name='wayBill'}} has-error{{/if}}">
             <div class="input-group">
 
             <div class="input-group-addon"># </div>
@@ -13,7 +14,7 @@
             {{#if afFieldIsInvalid name='wayBill'}}
                 <span class="help-block">{{afFieldMessage name='wayBill'}}</span>
             {{/if}}
-        </div>
+        </div>-->
 
         <div class="form-group{{#if afFieldIsInvalid name='sender'}} has-error{{/if}}">
             <div class="input-group">

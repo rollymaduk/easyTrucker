@@ -18,12 +18,17 @@ Meteor.methods
 
       schedule.shipmentDistance=distFromPickup
 
+      ###hack to include goodstype before insert###
+      schedule.specs.goodsType=[schedule.typeOfGood]
       Schema.TruckSpecs.clean(schedule.specs)
+      console.log schedule.specs
 
       truckqry=TruckHelpers.getTruckSpecsQuery(schedule.specs)
+      console.log truckqry
       truckqry=_.extend(truckqry,{$or:['dropoffSettings.coverage':$in:['international','usa']
       ,{'dropoffSettings.coverageDistance.value':$gte:distFromPickup}
       ,{'pickupSettings.coverage':$in:['international','usa']}]})
+
 
       trucks=Trucks.find(truckqry).map (doc)->
         baseDist=doc.pickupSettings?.coverageDistance?.value
@@ -33,14 +38,15 @@ Meteor.methods
             _.pick(doc,'_id','owner')
         else
           _.pick(doc,'_id','owner')
-
-      truckers=_.map(_.groupBy(trucks,'owner'),(val,key)->
-        trucks=_.map(val,(doc)->
-          doc._id
-        )
-        {owner:key,trucks:trucks}
-      )
-      schedule.truckers=truckers
+      trucks=_.compact(trucks)
+      if trucks?.length
+        truckers=_.map(_.groupBy(trucks,'owner'),(val,key)->
+            trucks=_.map(val,(doc)->
+              doc._id
+            )
+            {owner:key,trucks:trucks}
+          )
+      schedule.truckers=truckers or []
       schedule.wayBill="EZT-#{new Date().getTime()}"
       service= new TransactionService()
       service.addUpdateSchedule(schedule)
@@ -53,12 +59,21 @@ Meteor.methods
     @unblock()
     check(schedule,String)
     check(wB,{bidder:String,bid:String})
+    Rp_Payment.setCreditCount(1,@userId)
     Schedules.update(schedule,{$set:{'winningBid.bidder':wB.bidder,'winningBid.bid':wB.bid,status:STATE_BOOKED,nextStep:STATE_ASSIGNED}})
+
+    ###planName=AppPlans.get()###
+    ###StripePlanCount.updateCount(planName)###
+
 
   assignResource:(resource,schedule)->
     @unblock()
     check(resource,{driver:String,truck:String})
+    Rp_Payment.setCreditCount(1,@userId)
     Schedules.update(schedule,{$set:{resource:resource,status:STATE_ASSIGNED,nextStep:STATE_DISPATCH}})
+
+    ###planName=AppPlans.get()###
+    ###StripePlanCount.updateCount(planName)###
 
   updateSchedule:(qry,modifier,options)->
     @unblock()

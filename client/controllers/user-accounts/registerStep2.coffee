@@ -2,12 +2,19 @@ Template.registerStep2.created=->
   @isCompany=new ReactiveVar(false)
   @hasAuth=new ReactiveVar(false)
 
+
+Template.registerStep2.destroyed=->
+  @truckAuthSub.stop()
+
 Template.registerStep2.helpers
-  isTrucker:-> Meteor.user().isTrucker()
+  isTrucker:-> Meteor?.user()?.isTrucker()
 
   isCompany:-> Template.instance().isCompany.get()
 
   hasAuth:->Template.instance().hasAuth.get()
+
+  truckAuthList:->TruckAuthorizations.find().map (doc)->
+    label:doc.name,value:doc.name
 
 
 
@@ -24,6 +31,7 @@ Template.registerStep2.rendered=->
   AutoForm.resetForm("registerStep2")
   @isCompany.set(false)
   @hasAuth.set(false)
+  @truckAuthSub=ddpTruckSearch?.subscribe('truckAuthorizations')
 
 AutoForm.hooks
   registerStep2:

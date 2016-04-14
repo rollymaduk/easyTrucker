@@ -2,12 +2,6 @@ Schema.Delivery=new SimpleSchema
   hasIssue:
     type:Boolean
     defaultValue:false
-    autoform:
-      label:false
-      afFieldInput:
-        type:"fancy-checkbox"
-        class:"warning"
-        id:"issue"
   note:
     type:String
     optional:true

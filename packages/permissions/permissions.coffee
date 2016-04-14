@@ -2,12 +2,10 @@
 
 
 if Meteor.isServer
-  Meteor.publish 'r_polly_perm_publish',(roles)->
+  Meteor.publish 'r_polly_perm_publish',()->
     if @userId
-      user=Meteor.users.findOne(@userId)
-      group=_.keys(user.roles)[0]
-      userRoles=Roles.getRolesForUser(user,group)
-      roles= unless _.isArray(roles) then [roles] else roles
-      filter=roles:$in:_.intersection(userRoles,roles)
+      group=Roles.getGroupsForUser(@userId)[0]
+      userRoles=Roles.getRolesForUser(@userId,group)
+      filter=roles:$in:userRoles
       R_polly_permissions.find(filter)
 

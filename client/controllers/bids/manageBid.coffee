@@ -13,8 +13,9 @@ Template.manageBid.rendered=->
         else
           insDoc._id=currDoc?._id
           Meteor.call 'placeBid',insDoc,(err,res)=>
-            id=insDoc._id or res
-            Router.go 'bidDetail',{_id:id}
+            unless err
+              id=insDoc._id or res
+              Router.go 'bidDetail',{_id:id}
             @done()
             null
           false

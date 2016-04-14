@@ -15,6 +15,7 @@ Eztrucker.Utils.Emails={
     Meteor.users.update(userId, {$set: {"services.password.reset": tokenRecord }});
 
     Meteor._ensure(user, 'services', 'password').reset = tokenRecord;
-
-    Accounts.urls.enrollAccount(token);
+    link="app/#/enroll-account/#{token}"
+    Meteor.absoluteUrl(link)
+    ###Accounts.urls.enrollAccount("#{Meteor.settings.public.appPath}/#{tokenRecord}");###
 }

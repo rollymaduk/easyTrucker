@@ -14,7 +14,10 @@ Meteor.publishComposite 'schedules',(qry,isLight=false,limit=10)->
       qry={parent:schedule._id,audience:$in:[user._id]}
       ###latest schedule activity###
       Rp_Notification.getActivities(qry,{limit:1,sort:createdAt:-1})
-
+  ,
+    find:(schedule)->
+      Meteor.users.find(schedule?.winningBid?.bidder)
+  ,
     find:(schedule)->
       ###rating entry###
       Rp_Rating.getRatings({docId:schedule._id,$or:[{createdBy:user._id},audience:{$in:[user._id]}]})

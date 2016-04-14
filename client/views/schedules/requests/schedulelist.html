@@ -23,28 +23,18 @@
     <div class="ibox ">
         <div class="ibox-title">
             <div class="ibox-tools pull-right" >
-                <!--<a href="{{pathFor 'viewSchedule'}}"  class="label {{formatStatus status}} manage-bid">{{status}}</a>-->
+
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-wrench"></i> actions
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="{{pathFor 'viewSchedule'}}">View</a>
-
-                        <a href="{{pathFor 'editSchedule'}}" {{Rp_allow "canEditLoad,canManageLoad"  }}>Edit Load</a>
-
-
-                        <a href="#" class="duplicate-load" {{Rp_allow 'canEditLoad,canManageLoad'}}>Duplicate Load</a>
-
-                        {{>schedule_actions item=this}}
-
-
-
+                        {{>schedule_actions item=this allowMenus=true}}
                     </li>
                 </ul>
 
             </div>
-            <span class="label {{formatStatus state}}">{{state}}</span>&nbsp;
+            {{>statusLabel schedule=this}}&nbsp;
 
             <span class="small" {{Rp_allow 'canViewbidList'}} {{visibleWhen status 'new'}} >&nbsp;|&nbsp;<a href="{{pathFor 'bidList'}}">
                 {{bidCount}} bid(s)</a> </span>

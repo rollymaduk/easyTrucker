@@ -1,6 +1,9 @@
 
 
 Template.schedule_actions.events
+  'click .duplicate-load':(evt,temp)->
+    Modal.show 'duplicateScheduleModal',temp.data.item
+
   'click .dispatch-load':(evt,temp)->
     Modal.show 'dispatchModal',{schedule:temp.data.item._id
       ,subject:"#{temp.data.item.wayBill}-#{temp.data.item.shipmentTitle}"}
@@ -27,10 +30,16 @@ Template.schedule_actions.events
                 swal("Failure","An Error occurred during delete !",'error')
 
   'click .assign-resource':(evt,temp)->
-    ###unless AppPlans.get() then AppPlans.set(SUBSCRIBE_FREE,{userId: Meteor.userId()},(err)->console.log err)###
-
-    Eztrucker.Utils.Payment.checkUserPlan temp.data.item._id,->
-      Router.go "filteredTruckList",{trucks:temp.data.item.matchedTrucks()},{hash:temp.data.item._id}
+    Eztrucker.Utils.Payment.checkUserPlan (err,res)->
+     _trucks= temp?.data?.item?.matchedTrucks()
+     _id=temp?.data?.item?._id
+     if res
+       Meteor.setTimeout(()->
+         Router.go("filteredTruckList",{trucks:_trucks},{hash:_id})
+         return
+       ,10)
+     return
+    return
 
 
 

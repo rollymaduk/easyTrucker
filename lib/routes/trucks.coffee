@@ -48,15 +48,29 @@ Router.map ()->
     onBeforeAction:()->
       if RP_permissions.hasPermissions(['canEditTruck','canManageTruck'])
         @next()
+        return
+      else
+        @render 'home'
+        return
+    data:->Trucks.findOne(@params._id),
+    waitOn:-> Meteor.subscribe('truckItem',@params._id)
+    template:"manageTruck"
+  )
+
+  @route('viewTruck',
+    path:'/truck/view/:_id',
+    data:->Trucks.findOne(@params._id),
+    onBeforeAction:()->
+      if RP_permissions.hasPermissions(['canViewTruck','canManageTruck'])
+        @next()
         null
       else
         @render 'home'
         null
-    data:->Trucks.findOne(@params._id),
-    waitOn:-> Meteor.subscribe('truckItem',{filter:@params._id})
-    template:"manageTruck"
+    waitOn:->
+      Meteor.userId()
+      Meteor.subscribe('truckItem',@params._id)
+    template:"truckDetail"
   )
 
-
-
-  null
+  return

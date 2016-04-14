@@ -1,2 +1,2 @@
 Meteor.startup ->
-  Eztrucker.Utils.Payment.configure()
+  ###Eztrucker.Utils.Payment.configure()###

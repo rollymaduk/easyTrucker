@@ -1,0 +1,7 @@
+<template name="statusLabel">
+    {{#if small}}
+        <span  class="label small {{formatStatus schedule.state}}" style="margin-right:2%;">{{schedule.state}} - ${{schedule.maximumBidPrice}} </span>
+        {{else}}
+        <span class="label {{formatStatus schedule.state}}">{{schedule.state}} - ${{schedule.maximumBidPrice}}</span>
+    {{/if}}
+</template>

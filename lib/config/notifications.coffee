@@ -21,7 +21,8 @@ if Meteor.isServer
     data={title:notification.title,description:notification.description,link_url:link or null,sender:sender}
     emails=Rp_swu_mailer.createMailItems(notification.collection,recipients,data) if recipients
     if canSendMail
-      Rp_swu_mailer.send(emails) if emails
+      Meteor.defer ->
+        Rp_swu_mailer.send(emails) if emails
 
 ###
 if Meteor.isServer

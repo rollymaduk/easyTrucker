@@ -10,7 +10,7 @@ Template.chooseDriverModal.helpers
     render:
       option:(item,escape)->
         console.log item
-        Blaze.toHTMLWithData(Template.chooseDriverItem,item.profile)
+        Blaze.toHTMLWithData(Template.selectizeImageList,{data:"#{item.profile.firstname} #{item.profile.lastname}",photo:item.profile.photo})
 
       item:(item,escape)->
         "<div>#{escape(item.profile.firstname)} #{escape(item.profile.lastname)}</div>"

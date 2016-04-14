@@ -5,13 +5,13 @@
                 <h5>Create A new Truck </h5>
             </div>
             <div class="ibox-content">
-                <div class="row">
+
                     {{>Wizard steps=steps onCanceled=oncanceled onFinished=onfinished}}
                     <!--{{>quickForm collection="Trucks" type='insert'   buttonContent=false id='tf' doc=this }}
                     <div class="col-sm-12">
                         <button  class="btn btn-primary btn-sm pull-right"  onclick="$('#tf').submit();">save</button>
                     </div>-->
-                </div>
+
 
             </div>
         </div>
@@ -34,12 +34,33 @@
 
 <template name="truckSpecsCustom">
     {{#autoForm schema='Schema.TruckSpecs' preserveForm=false doc=this id='truckSpecsForm' }}
-        {{>afQuickField name='type'}}
-        {{>afQuickField name='volumeType'}}
+        <div>
+            {{>afQuickField name='goodsType'}}
+        </div>
+        {{> afQuickField  name='type' type="selectize" selectize=truckSelectize }}
+
+
+        <!--{{>afQuickField name='volumeType'}}
         <div class="{{hasDoors}}">
            {{>afQuickField name='doors'}}
+        </div>-->
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Weight
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-9">
+                    {{>afQuickField name='weight.value'}}
+                </div>
+
+                <div class="col-sm-3">
+                    {{>afQuickField name='weight.metric'}}
+                </div>
+            </div>
         </div>
-        {{>afQuickField name='weight'}}
         <div class="box-vol {{isBoxed}}" >
             <div class="panel panel-default">
                     <div class="panel-heading">
@@ -79,6 +100,7 @@
                     </div>
             </div>
         </div>
+
     {{/autoForm}}
 </template>
 <template name="truckGeofenceCustom">

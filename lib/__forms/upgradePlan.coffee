@@ -1,6 +1,9 @@
 Form.UpgradePlan=new SimpleSchema
   plans:
     type:String
-    allowedValues:[SUBSCRIBE_ANNUAL,SUBSCRIBE_MONTH,SUBSCRIBE_FREE]
+    allowedValues:_.map(Meteor?.settings?.public?.paymentPlans,(item)->item.name)
     autoform:
-      options:{premium_yr:"Premium(1 Year)-$470.40",premium:"Premium(Monthly)-$49.00"}
+      options:()->
+        _.map(Meteor?.settings?.public?.paymentPlans,(item)->
+          {label:item?.description,value:item?.name}
+        )

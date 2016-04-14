@@ -1,20 +1,17 @@
 Eztrucker.Utils.Registration={
   registerUser:(user,role,groupName,callback)->
-    if callback
-      Meteor.call 'registerNewUser',user,role,groupName,(err,res)->
-        if err then callback.call this,err,null else  callback.call this,null,res
-    else
-      Meteor.call 'registerNewUser',user,role,groupName
+    Meteor.call 'registerNewUser',user,role,groupName,(err,res)->
+     callback.call @,err,res if callback
 
   registerNewUser:(user,role,groupName,subscription,callback)->
-    console.log user
-    subscription=subscription or SUBSCRIBE_FREE
-    if _.contains([SUBSCRIBE_FREE,SUBSCRIBE_ANNUAL,SUBSCRIBE_MONTH],subscription)
+    if Meteor?.settings?.paymentPlans?.length
+      subscription=subscription or _.findWhere(Meteor.settings.paymentPlans,{isDefault:true})?.name
       unless Meteor.userId()
-        AppPlans.set(subscription,{email:user.email},(error)=>
-          unless error
-            @registerUser(user, role,groupName,callback)
-          else
-            callback.call this,error,null
+        @registerUser(user, role,groupName,(err,res)->
+          Rp_Payment.subscribe(subscription,{metadata:{userId:res}},(err,res)->
+            console.log err or res
+            callback.call @,err,res if callback
+          )
         )
+
 }

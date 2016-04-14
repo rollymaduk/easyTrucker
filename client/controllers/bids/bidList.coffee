@@ -15,17 +15,20 @@ Template.bidList.helpers
     Bids.findOne({owner:Meteor.userId()})
 
   schedule:->
-    Iron.controller().getParams()._id
+    Router.current().params._id
 
   canLoadMore:()->
     Counts.get('total-bids')>Bids.find().count()
 
 
 Template.bidList.created=->
-  params=Iron.controller().params
+  params=Router.current().params
   @handle=Meteor.paginatedSubscribe('bids',{'schedule._id':params._id},{perPage:10},()->
     console.log("subs ready!")
   )
+
+Template.bidList.destroyed=->
+  @handle.stop()
 
 Template.bidList.events
   'click .load-more':(evt,temp)->

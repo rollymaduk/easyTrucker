@@ -13,7 +13,7 @@ Schema.ProfileFormContact=new SimpleSchema
         "required"
       else undefined
     autoform:
-      readonly:true
+      readonly:false
   emails:
     type:[String]
     optional:true
@@ -41,14 +41,11 @@ Schema.ProfileFormContact=new SimpleSchema
       else undefined
     type:String
     autoform:
-      readonly:true
+      readonly:false
   truckAuthorityType:
     type:String
     optional:true
-    allowedValues:['DOT','FF','MC','MX',TEXT_NONE]
     defaultValue:TEXT_NONE
-    autoform:
-      options:{DOT:'DOT',FF:'FF',MC:'MC',MX:'MX',None:TEXT_NONE}
   truckAuthorityNumber:
     type:String
     optional:true

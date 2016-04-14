@@ -14,7 +14,7 @@
 
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">{{currentUser.profile.companyName}}</span>
+                    <span class="m-r-sm text-muted welcome-message">{{currentUser.profile.companyName}}&nbsp;-({{currentUser.plan.credit}} units)</span>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -35,15 +35,7 @@
                         {{#each alerts}}
                             {{>alertItem}}
                         {{/each}}
-                        <li>
 
-                            <div class="text-center link-block">
-                                <a href="#">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
                     </ul>
                 </li>
 
@@ -67,7 +59,7 @@
 </template>
 <template name="alertItem">
     <li>
-            <a href="{{link}}">
+            <a href="{{link}} " class="notify-link">
                 <div>
                     <i class="fa fa-bell"></i>{{title}}: {{summarizeText description 30}}
                     <span class="pull-right text-muted small">{{tm_cal createdAt}}</span>
@@ -84,7 +76,7 @@
                 <div>
                     <span class="fa fa-envelope" ></span>
                     <small class="pull-right">{{tm_now createdAt}}</small>
-                        <a href="{{link}}" class="text-muted comment-link">
+                        <a href="{{link}}" class="notify-link text-muted comment-link">
                             {{summarizeText description 50}}
                         </a>
                     <br>

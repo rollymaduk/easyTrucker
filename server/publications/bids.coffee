@@ -10,10 +10,14 @@ Meteor.publishComposite 'bids',(qry,isLight=false,limit=10)->
   children:[
     find:(bid)->
       ###bidders###
-      Meteor.users.find(bid.owner)
+      Meteor.users.find(bid.owner,{fields:profile:1,roles:1})
+  ,
     find:(bid)->
       ###bid latest activity###
       Rp_Notification.getActivities({docId:bid._id,audience:$in:[userId]},{limit:1,sort:createdAt:-1})
+  ,
+    find:(bid)->
+      Schedules.find(bid.schedule._id,{fields:{status:1,winningBid:1}})
   ]
 
 

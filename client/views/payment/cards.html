@@ -1,22 +1,35 @@
 <template name="cardList">
-    <table id="cardList" class="footable table table-striped toggle-arrow-tiny default breakpoint">
-        <thead><tr>
-            <th data-toggle="true" class="footable-visible footable-first-column">card</th>
-            <th data-hide="tablet,phone">source</th>
-            <th data-hide="tablet,phone">expires</th>
-            <th></th>
-        </tr></thead>
+    <div class="ibox">
+        <div class="ibox-title">
+            <div class="ibox-tools">
+                <label class="pull-left" for="togglePayWithCard"><input id="togglePayWithCard" type="checkbox" {{payWithCardState}}>  Make Payments with Credit Card On File</label>
 
-        {{#each cards}}
-            {{>cardItem}}
-        {{/each}}
-    </table>
+                <a href="#" class="btn btn-xs btn-primary add-new-card">add new card</a>
+            </div>
+
+        </div>
+        <div class="ibox-content">
+            <table id="cardList" class="footable table table-striped toggle-arrow-tiny default breakpoint">
+                <thead><tr>
+                    <th data-toggle="true" class="footable-visible footable-first-column">card</th>
+                    <th data-hide="tablet,phone">isDefault</th>
+                    <th data-hide="tablet,phone">expires</th>
+                    <th></th>
+                </tr></thead>
+
+                {{#each cards}}
+                    {{>cardItem}}
+                {{/each}}
+            </table>
+        </div>
+    </div>
+
 </template>
 
 <template name="cardItem">
     <tr>
         <td>****{{last4}}</td>
-        <td>{{country}}</td>
+        <td>{{#if isDefault}}<i class="fa fa-check text-navy"></i> {{else}} <i class="fa fa-times text-navy"></i>{{/if}}</td>
         <td>{{exp_month}}/{{exp_year}}</td>
         <td><a href="#" class="change-card btn btn-xs btn-primary">change</a></td>
     </tr>

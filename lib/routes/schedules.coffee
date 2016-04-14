@@ -27,6 +27,7 @@ Router.map ()->
         @render 'home'
         null
     data:->
+      console.log @params.status
       filter=CommonHelpers.getFilterForScheduleExtended @params.status,@params.hash
       Schedules.find(filter.filter).fetch()
   )

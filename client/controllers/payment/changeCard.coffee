@@ -2,18 +2,32 @@ AutoForm.hooks
   changeCardForm:
     onSubmit:(ins,upd,curr)->
       that=@
-      Meteor.call 'changeCardDetails',curr.id,curr.customer,ins,(err,res)->
-        if res
-          toastr.success("Card detail successfully changed","Card change")
-          Eztrucker.Utils.Payment.getCustomerCards(curr.customer,(error,result)->
-            if result then Session.set('cardList',result) else console.log error
-          )
+      Rp_Payment.changeCard(ins,(err,res)->
+       console.log err or res
+       if res
+         toastr.success("Card detail successfully changed","Card change successfull")
+       else
+         toastr.error(err.message,"Card change failed")
+       that.done()
+       Modal.hide()
+       return
+      )
+      false
+  ,true
 
+AutoForm.hooks
+  addCardForm:
+    onSubmit:(ins,upd,curr)->
+      that=@
+      console.log {source:ins}
+      Rp_Payment.addCard({source:ins},(err,res)->
+        if res
+          toastr.success("Card detail successfully changed","Card change successfull")
         else
-          toastr.error(err.message,"Card change")
-          console.log err
+          toastr.error(err.message,"Card change failed")
         that.done()
         Modal.hide()
         return
+      )
       false
-  ,true
+,true

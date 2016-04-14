@@ -36,12 +36,30 @@
 
     {{#autoForm schema='Schema.Memo' preserveForm=false doc=this id='mf' }}
 
-        {{>afQuickField name='specs.type'}}
-        {{>afQuickField name='specs.volumeType'}}
-        <div class="{{hasDoors}}">
-            {{>afQuickField name='specs.doors'}}
+        {{>afQuickField name='shipmentTitle' }}
+
+        {{>afQuickField name='typeOfGood' options=goodTypes}}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse"  href="#weightPanel" aria-expanded="true" class=""><i class="fa fa-chevron-circle-up"></i>Weight</a>
+
+                </h3>
+            </div>
+            <div id='weightPanel' class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <div class="col-sm-9">
+                        {{>afQuickField name='specs.weight.value'}}
+                    </div>
+
+                    <div class="col-sm-3">
+                        {{>afQuickField name='specs.weight.metric'}}
+                </div>
+                </div>
+            </div>
         </div>
-        {{>afQuickField name='specs.weight'}}
 
         <div class=" box-vol {{isBoxed}}" >
         {{#panel title='Dimensions'}}

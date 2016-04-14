@@ -1,4 +1,15 @@
 <template name="schedule_actions">
+    {{#if allowMenus}}
+        {{#with item}}
+            <a href="{{pathFor 'viewSchedule'}}">View</a>
+            {{#if canEditBeforeAcceptance}}
+                <a href="{{pathFor 'editSchedule'}}" {{Rp_allow "canEditLoad,canManageLoad"  }}>Edit Load</a>
+            {{/if}}
+
+
+            <a href="#" class="duplicate-load" {{Rp_allow 'canEditLoad,canManageLoad'}}>Duplicate Load</a>
+        {{/with}}
+    {{/if}}
     {{#unless item.canAssignResource}}
         {{#if item.bidCount}}
             {{#unless hideBids}}
@@ -14,7 +25,7 @@
             {{/if}}
 
     {{else}}
-       <a {{Rp_allow 'canAssignTruck'}} {{visibleWhen item.nextStep 'booked'}} href="#" class="assign-resource {{btnClasses}}">Assign Driver/Truck</a>
+       <a {{Rp_allow 'canAssignTruck'}} {{visibleWhen item.nextStep 'booked'}} href="" class="assign-resource {{btnClasses}}">Assign Driver/Truck</a>
     {{/unless}}
         <a href="#" {{Rp_allow 'canDispatchLoad'}} {{visibleWhen item.nextStep 'dispatched'}} class="dispatch-load {{btnClasses}}">Dispatch load</a>
         <a href="#" {{Rp_allow 'canCloseRequest'}} class="deliver-load {{btnClasses}}" {{visibleWhen item.nextStep 'delivered'}}>Deliver Load</a>

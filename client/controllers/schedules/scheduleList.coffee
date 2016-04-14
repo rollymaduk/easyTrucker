@@ -7,11 +7,16 @@ Template.scheduleList.helpers
 
 
 Template.scheduleList.created=->
-  params=Iron.controller().params
-  filter=CommonHelpers.getFilterForScheduleExtended params.status,params.hash
-  @handle=Meteor.paginatedSubscribe('schedules',filter,{perPage:10},()->
-    console.log("subs ready!")
-  )
+  @autorun =>
+    params=Router.current().params
+    filter=CommonHelpers.getFilterForScheduleExtended params.status,params.hash
+    @handle=Meteor.paginatedSubscribe('schedules',filter,{perPage:10},()->
+      console.log("subs ready!")
+    )
+
+Template.scheduleList.destroyed=->
+  @handle.stop()
+  console.log("subs destroyed!")
 
 Template.scheduleList.events
   'click .load-more':(evt,temp)->

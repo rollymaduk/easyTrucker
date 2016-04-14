@@ -29,6 +29,7 @@ Template.topNavbar.events
 # Remove all inline style from jquery fadeIn function to reset menu state
       $('#side-menu').removeAttr 'style'
     return
+
   'click .right-sidebar-toggle': ->
     $('#right-sidebar').toggleClass 'sidebar-open'
     return
@@ -43,18 +44,27 @@ Template.topNavbar.events
   'click .right-sidebar-toggle':(evt,temp)->
     $('#right-sidebar').toggleClass('sidebar-open')
 
-  'click .comment-link':(evt,temp)->
-    console.log evt.target
-    ###hash=Router.current()?.params?.hash
-    Eztrucker.Utils.General.navigateToContent(hash)
-    return###
 
+
+
+
+
+Template.alertItem.events
+  'click .notify-link':(evt,temp)->
+    Rp_Notification.deactivateNotification(temp.data._id,(err,res)->console.log err or res)
+
+
+
+
+Template.messageNotifyItem.events
+  'click .comment-link':(evt,temp)->
+    Rp_Notification.deactivateNotification(temp.data._id,(err,res)->console.log err or res)
 
 Template.topNavbar.helpers
   alerts:()->
-    Rp_Notification.getAlerts({collection:$in:[COLLECTION_REQUEST,COLLECTION_BID]})
+    Rp_Notification.getActiveNotifications({collection:$in:[COLLECTION_REQUEST,COLLECTION_BID]})
 
   messages:()->
-    Rp_Notification.getAlerts({collection:COLLECTION_COMMENT})
+    Rp_Notification.getActiveNotifications({collection:COLLECTION_COMMENT})
 
 

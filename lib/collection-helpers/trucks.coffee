@@ -7,10 +7,13 @@ getCoverageDescription=(coverage,value,metric,label)->
 
 Trucks.helpers
   title:()->
-    item="#{@type} #{@registration}"
-    item.trimToLength(15)
+    item="#{@make} #{@registration}"
+    item.trimToLength(35)
+
+  description:()->
+    "#{@make}, #{@type}, #{CommonHelpers.getTruckWeight(@)}, #{CommonHelpers.getTruckVolume(@)}"
   insurance:()->
-    "#{@InsuranceCompany} (#{@policyNumber})"
+    "#{@InsuranceCompany} (#{@policyNumber}-Expires:#{moment(@expirationDate).calendar()})"
 
   drivers:->
     group=Roles.getGroupsForUser(Meteor.userId())
@@ -19,7 +22,8 @@ Trucks.helpers
       doc.userProfile() if !_.contains(busyDrivers,doc._id)
     _.compact(drivers)
 
-
+  goodsTypeInfo:()->
+    _.map(@goodsType,(val)->val.name).join(',')
 
   matches:->
     Schedules.find({status:{$in:[STATE_NEW,STATE_BOOKED]},'truckers.trucks':$in:[@_id]}).map (doc)->
@@ -37,17 +41,20 @@ Trucks.helpers
     console.log res
     res
 
-  isOccupied:->
+  availableState:->
     scheduleId=Session.get('assignMode')
     if scheduleId
       bid=Bids.findOne({'schedule._id':scheduleId,owner:@owner})
       schedules=Schedules.find({'resource.truck':@_id
         ,status:$in:[STATE_ASSIGNED,STATE_DISPATCH]}).fetch()
       res=Eztrucker.Utils.Trucks.getTruckAvailability(schedules,bid).length
-      res
+      if res then 'unavailable' else 'available'
 
   isAssignMode:->
     Session.get('assignMode')
+
+  policyState:->
+    unless @isPolicyValid then 'expired'
 
   pickup:()->
     distance=@pickupSettings?.coverageDistance?.value
@@ -59,3 +66,6 @@ Trucks.helpers
     getCoverageDescription(@dropoffSettings.coverage,distance,metric,"pickup location")
   volume:()->
     CommonHelpers.getTruckVolume(@)
+  weightInfo:()->
+    CommonHelpers.getTruckWeight(@)
+

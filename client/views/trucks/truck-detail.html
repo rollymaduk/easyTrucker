@@ -1,0 +1,155 @@
+<template name="truckDetail">
+
+    <div id="truck-detail">
+        <div class="col-lg-9">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="m-b-md">
+                                <div class="row pull-right" style="margin-right:1%">
+
+                                    &nbsp;&nbsp;
+
+                                        <a class="dropdown-toggle" style="color:inherit" data-toggle="dropdown" href="#">
+                                            <i class="fa fa-wrench"></i> actions
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-user">
+                                            <li>
+                                                {{>truckActions}}
+                                            </li>
+                                        </ul>
+
+
+                                    &nbsp;&nbsp;
+                                    <a href="{{pathFor 'scheduleList'}}" style="color: inherit" class=" close-bid">
+                                        <span class=" glyphicon  glyphicon-remove"></span>
+                                    </a>
+
+                                </div>
+
+                                <div><h2> {{title}}<span class="small">-{{type}}</span></h2>
+                                    {{#if policyState}}
+                                        <span class="label label-danger">{{policyState}}</span>
+                                    {{/if}}
+                                    {{#if availableState}}
+                                        <span class="label label-primary">{{availableState}}</span>
+                                    {{else}}
+                                        {{#if matches.length}}
+                                            <a href="{{pathFor 'filteredSchedules' status=matches hash='_id' }}"
+                                               style="text-decoration:none;color:inherit;font:inherit;">
+                                                <span class="label label-success">{{matches.length}} matches</span>
+                                            </a>
+                                        {{/if}}
+                                    {{/if}}
+                                    <!--<span class="label {{formatStatus state}}">{{state}} </span> &nbsp;&nbsp;
+                                    <span>{{>schedule_actions item=this hideBids=canManageBid btnClasses="btn btn-xs btn-primary"}}</span> &nbsp;&nbsp;-->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Vehicle Specs</a>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <span class="text-center">
+
+                                        </span>
+                                        <div class="col-lg-12">
+                                            <dl class="dl-horizontal">
+                                                <dt>Specs:</dt> <dd>{{description}}</dd>
+                                                <dt>Good Types</dt> <dd>{{goodsTypeInfo}}</dd>
+
+                                            </dl>
+                                        </div>
+
+                                    </div>
+                                    <div class="row " >
+                                        <div class="col-lg-12 ">
+
+                                            <dl class="dl-horizontal" >
+                                                <dt >Matches</dt>
+
+                                                <dd >
+
+                                                    {{#unless matches.length}}
+                                                        <p class="text-center gray-bg">
+                                                         <small class="no-bid-warning"><i class="fa fa-warning"></i> There are currently no matches on this load</small>
+
+                                                        </p>
+                                                    {{else}}
+                                                        <a href="{{pathFor 'filteredSchedules' status=matches hash='_id' }}" >
+                                                            {{matches.length}} Match(es)
+                                                        </a>
+
+                                                    {{/unless}}
+                                                </dd>
+
+                                            </dl>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">GeoTracking</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <dl class="dl-horizontal">
+                                                <dt>Base Location:</dt> <dd>{{baseLocation.address}}</dd>
+                                                <dt>Pickup settings:</dt> <dd>{{pickup}}</dd>
+                                                <dt>Dropoff settings</dt> <dd>{{dropoff}}</dd>
+                                            </dl>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">General</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Make:</dt> <dd>{{make}}</dd>
+                                                    <dt>Registration:</dt> <dd>{{registration}}</dd>
+                                                    <dt>Chasis</dt> <dd>{{chasis}}</dd>
+                                                    <dt>Insurance</dt> <dd>{{insurance}}</dd>
+
+                                                </dl>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -8,7 +8,7 @@
         {{/if}}
         {{>afQuickField name='telephones'}}
         {{#if isTrucker}}
-            {{>afQuickField  name='truckAuthorityType'}}
+            {{>afQuickField  name='truckAuthorityType' options=truckAuthList}}
             {{#if hasAuth}}
                 {{>afQuickField class=isTrucker name='truckAuthorityNumber'}}
             {{/if}}

@@ -72,7 +72,7 @@ Schema.User=new SimpleSchema
     type:Schema.userSettings
     optional:true
     blackbox:true
-  appPlans:
+  plan:
     type: Object,
     optional: true,
     blackbox: true

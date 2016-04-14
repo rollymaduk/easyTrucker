@@ -25,11 +25,11 @@ Eztrucker.Utils.Notification={
         when STATE_NEW
           {title:TITLE_NEW,description:"Shipment request for #{doc.shipmentTitle}(#{doc.wayBill})"
             ,collection:collection,parent:doc._id}
-        when STATE_BOOKED
-          {title:TITLE_UPDATE,description:"You won a bid for shipment Request: #{doc.shipmentTitle}(#{doc.wayBill})"
+        when STATE_ISSUE
+          {title:TITLE_UPDATE,description:"Delivered Request: #{doc.shipmentTitle}(#{doc.wayBill}) with #{doc.status}"
             ,collection:collection,parent:doc._id}
         else
-          {title:TITLE_UPDATE,description:"Shipment status changed to #{doc.status} for Request: #{doc.shipmentTitle}(#{doc.wayBill})"
+          {title:TITLE_UPDATE,description:"#{doc.status} Request: #{doc.shipmentTitle}(#{doc.wayBill})"
             ,collection:collection,parent:doc._id}
 
     catch err
@@ -42,10 +42,10 @@ Eztrucker.Utils.Notification={
     try
       check(doc,Schema.Bid)
       if isNew
-        {parent:doc.schedule._id,title:TITLE_NEW, description:"Bid for #{doc.schedule.shipmentTitle}",collection:collection
+        {parent:doc.schedule._id,title:TITLE_NEW, description:"ADDED Bid #{doc.schedule.shipmentTitle}",collection:collection
           ,audience:[doc.schedule.owner]}
       else
-       {parent:doc.schedule._id,title:TITLE_UPDATE, description:"Bid changed for #{doc.schedule.shipmentTitle}",collection:collection
+       {parent:doc.schedule._id,title:TITLE_UPDATE, description:"CHANGED Bid #{doc.schedule.shipmentTitle}",collection:collection
          ,audience:[doc.schedule.owner]}
     catch err
       console.log err.message

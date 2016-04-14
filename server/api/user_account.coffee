@@ -15,8 +15,8 @@ Meteor.methods
     Rp_swu_mailer.send([emailObject])
     ###track user signup with threads###
 
-    Rp_Threads.identify({email:recipient.emails[0].address},user,(err,res)->
+    ###Rp_Threads.identify({email:recipient.emails[0].address},user,(err,res)->
       if res
         Rp_Threads.track('signUp',{email:recipient.emails[0].address},user,(err,res)->)
-    )
+    )###
 

@@ -5,7 +5,8 @@ Schedules.helpers
    else if !truckers and @status is STATE_NEW then STATE_UNMATCHED
    else @status
 
-
+  canEditBeforeAcceptance:->
+    @status is STATE_NEW
   createRating:()->
     switch Session.get('currentRole')
       when ROLE_TRUCKER,ROLE_DRIVER
@@ -20,13 +21,13 @@ Schedules.helpers
   performance:->
     res=Rp_Ratings.find({docId:@_id,audience:$in:[Meteor.userId()]}).map (doc)->
       doc.data
-    res
+    res or []
 
   activities:->
-    Rp_Notification.getActivities(20)
+    Rp_Notification.getAllNotifications({parent:@_id},{sort:createdAt:-1},20)
 
   latestActivity:()->
-    Rp_Notifications.findOne({parent:@_id},{sort:createdAt:-1}) or {description:@shipmentTitle}
+    Rp_Notification.getAllNotifications({parent:@_id},{sort:createdAt:-1},1)[0] or {description:@shipmentTitle}
 
   matchedTrucks:->
     trucker=_.findWhere(@truckers,{owner:Meteor.userId()})
@@ -37,7 +38,7 @@ Schedules.helpers
 
   hasBid:->
     if(Meteor.userId())
-      _.contains(@bidders,Meteor.userId())
+      _.contains(@bidders,Meteor?.userId())
 
   notDirty:->
     @messages.length is 0 or @totalBids is 0
@@ -53,6 +54,15 @@ Schedules.helpers
 
   truckSpecsVolume:()->
     CommonHelpers.getTruckVolume(@specs)
+
+  truckSpecsWeight:()->
+    CommonHelpers.getTruckWeight(@specs)
+
+  shipper:->
+    Meteor?.user()?.fullname()
+
+  transporter:->
+    Meteor.users.findOne(@winningBid?.bidder)?.fullname()
 
 
 

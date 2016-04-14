@@ -1,3 +1,7 @@
+String.prototype.trimToLength = (m)->
+  @.split("-").join(" ")
+  if(@length > m) then $.trim(@).substring(0, m).split(" ").slice(0, -1).join(" ") + "..." else @;
+
 Meteor.startup ->
   Impersonate.field1='profile.firstname'
   Impersonate.field2='profile.lastname'
@@ -20,12 +24,7 @@ Meteor.startup ->
     allowEscapeKey:true
     allowOutsideClick:true
 
-  String.prototype.trimToLength = (m)->
-      @.split("-").join(" ")
-      if(@length > m) then $.trim(@).substring(0, m).split(" ").slice(0, -1).join(" ") + "..." else @;
-
   Template.scheduleDate.replaces('afBootstrapDateTimePicker')
-
 
   Tracker.autorun ->
     user=Meteor?.user()
@@ -35,7 +34,7 @@ Meteor.startup ->
     Session.set("user_sound",sound)
     if roles
       role=_.values(roles)[0][0]
-      RP_permissions.setCurrentRole(role)
+      RP_permissions.getPermissionsForRoles(role)
       Session.set('currentRole',role)
       {telephones}=profile
       console.log telephones

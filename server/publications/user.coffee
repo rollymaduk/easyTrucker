@@ -9,5 +9,5 @@ Meteor.publish('userList',(domainroles)->
 )
 
 Meteor.publish 'userInfo',(id,withImage)->
-  Meteor.users.find(id,fields:profile:1)
+  Meteor.users.find(id,{fields:{profile:1,roles:1}})
 

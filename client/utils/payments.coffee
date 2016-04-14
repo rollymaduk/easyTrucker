@@ -13,6 +13,7 @@ Eztrucker.Utils.Payment= {
               if callback then callback.call null
             else console.log err or res
       )
+
     catch err
       throw new Meteor.Error(err.index, err.message)
   pay: (requestId,email,callback)->
@@ -33,18 +34,9 @@ Eztrucker.Utils.Payment= {
       catch err
         throw new Meteor.Error(err.index, err.message)
 
-  checkUserPlan:(request,callback)->
-    plan=AppPlans.get() or SUBSCRIBE_FREE
-    if plan is SUBSCRIBE_FREE
-      Meteor.call 'validateCharge',request,(err,res)->
-        console.log err or res
-        unless err
-          unless res then Modal.show 'payAsYouGoModal',request
-          else callback.call this
-        else
-          console.log err
-    else
-      callback.call this
+  checkUserPlan:(callback)->
+    Rp_Payment.pay(null,callback)
+
 
   getCustomerCards:(customerId,callback)->
     Meteor.call 'getCustomerCards',customerId,(err,res)->

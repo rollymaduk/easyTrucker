@@ -5,6 +5,8 @@ Template.truckGeofence.created=->
   @isPickupDistance=new ReactiveVar("hidden")
   @isDropoffDistance=new ReactiveVar("hidden")
 
+
+
 Template.truckGeofence.rendered=->
   if @data.dropoffSettings
     TruckHelpers.setCoverageVisibility(@data.dropoffSettings.coverage,@isDropoffDistance,@)
@@ -36,8 +38,10 @@ Template.truckSpecs.created=->
   @hasDoors=new ReactiveVar("hidden")
 
 Template.truckSpecs.rendered=->
-  if @data.volumeType
-    TruckHelpers.setVolumeVisibility @data.volumeType,@,'truckSpecsForm'
+  if @data.typeId
+    truckVolType=TruckTypes.findOne(@data.typeId)?.loadType
+    TruckHelpers.setVolumeVisibility truckVolType,@,'truckSpecsForm' if truckVolType
+
 
 Template.truckSpecs.helpers
   isLiquid:->
@@ -47,10 +51,38 @@ Template.truckSpecs.helpers
   hasDoors:->
     Template.instance().hasDoors.get()
 
-Template.truckSpecs.events
-  'change select[data-schema-key="volumeType"]':(evt,temp)->
-    TruckHelpers.setVolumeVisibility evt.target.value,temp,'truckSpecsForm'
+  truckSelectize:->
+    options:->
+      TruckTypes.find({},{sort:{name:1}})
+    valueField: "_id"
+    searchField:"name"
+    sortField:[{field:"name",direction:"asc"}]
+    render:
+      option:(item,escape)->
+        console.log item
+        Blaze.toHTMLWithData(Template.selectizeImageList,{data:item.name,photo:item.photo})
 
+      item:(item,escape)->
+        "<div>#{escape(item.name)}</div>"
+
+
+
+
+Template.truckSpecs.events
+  'change select[data-schema-key="type"]':(evt,temp)->
+    console.log evt.target.value
+    truckVolumeType=TruckTypes.findOne(evt.target.value).loadType
+    console.log truckVolumeType
+    TruckHelpers.setVolumeVisibility truckVolumeType,temp,'truckSpecsForm'
+
+Template.manageTruck.created=->
+  @goodTypesSub=ddpTruckSearch.subscribe('goodTypes')
+  @truckTypesSub=ddpTruckSearch.subscribe('trucks')
+
+
+Template.manageTruck.destroyed=->
+  @goodTypesSub.stop()
+  @truckTypesSub.stop()
 
 Template.manageTruck.helpers
   onfinished:->
@@ -58,10 +90,11 @@ Template.manageTruck.helpers
     (e)->
       data=@getAllData()
       data._id=truckId
-
+      data.volumeType=TruckTypes.findOne(data.type).loadType
+      data.typeId=data.type
+      data.type=TruckTypes.findOne(data.type).name
       Meteor.call 'addUpdateTruck',data,(err,res)->
         unless err then Router.go('truckList') else console.log err
-
 
   oncanceled:->
     (e)->Router.go('truckList')
@@ -122,6 +155,7 @@ AutoForm.hooks
 
   truckSpecsForm:
     docToForm:(doc)->
+      doc.weight.value=Converters.convertWeightFromKg(doc.weight.value,doc.weight.metric)
       unless _.isEmpty(doc.boxedVolume)
         doc.boxedVolume.length=Converters.convertSizeFromFeet(doc.boxedVolume.length,doc.boxedVolume.metric)
         doc.boxedVolume.width=Converters.convertSizeFromFeet(doc.boxedVolume.width,doc.boxedVolume.metric)
@@ -130,6 +164,7 @@ AutoForm.hooks
         doc.liquidVolume.value=Converters.convertVolumeFromLitre(doc.liquidVolume.value,doc.liquidVolume.metric)
       doc
     formToDoc:(doc)->
+      doc.weight.value=Converters.convertWeightToKg(doc.weight.value,doc.weight.metric)
       unless _.isEmpty(doc.boxedVolume)
         doc.boxedVolume.length=Converters.convertSizeToFeet(doc.boxedVolume.length,doc.boxedVolume.metric)
         doc.boxedVolume.width=Converters.convertSizeToFeet(doc.boxedVolume.width,doc.boxedVolume.metric)

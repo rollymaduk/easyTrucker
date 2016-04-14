@@ -49,12 +49,23 @@
 @TITLE_REQUEST='REQUEST'
 @TITLE_BID='BID'
 
-@SUBSCRIBE_ANNUAL="premium_yr"
-@SUBSCRIBE_MONTH="premium"
-@SUBSCRIBE_FREE="free"
+
+###@SUBSCRIBE_PREMIUM="premium_plan"
+@SUBSCRIBE_STANDARD="standard_plan"
+@SUBSCRIBE_PAYG="pay_as_you_go"
+
+@TEXT_SUBSCRIBE_PREMIUM="Premium-$470.40/Transaction"
+@TEXT_SUBSCRIBE_STANDARD="Standard-$49.00/Transaction"
+@TEXT_SUBSCRIBE_PAYG="Pay As You Go-$10/Transaction"
+
+@AMOUNT_PREMIUM=47000
+@AMOUNT_STANDARD=4900
+@AMOUNT_PAYG=1000###
 
 @ACCOUNT_INDIVIDUAL="Individual"
 @ACCOUNT_GROUP="Organization"
+
+@COUNT_SUBS_ID="counterSubscriptionId"
 
 @SOUNDS=["cabin_hum","welcome","arrived","its_here"
 ,"inspinia","spritely","zingy_blip","new_alert","uh_oh"

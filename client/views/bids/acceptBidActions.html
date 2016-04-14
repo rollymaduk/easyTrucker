@@ -1,3 +1,7 @@
 <template name="acceptBidActions">
-    <a {{Rp_allow 'canAcceptBid'}} href="#" class="accept-bid btn btn-primary btn-xs ">Accept bid</a>
+    {{#if bid.scheduleIsNew}}
+        <a {{Rp_allow 'canAcceptBid'}} href="#" class="accept-bid btn btn-primary btn-xs ">Accept bid</a>
+    {{else}}
+
+    {{/if}}
 </template>

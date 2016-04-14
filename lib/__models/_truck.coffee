@@ -8,68 +8,70 @@ Schema.TruckInsurance=new SimpleSchema
         type: 'bootstrap-datetimepicker'
       }
     }
+  isPolicyValid:
+    type:Boolean
+    optional:true
+    defaultValue:true
+    autoform:
+      label:false
+      type:"hidden"
+
   InsuranceCompany:
     type:String
 
 Schema.TruckSpecs=new SimpleSchema
-  type:
+  typeId:
     type:String
     optional:true
-    allowedValues:[
-      'Beavertail'
-      'Box van'
-      'Crew van'
-      'Curtainside'
-      'Dropside'
-      'Flatbed'
-      'Livestock'
-      'Log Carrier'
-      'Luton van'
-      'Microvan/Minibus'
-      'Pick up'
-      'Straight truck'
-      'Tanker-Insulated Food grade'
-      'Tanker-Non-insulated Food grade'
-      'Tanker-Insulated non-food grade'
-      'Tanker-Non-insulated non-Food grade'
-      'Temperature-controlled (Boxed)'
-      'Tipper'
-      'Tractor Trailer'
-      'Vehicle transporter'
-      ]
     autoform:
-      options:"allowed"
+      type:"hidden"
+  type:
+    type:String
+    label:"Type Of Vehicle"
+    optional:true
+  goodsType:
+    type:[Object]
+    blackbox:true
+    optional:true
+    autoform:
+      type:"tagsTypeahead"
   volumeType:
     label:'Load Type'
     type:String
-    allowedValues:['boxed','liquid','nonboxed']
-    autoform:
-      options:{boxed:'boxed',liquid:'liquid',nonboxed:'non-boxed'}
-  doors:
-    type:String
     optional:true
-    allowedValues:['rollup','barndoors']
-    autoValue:->
-      _voltype=@siblingField('volumeType')
-      if(@isSet and !_.isEqual(_voltype.value,'boxed'))
-        @unset()
-        null
-    autoform:
-      options: {rollup:"roll-up",barndoors:"barn-doors"}
+    allowedValues:['boxed','liquid','non-boxed']
+    ###autoform:
+      options:{boxed:'boxed',liquid:'liquid',"non-boxed":'non-boxed'}
+      type:"hidden"###
+  ###doors:
+      type:String
+      optional:true
+      allowedValues:['rollup','barndoors']
+      autoValue:->
+        _voltype=@siblingField('volumeType')
+        if(@isSet and !_.isEqual(_voltype.value,'boxed'))
+          @unset()
+          null
+      autoform:
+        options: {rollup:"roll-up",barndoors:"barn-doors"}###
   weight:
-    type:Number
+    type:Object
     optional:true
+
+  'weight.value':
+    type:Number
     decimal:true
-    min:0
-    max:250
-    label:"Weight(tons)"
+  'weight.metric':
+    type:String
+    allowedValues:['lbs','kg','mt','cwt','per']
+    autoform:
+      options:{lbs:'Pounds',kg:'Kilograms',mt:'Metric Tonnes',cwt:"100 weights",per:"passenger(s)"}
   boxedVolume:
     type:Object
     optional:true
     autoValue:->
-      _vol=@siblingField('volumeType')
-      console.log _vol
-      if(@isSet and  !_.isEqual(_vol.value,'boxed'))
+      _voltype=@siblingField('volumeType')
+      if(@isSet and !_.isEqual(_voltype.value,'boxed'))
         @unset()
         null
   'boxedVolume.width':
@@ -83,16 +85,15 @@ Schema.TruckSpecs=new SimpleSchema
     decimal:true
   'boxedVolume.metric':
     type:String
-    allowedValues:['ft','m','cm']
+    allowedValues:['ft','m','cm','inch']
     autoform:
-      options:{ft:'Feet',m:'Meters',cm:'Centimeters'}
-   liquidVolume:
+      options:{ft:'Feet',m:'Meters',cm:'Centimeters',inch:"Inches"}
+  liquidVolume:
     type:Object
     optional:true
     autoValue:->
      _voltype=@siblingField('volumeType')
-
-     if(@isSet and  !_.isEqual(_voltype.value,'liquid'))
+     if(@isSet and !_.isEqual(_voltype.value,'liquid'))
        @unset()
        null
   'liquidVolume.value':
@@ -100,9 +101,9 @@ Schema.TruckSpecs=new SimpleSchema
     decimal:true
   'liquidVolume.metric':
     type:String
-    allowedValues:['l','gal','ft3','bbl']
+    allowedValues:['l','gal','ft3','bbl','ccm',]
     autoform:
-      options:{l:'litres',gal:'gallons',ft3:'cubic feet',bbl:'barrels'}
+      options:{l:'litres',gal:'gallons',ft3:'cubic feet',bbl:'barrels','ccm':'cubic meters'}
 
 
 Schema.TruckGeofence=new SimpleSchema
@@ -136,7 +137,7 @@ Schema.TruckGeofence=new SimpleSchema
     type:String
     allowedValues:['m','km','mi']
     autoform:
-      options:{m:'Meters',k:'KM',mi:'Miles'}
+      options:{m:'Meters',km:'KM',mi:'Miles'}
   dropoffSettings:
     type:Object
   'dropoffSettings.coverage':

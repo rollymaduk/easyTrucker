@@ -1,4 +1,4 @@
-@Bids=new Meteor.Collection 'bids'
+@Bids=new Meteor.Collection "#{Meteor.settings.public.dbPrefix}bids"
 Bids.attachSchema Schema.Bid
 Bids.attachBehaviour('timestampable');
 Bids.allow

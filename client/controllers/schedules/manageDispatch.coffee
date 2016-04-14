@@ -2,8 +2,6 @@ Template.manageDispatch.created=->
   console.log @data
 
 
-
-
 AutoForm.hooks
   manageDispatchForm:
     onSubmit:(insertDoc,updDoc,currDoc)->

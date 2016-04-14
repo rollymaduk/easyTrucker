@@ -15,10 +15,13 @@
                                         {{#unless showManageBid}}
 
                                             <div class="col-lg-4" {{Rp_allow 'canEditbid,canManagebid'}}>
-                                                <span>
-                                    <a href="{{pathFor 'editBid'}}" style="color: inherit">
-                                        <span class="glyphicon glyphicon-pencil"></span></a>
-                                    </span>
+                                              {{#if scheduleIsNew}}
+                                                    <span>
+                                                    <a href="{{pathFor 'editBid'}}" style="color: inherit">
+                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                    </a>
+                                                    </span>
+                                              {{/if}}
 
                                             </div>
 
@@ -30,7 +33,7 @@
                                         </div>
                                     </div>
 
-                                    <span class="pull-left" style="margin-right:2%;">{{>acceptBidActions}}</span>
+                                    <span class="pull-left" style="margin-right:2%;">{{>acceptBidActions bid=this}}</span>
                                     <h2>${{quote}} for <a href="{{pathFor "viewSchedule" _id=this.schedule._id}}">{{schedule.shipmentTitle}}</a></h2>
                                 </div>
 
